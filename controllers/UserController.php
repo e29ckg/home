@@ -1,0 +1,344 @@
+<?php
+
+namespace app\controllers;
+
+use Yii;
+use yii\web\Controller;
+use app\models\User;
+use app\models\Profile;
+use yii\web\UploadedFile;
+use yii\helpers\Url;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
+use yii\web\Session;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+
+class UserController extends Controller{
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','profile'],
+                'rules' => [
+                    [
+                        'actions' => ['index','profile'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+    
+    public function actionIndex(){
+        $this->layout = 'main';
+
+        // $sql = "SELECT id, name, sname FROM profile ";       
+        // $data = Yii::$app->db->createCommand($sql)->queryAll();
+        $models = User::find()->where(['status' => 10])->all();
+        $userAll = User::getCountAll();
+        $userDis = User::getCountDis();
+       
+        return $this->render('index',[
+            'models' => $models,
+            'userAll' => $userAll,
+            'userDis' => $userDis,
+        ]);
+    }
+
+    public function actionIndex_dis(){
+        $this->layout = 'main';
+
+        // $sql = "SELECT id, name, sname FROM profile ";       
+        // $data = Yii::$app->db->createCommand($sql)->queryAll();
+        $models = User::find()->where(['status' => 0])->all();
+        $userAll = User::getCountAll();
+        $userDis = User::getCountDis();
+       
+        return $this->render('index_dis',[
+            'models' => $models,
+            'userAll' => $userAll,
+            'userDis' => $userDis,
+        ]);
+    }
+
+    public function actionCreate() {
+     
+        $model = new User();
+
+        //Add This For Ajax Email Exist Validation 
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        } 
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {            
+            
+            $model->password_hash = Yii::$app->security->generatePasswordHash('password');
+            $model->created_at = date("Y-m-d H:i:s");
+
+            if($model->save()){
+                Yii::$app->session->setFlash('success', ['บันทึกเรียบร้อย']);
+                $mU = User::find()->where(['username' => $_POST['User']['username']])->one();
+
+                $mP = new Profile();
+                $mP->user_id = $mU->id;
+                $mP->name = $_POST['User']['username'];
+                $mP->img = 'nopic.png';
+                $mP->save();
+                return $this->redirect(['index']);
+           } 
+        }
+
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_form',[
+                    'model' => $model,                
+            ]);
+        }
+            return $this->render('_form',[
+                'model' => $model,                     
+            ]); 
+        
+    }
+
+    public function actionUpdate_username($id){
+        // $model = User::findOne($id);
+        $model = User::findOne($id);
+
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        } 
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {            
+            
+            $model->updated_at = date("Y-m-d H:i:s");
+
+            if($model->save()){
+                Yii::$app->session->setFlash('success', ['บันทึกเรียบร้อย']);
+                return $this->redirect(['index']);
+           } 
+        }
+
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_form',[
+                    'model' => $model,                
+            ]);
+        }
+            return $this->render('_form',[
+                'model' => $model,                     
+            ]); 
+
+    }
+
+    public function actionReset_pass($id){
+        // $model = User::findOne($id);
+        $model = User::findOne($id);
+        $model->password_hash = Yii::$app->security->generatePasswordHash('password');
+        $model->updated_at = date("Y-m-d H:i:s");
+        if($model->save()){
+            Yii::$app->session->setFlash('success', ['บันทึกเรียบร้อย']);
+            return $this->redirect(['index']);
+       }else{
+        Yii::$app->session->setFlash('error', ['ไม่สามารถบันทึก']);
+            return $this->redirect(['index']);
+       } 
+        
+    }
+    public function actionDel($id){
+        // $model = User::findOne($id);
+        $model = User::findOne($id);
+        $modelProfile = Profile::findOne($model->user_id);
+        $model->status = 0;
+        $modelProfile->status = 0;
+        $model->updated_at = date("Y-m-d H:i:s");
+        $modelProfile->updated_at = date("Y-m-d H:i:s");
+        $model->save();
+        return $this->redirect(['index']);
+    }
+
+    public function actionActive($id){
+        // $model = User::findOne($id);
+        $model = User::findOne($id);
+        $model->status = 10;
+        $model->updated_at = date("Y-m-d H:i:s");
+        $model->save();
+        return $this->redirect(['index']);
+    }
+
+    public function actionProfile($id = null){
+        if($id == ''){
+            $mdUser = User::findOne(Yii::$app->user->id);
+            $mdProfile = Profile::find()->where(['user_id' => Yii::$app->user->id])->one();               
+            return $this->render('profile',['mdProfile' => $mdProfile,'mdUser' => $mdUser]);
+        }else{
+            $mdUser = User::findOne($id);
+            $mdProfile = Profile::find()->where(['user_id' => $id])->one();               
+            return $this->render('profile',['mdProfile' => $mdProfile,'mdUser' => $mdUser]);
+        }
+            
+    }
+    public function actionEdit_img($id=null){
+        
+        if($id == ''){
+            $mdProfile = Profile::find()->where(['user_id' => Yii::$app->user->id])->one();
+        }else{
+            $mdProfile = Profile::find()->where(['user_id' => $id])->one();
+        }
+
+        $filename = $mdProfile->img;
+
+        if ($mdProfile->load(Yii::$app->request->post())) {
+            $f = UploadedFile::getInstance($mdProfile, 'img');
+
+            if(!empty($f)){
+                
+                $dir = Url::to('@webroot/uploads/user/');
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0777, true);
+                }                
+                if($filename && is_file($dir.$filename)){
+                    unlink($dir.$filename);// ลบ รูปเดิม;   
+                }
+                $fileName = md5($f->baseName . time()) . '.' . $f->extension;
+                if($f->saveAs($dir . $fileName)){
+                    $mdProfile->img = $fileName;
+                }
+                if($mdProfile->save()){
+                    Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
+                };   
+                return $this->redirect(['profile','id' => $mdProfile->user_id]);                            
+            }
+            $mdProfile->img = $filename;
+            if($mdProfile->save()){
+                Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
+            };          
+            return $this->redirect(['profile','id' => $mdProfile->user_id]);
+        }
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('edit_img',[
+                    'model' => $mdProfile,                    
+            ]);
+        }
+        
+        return $this->render('edit_img',[
+               'model' => $mdProfile,                    
+        ]);
+    }
+
+    public function actionChang_pass($id = null){
+        if($id == ''){
+            $mdUser = User::findOne(Yii::$app->user->id);
+            $mdProfile = Profile::find()->where(['user_id' => Yii::$app->user->id])->one();
+        }else{
+            $mdUser = User::findOne($id);
+        }
+
+        $pass = $mdUser->password_hash;
+
+        // if(!($pass == Yii::$app->security->generatePasswordHash('password'))){
+        //     Yii::$app->session->setFlash('success', 'ไม่สามารถเปลี่ยน Password ได้');
+        //     return $this->redirect(['profile']); 
+        // }
+
+        if ($mdUser->load(Yii::$app->request->post())) {
+            if($_POST['User']['password_hash'] == $pass){
+                return $this->redirect(['profile']);
+            }
+            if(!($_POST['User']['password_hash'] == '' )){
+                $mdUser->password_hash = Yii::$app->security->generatePasswordHash($_POST['User']['password_hash']);
+                if($mdUser->save()){
+                    Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
+                }; 
+            }    
+            return $this->redirect(['profile','id'=> $mdUser->id]);                    
+        }
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_form_chang_pass',[
+                    'model' => $mdUser,                    
+            ]);
+        }
+        
+        return $this->render('_form_chang_pass',[
+               'model' => $mdUser,                    
+        ]);
+    }
+
+    public function actionChang_email($id = null){
+        if($id == ''){
+            $mdUser = User::findOne(Yii::$app->user->id);
+        }else{
+            $mdUser = User::findOne($id);
+        }
+        
+        if(Yii::$app->request->isAjax && $mdUser->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($mdUser);
+        }
+
+        if ($mdUser->load(Yii::$app->request->post())) {
+                $mdUser->email = $_POST['User']['email'];
+               
+                if($mdUser->save()){
+                    Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
+                }else{
+                    Yii::$app->session->setFlash('error', 'ไม่สำเร็จ');
+                }  
+               
+            return $this->redirect(['profile' , 'id' => $mdUser->id]);                    
+        }
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_form_chang_email',[
+                    'model' => $mdUser,                    
+            ]);
+        }
+        
+        return $this->render('_form_chang_email',[
+               'model' => $mdUser,                    
+        ]);
+    }
+
+    public function actionEdit_profile($id=null){
+        
+        if($id == ''){
+            $mdProfile = Profile::find()->where(['user_id' => Yii::$app->user->id])->one();
+        }else{
+            $mdProfile = Profile::find()->where(['user_id' => $id])->one();
+        }
+
+        if ($mdProfile->load(Yii::$app->request->post())) {
+            $mdProfile->fname = $_POST['Profile']['fname'];
+            $mdProfile->name = $_POST['Profile']['name'];
+            $mdProfile->sname = $_POST['Profile']['sname'];
+            $mdProfile->id_card = $_POST['Profile']['id_card'];
+            $mdProfile->dep = $_POST['Profile']['dep'];
+            $mdProfile->address = $_POST['Profile']['address'];
+            $mdProfile->phone = $_POST['Profile']['phone'];
+                 if($mdProfile->save()){
+                    Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
+                }else{
+                    Yii::$app->session->setFlash('error', 'ไม่สำเร็จ');
+                } 
+               
+            return $this->redirect(['profile', 'id' => $mdProfile->user_id]);                    
+        }
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_form_edit_profile',[
+                    'model' => $mdProfile,                    
+            ]);
+        }
+        
+        return $this->render('_form_edit_profile',[
+               'model' => $mdProfile,                    
+        ]);
+    }
+}
