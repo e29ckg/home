@@ -88,12 +88,11 @@ $this->params['breadcrumbs'][] = $this->title;
 													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="uploads/weblink/'.$model->img.'" height="42" alt="Pic"></a>';
 													
 												}else{
-													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="uploads/user/none.png" height="42" alt="Pic"></a>';
+													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/avatars/male.png" height="42" alt="Pic"></a>';
 													
-													echo '<img src="uploads/user/none.png" height="42" alt="Pic">';
 												}
 											}else{
-												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="uploads/user/none.png" height="42" alt="Pic"></a>';
+												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/avatars/male.png" height="42" alt="Pic"></a>';
 												
 											}
 										?>

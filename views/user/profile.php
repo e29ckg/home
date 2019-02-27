@@ -90,7 +90,7 @@
 													<div class="row">
 				
 														<div class="col-sm-3 profile-pic">
-															<img src="<?=file_exists('uploads/user/'.$mdProfile->img) ? 'uploads/user/'.$mdProfile->img : 'img/avatars/sunny-big.png' ?>" alt="demo user">
+															<img src="<?=file_exists('uploads/user/'.$mdProfile->img) ? 'uploads/user/'.$mdProfile->img : 'img/avatars/male.png' ?>" alt="demo user">
 														
 															<div class="air air-bottom-right padding-10">
 																<a id="act-edit-img" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn txt-color-white bg-color-teal btn-sm"><i class="fa fa-gear fa-sm"></i></a>
