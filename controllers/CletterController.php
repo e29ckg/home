@@ -30,10 +30,10 @@ class CletterController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','create'],
+                'only' => ['index','create','show'],
                 'rules' => [
                     [
-                        'actions' => ['index','create'],
+                        'actions' => ['index','create','show'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
