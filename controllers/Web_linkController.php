@@ -14,6 +14,7 @@ use yii\web\UploadedFile;
 use yii\helpers\Url;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
+use kartik\mpdf\Pdf;
 
 /**
  * Web_linkController implements the CRUD actions for WebLink model.
@@ -26,7 +27,17 @@ class Web_linkController extends Controller
     public function behaviors()
     {
         return [
-            
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['admin'],
+                'rules' => [
+                    [
+                        'actions' => ['admin'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -42,10 +53,10 @@ class Web_linkController extends Controller
      */
     public function actionIndex()
     {
-        $sql = 'SELECT * FROM web_link';
+        // $sql = 'SELECT * FROM web_link';
         // $models = Yii::$app->db->createCommand($sql)->queryAll();
         $models = WebLink::find()->orderBy([
-            'create_at'=>SORT_ASC,
+            'create_at'=>SORT_DESC,
             'id' => SORT_DESC,
             ])->limit(100)->all();
         
@@ -256,5 +267,57 @@ class Web_linkController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+    public function actionPrint($id = null)
+    {
+        // $this->layout = 'cart_shop';   
+        // $user_id = Yii::$app->user->id;
+        // $model = $this->findModel($id);
+        $user_id = Yii::$app->user->id;
+        // $model_lists = OrderList::find()->where(['order_code'=> $model->order_code])->all();
+
+        // $destination = Pdf::DEST_BROWSER;
+        // $destination = Pdf::DEST_DOWNLOAD;
+        $destination = Pdf::DEST_FILE;
+// 
+        $filename = Yii::$app->basePath .'/web/uploads/a1.pdf';
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+    $pdf = new Pdf([
+        'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+        'content' => $this->renderPartial('print',[]),
+        // portrait orientation
+        'orientation' => Pdf::ORIENT_PORTRAIT,
+        // stream to browser inline
+        'destination' => $destination,
+        'filename' => $filename,
+        // 'cssFile' => 'css/pdf.css',
+        'options' => [
+            // any mpdf options you wish to set
+        ],
+        'methods' => [
+            // 'SetTitle' => 'Privacy Policy - Krajee.com',
+            // 'SetSubject' => 'Generating PDF files via yii2-mpdf extension has never been easy',
+            // 'SetHeader' => ['Krajee Privacy Policy||Generated On: ' . date("r")],
+            // 'SetFooter' => ['|Page {PAGENO}|'],
+            // 'SetAuthor' => 'Kartik Visweswaran',
+            // 'SetCreator' => 'Kartik Visweswaran',
+            // 'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
+        ]
+    ]);
+    // $mpdf = $pdf->api;
+     // fetches mpdf api
+    //  $html = self::generateTablePdf($id);
+    //  $mpdf->shrink_tables_to_fit = 8;
+    //  $mpdf->use_kwt = true;
+    //  $mpdf->table_keep_together = true;
+    //  $mpdf->WriteHtml($html);
+     // call mpdf write html
+    //  $filename = \Yii::$app->basePath . '/web/uploads/1.pdf';
+    //  $mpdf->Output($filename, 'F');
+    $pdf->render();
+    // return $pdf->render();
+    return $this->redirect(['index']);
     }
 }
