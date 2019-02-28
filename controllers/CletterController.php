@@ -227,7 +227,7 @@ class CletterController extends Controller
             
             $modelLog = new Log();
             $modelLog->user_id = Yii::$app->user->identity->id;
-            $modelLog->manager = 'Cletter-Read';
+            $modelLog->manager = 'Cletter_Read';
             $modelLog->detail = $id;
             $modelLog->create_at = date("Y-m-d H:i:s");
             $modelLog->ip = Yii::$app->getRequest()->getUserIP();

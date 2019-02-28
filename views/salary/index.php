@@ -80,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<?php
 											if (!empty($model->file)){
 												if(file_exists('uploads/salary/'.$model->file)){
-													echo '<a href="uploads/salary/'.$model->file.'" target="_blank"><i class="fa fa-file-text-o"></i></a>';
+													echo '<a href="index.php?r=salary/show&id='.$model->id.'" target="_blank"><i class="fa fa-file-text-o"></i></a>';
 													
 												}else{
 													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
@@ -98,12 +98,11 @@ $this->params['breadcrumbs'][] = $this->title;
 										<?php
 											if (!empty($model->file)){
 												if(file_exists('uploads/salary/'.$model->file)){
-													echo '<a href="uploads/salary/'.$model->file.'" target="_blank">'.$model->create_at.' : '.$model->file.' <i class="fa fa-file-text-o"></i></a>';
+													echo '<a href="index.php?r=salary/show&id='.$model->id.'">'.$model->file.' <i class="fa fa-file-text-o"></i></a>';
 													
 												}else{
 													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
 													
-													echo '<img src="img/none.png" height="42" alt="Pic">';
 												}
 											}else{
 												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
@@ -208,7 +207,7 @@ $(document).ready(function() {
 						responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
 					}
 				},
-				"paging":   false,
+				// "paging":   false,
 				"rowCallback" : function(nRow) {
 					responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
 				},

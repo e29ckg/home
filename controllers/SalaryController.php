@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Salary;
+use app\models\Log;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -224,17 +225,53 @@ class SalaryController extends Controller
     }
 
     public function actionShow($id=null){
-        $mdSalary = Salary::find()->where(['id' => $id])->one();
 
-        if(Yii::$app->request->isAjax){
-            return $this->renderAjax('show',[
-                    'model' => $mdSalary,                    
-            ]);
+        $model = $this->findModel($id);
+    
+        // This will need to be the path relative to the root of your app.
+        $filePath = '/web/uploads/salary';
+        // Might need to change '@app' for another alias
+        $completePath = Yii::getAlias('@app'.$filePath.'/'.$model->file);
+        if(is_file($completePath)){
+
+        $modelLog = new Log();
+        $modelLog->user_id = Yii::$app->user->identity->id;
+        $modelLog->manager = 'Salary_Read';
+        $modelLog->detail = $id;
+        $modelLog->create_at = date("Y-m-d H:i:s");
+        $modelLog->ip = Yii::$app->getRequest()->getUserIP();
+        $modelLog->save();
+
+        return Yii::$app->response->sendFile($completePath, $model->file, ['inline'=>true]);
+        }else{
+            Yii::$app->session->setFlash('error', 'ไม่พบ File... ');
+            return $this->redirect(['salary/index',['id' => $completePath]]);
         }
-        
-        return $this->render('show',[
-               'model' => $mdSalary,                    
-        ]);
+    }
+
+    public function actionShow_admin($id=null){
+
+        $model = $this->findModel($id);
+    
+        // This will need to be the path relative to the root of your app.
+        $filePath = '/web/uploads/salary';
+        // Might need to change '@app' for another alias
+        $completePath = Yii::getAlias('@app'.$filePath.'/'.$model->file);
+        if(is_file($completePath)){
+
+        $modelLog = new Log();
+        $modelLog->user_id = Yii::$app->user->identity->id;
+        $modelLog->manager = 'Salary_Admin_Read';
+        $modelLog->detail = $id;
+        $modelLog->create_at = date("Y-m-d H:i:s");
+        $modelLog->ip = Yii::$app->getRequest()->getUserIP();
+        $modelLog->save();
+
+        return Yii::$app->response->sendFile($completePath, $model->file, ['inline'=>true]);
+        }else{
+            Yii::$app->session->setFlash('error', 'ไม่พบ File... ');
+            return $this->redirect(['salary/index',['id' => $completePath]]);
+        }
     }
 
     /**

@@ -86,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<?php
 											if (!empty($model->file)){
 												if(file_exists('uploads/salary/'.$model->file)){
-													echo '<a href="uploads/salary/'.$model->file.'" target="_blank"><i class="fa fa-file-text-o"></i></a>';
+													echo '<a href="index.php?r=salary/show_admin&id='.$model->id.'" target="_blank"><i class="fa fa-file-text-o"></i></a>';
 													
 												}else{
 													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<?php
 											if (!empty($model->file)){
 												if(file_exists('uploads/salary/'.$model->file)){
-													echo '<a href="uploads/salary/'.$model->file.'" target="_blank">'.$model->create_at.' : '.$model->file.' <i class="fa fa-file-text-o"></i></a>';
+													echo '<a href="index.php?r=salary/show_admin&id='.$model->id.'" target="_blank">'.$model->create_at.' : '.$model->file.' <i class="fa fa-file-text-o"></i></a>';
 													
 												}else{
 													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
