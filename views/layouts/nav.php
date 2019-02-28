@@ -147,6 +147,11 @@ $menu = [
 					'url' => 'html',
 					'template' => '<a target="_blank" href="http://'.$_SERVER["HTTP_HOST"].'/{url}" title="{label}"><i class="fa fa-lg fa-fw fa-wrench"></i> <span class="menu-item-parent">{label}</span></a>',
 				],
+				[
+					'label' => 'Log',
+					'url' => ['/log/index'],
+					'template' => '<a target="_blank" href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-wrench"></i> <span class="menu-item-parent">{label}</span></a>',
+				],
 			],
 		],
 	];

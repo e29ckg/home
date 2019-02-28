@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\CLetter;
+use app\models\Log;
 use KS\Line\LineNotify;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -223,6 +224,15 @@ class CletterController extends Controller
         // Might need to change '@app' for another alias
         $completePath = Yii::getAlias('@app'.$filePath.'/'.$model->file);
         if(is_file($completePath)){
+            
+            $modelLog = new Log();
+            $modelLog->user_id = Yii::$app->user->identity->id;
+            $modelLog->manager = 'Cletter-Read';
+            $modelLog->detail = $id;
+            $modelLog->create_at = date("Y-m-d H:i:s");
+            $modelLog->ip = Yii::$app->getRequest()->getUserIP();
+            $modelLog->save();
+
             return Yii::$app->response->sendFile($completePath, $model->file, ['inline'=>true]);
         }else{
             Yii::$app->session->setFlash('error', 'ไม่พบ File... ');

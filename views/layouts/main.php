@@ -203,7 +203,7 @@ if (Yii::$app->user->identity){
 					
 					<!--a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut"-->
 					<a href="<?= Yii::$app->user->identity ? 'index.php?r=user/profile' : 'index.php?r=site/login'?>" >
-					<img src="<?= file_exists('uploads/user/'.$mdProfile->img) ? 'uploads/user/'.$mdProfile->img : 'img/avatars/sunny-big.png' ?>" alt="demo user">
+					<img src="<?= file_exists('uploads/user/'.$mdProfile->img) ? 'uploads/user/'.$mdProfile->img : 'img/none.png' ?>" alt="demo user">
 						<!--img src="img/avatars/sunny.png" alt="me" class="online" /--> 
 						<span>
 							<?php echo Yii::$app->user->identity ? $mdProfile->fname.$mdProfile->name.' '.$mdProfile->sname : 'Login'; ?>

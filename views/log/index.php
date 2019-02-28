@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Salary';
+$this->title = 'Web Links';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -65,15 +65,11 @@ $this->params['breadcrumbs'][] = $this->title;
 								<thead>
 									<tr>
 					                    <th data-class="expand"> # </th>
-										<th >file</th>
-					                    <th >ชื่อ</th>
-					                    <th >Link</th>
-										<?php
-											if(Yii::$app->user->identity->role == 9){
-										?>
-										<th ></th>
-										<?php } ?>	
-										
+										<th >User_id</th>
+					                    <th >Manager</th>
+					                    <th >Detail</th>
+										<th >IP</th>	
+										<th >Create_At</th>		
 						            </tr>
 								</thead>
 								<tbody>  
@@ -81,53 +77,11 @@ $this->params['breadcrumbs'][] = $this->title;
 									<?php foreach ($models as $model): ?>
 						            <tr>
 						                <td><?= $i++?></td>
-										<td class="text-center" >
-										
-										<?php
-											if (!empty($model->file)){
-												if(file_exists('uploads/salary/'.$model->file)){
-													echo '<a href="uploads/salary/'.$model->file.'" target="_blank"><i class="fa fa-file-text-o"></i></a>';
-													
-												}else{
-													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
-													
-												}
-											}else{
-												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
-												
-											}
-										?>
-												</td>
-                                        <td><?php  echo $model->getProfileName()?></td>
-                                        <td>
-										<?php
-											if (!empty($model->file)){
-												if(file_exists('uploads/salary/'.$model->file)){
-													echo '<a href="uploads/salary/'.$model->file.'" target="_blank">'.$model->create_at.' : '.$model->file.' <i class="fa fa-file-text-o"></i></a>';
-													
-												}else{
-													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
-													
-												}
-											}else{
-												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
-												
-											}
-										?></td>	
-										<?php
-											if(Yii::$app->user->identity->role == 9){
-										?>
-										<td>
-											<a href="#" class="act-update btn btn-info btn-xs" data-id=<?=$model['id']?>>แก้ไข</a>
-										<?= Html::a('<i class="fa fa-remove"></i> ลบ',['salary/delete','id' => $model->id],
-													[
-														'class' => 'btn btn-danger btn-xs act-update',
-														'data-confirm' => 'Are you sure to delete this item?',
-                                    					'data-method' => 'post',
-													]);
-											?>
-											</td>
-										<?php } ?>					        
+                                        <td><?=$model->user_id?></td>
+                                        <td><?=$model->manager?></td>
+										<td><?=$model->detail?></td>			
+										<td><?=$model->ip?></td>	
+										<td><?=$model->create_at?></td>						        
 									</tr>
 									<?php  endforeach; ?>
 								</tbody>	
@@ -148,7 +102,7 @@ $(document).ready(function() {
 		        
 	function init_click_handlers(){    
 
-		var url_show = "index.php?r=salary/show";				
+		var url_show = "index.php?r=web_link/show";				
 			$( ".act-show" ).click(function() {
 				var fID = $(this).data("id");
         	$.get(url_show,{id: fID},function (data){
@@ -161,7 +115,7 @@ $(document).ready(function() {
         	});     
 		});
 
-		var url_update = "index.php?r=salary/update";
+		var url_update = "index.php?r=web_link/update";
     	$(".act-update").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
@@ -171,11 +125,13 @@ $(document).ready(function() {
             	$(".modal-title").html("แก้ไขข้อมูลสมาชิก");
             	$("#activity-modal").modal("show");
         	});
-    	});    	
+    	});
+
 		
-    	var url_view = "index.php?r=ppss/view";		
+    	var url_view = "index.php?r=web_link/view";		
     	$(".act-view").click(function(e) {			
                 var fID = $(this).data("id");
+				
                 $.get(url_view,{id: fID},function (data){
                         $("#activity-modal").find(".modal-body").html(data);
                         $(".modal-body").html(data);
@@ -183,15 +139,17 @@ $(document).ready(function() {
                         $("#activity-modal").modal("show");
                     }
                 );
-            });   
+            }); 
+
+			
     
 	}
 
     init_click_handlers(); //first run
 			
-	$('#activity-modal').on('hidden.bs.modal', function () {
- 		location.reload();
-	})
+	// $('#activity-modal').on('hidden.bs.modal', function () {
+ 	// 	location.reload();
+	// })
 
 				var responsiveHelper_dt_basic = undefined;
 				var responsiveHelper_datatable_fixed_column = undefined;
@@ -233,7 +191,7 @@ $(document).ready(function() {
 		    
 		    // custom toolbar
 												
-		    $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> act-create</button></div>');
+		    // $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> act-create</button></div>');
 			   
 		    // Apply the filter
 		    $("#datatable_fixed_column thead th input[type=text]").on( 'keyup change', function () {
@@ -249,7 +207,7 @@ $(document).ready(function() {
 
 /* END COLUMN FILTER */  
 
-		var url_create = "index.php?r=salary/create";
+		var url_create = "index.php?r=web_link/create";
     	$( "#act-create" ).click(function() {
         	$.get(url_create,function (data){
                 $("#activity-modal").find(".modal-body").html(data);

@@ -83,12 +83,11 @@ $this->params['breadcrumbs'][] = $this->title;
 													echo '<a href="uploads/salary/'.$model->file.'" target="_blank"><i class="fa fa-file-text-o"></i></a>';
 													
 												}else{
-													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="uploads/user/none.png" height="42" alt="Pic"></a>';
+													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
 													
-													echo '<img src="uploads/user/none.png" height="42" alt="Pic">';
 												}
 											}else{
-												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="uploads/user/none.png" height="42" alt="Pic"></a>';
+												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
 												
 											}
 										?>
@@ -102,12 +101,12 @@ $this->params['breadcrumbs'][] = $this->title;
 													echo '<a href="uploads/salary/'.$model->file.'" target="_blank">'.$model->create_at.' : '.$model->file.' <i class="fa fa-file-text-o"></i></a>';
 													
 												}else{
-													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="uploads/user/none.png" height="42" alt="Pic"></a>';
+													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
 													
-													echo '<img src="uploads/user/none.png" height="42" alt="Pic">';
+													echo '<img src="img/none.png" height="42" alt="Pic">';
 												}
 											}else{
-												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="uploads/user/none.png" height="42" alt="Pic"></a>';
+												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
 												
 											}
 										?>
