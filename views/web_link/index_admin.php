@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<?php
 											if(Yii::$app->user->identity->role == 9){
 										?>
-										<th ></th>
+										<th style="width:80px"></th>
 										<?php } ?>	
 										
 						            </tr>
@@ -85,14 +85,12 @@ $this->params['breadcrumbs'][] = $this->title;
 										<?php
 											if (!empty($model->img)){
 												if(file_exists('uploads/weblink/'.$model->img)){
-													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="uploads/weblink/'.$model->img.'" height="42" alt="Pic"></a>';
-													
+													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="uploads/weblink/'.$model->img.'" height="42" alt="Pic"></a>';													
 												}else{
-													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/avatars/male.png" height="42" alt="Pic"></a>';
-													
+													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';													
 												}
 											}else{
-												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/avatars/male.png" height="42" alt="Pic"></a>';
+												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
 												
 											}
 										?>
@@ -103,14 +101,9 @@ $this->params['breadcrumbs'][] = $this->title;
 											if(Yii::$app->user->identity->role == 9){
 										?>
 										<td>
-											<a href="#" class="act-update btn btn-info btn-xs" data-id=<?=$model['id']?>>แก้ไข</a>
-										<?= Html::a('<i class="fa fa-remove"></i> ลบ',['web_link/delete','id' => $model->id],
-													[
-														'class' => 'btn btn-danger btn-xs act-update',
-														'data-confirm' => 'Are you sure to delete this item?',
-                                    					'data-method' => 'post',
-													]);
-											?>
+										<a href="#" class="act-update btn btn-info btn-xs" data-id=<?=$model['id']?>>แก้ไข</a> 
+										<a href="index.php?r=web_link/delete&id=<?=$model->id?>" class="btn btn-danger btn-xs" data-method='post' data-id=<?=$model['id']?> data-confirm='Are you sure to delete this item?'><i class="fa fa-remove"></i> ลบ</a> 
+										
 											</td>
 										<?php } ?>					        
 									</tr>
