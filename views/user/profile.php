@@ -1,4 +1,9 @@
 
+<?php
+
+use yii\helpers\Html;
+use yii\helpers\Url;
+?>
 			<!-- MAIN CONTENT -->
 			<div id="content">
 
@@ -70,16 +75,16 @@
 														</ol>
 														<div class="carousel-inner">
 															<!-- Slide 1 -->
-															<div class="item active">																
-																<img src="img/demo/s1.jpg" alt="demo user">
+															<div class="item active">
+																<?= Html::img('@web/img/demo/s1.jpg', ['alt' => 'demo user']);?>	
 															</div>
 															<!-- Slide 2 -->
 															<div class="item">
-																<img src="img/demo/s2.jpg" alt="demo user">
+																<img src="/home/web/img/demo/s2.jpg" alt="demo user">
 															</div>
 															<!-- Slide 3 -->
 															<div class="item">
-																<img src="img/demo/m3.jpg" alt="demo user">
+																<img src="/home/web/img/demo/m3.jpg" alt="demo user">
 															</div>
 														</div>
 													</div>
@@ -90,8 +95,13 @@
 													<div class="row">
 				
 														<div class="col-sm-3 profile-pic">
-															<img src="<?=file_exists('uploads/user/'.$mdProfile->img) ? 'uploads/user/'.$mdProfile->img : 'img/avatars/male.png' ?>" alt="demo user">
-														
+															<?php 
+																if(!empty($mdProfile->img)){
+																	echo Html::img('@web/uploads/user/'.$mdProfile->img, ['alt' => 'user']);
+																}else{
+																	echo Html::img('@web/img/avatars/male.png', ['alt' => 'My logo1']);
+																}
+															?>
 															<div class="air air-bottom-right padding-10">
 																<a id="act-edit-img" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn txt-color-white bg-color-teal btn-sm"><i class="fa fa-gear fa-sm"></i></a>
 															</div>															
@@ -536,15 +546,16 @@
 
 $script = <<< JS
 
-$('#activity-modal').on('hidden.bs.modal', function () {
- 		location.reload();
-	}) 
 
      
 $(document).ready(function() {	
+	$('#activity-modal').on('hidden.bs.modal', function () {
+ 		location.reload();
+	}) 
+
 	
 /* BASIC ;*/
-		var url_create = "index.php?r=user/edit_img";				
+		var url_create = 'edit_img';				
 			$( "#act-edit-img" ).click(function() {
 				var fID = $(this).data("id");
         	$.get(url_create,{id: fID},function (data){
@@ -557,7 +568,7 @@ $(document).ready(function() {
         	});     
 		});
 
-		var url_edit_profile = "index.php?r=user/edit_profile";		
+		var url_edit_profile = "edit_profile";		
 			$( "#act-edit-profile" ).click(function() {
 				var fID = $(this).data("id");	
         	$.get(url_edit_profile,{id: fID},function (data){
@@ -569,7 +580,7 @@ $(document).ready(function() {
         	});     
 		});
 
-		var url_chang_email = "index.php?r=user/chang_email";		
+		var url_chang_email = "chang_email";		
 			$( "#act-chang-email" ).click(function() {
 				var fID = $(this).data("id");	
         	$.get(url_chang_email,{id: fID},function (data){
@@ -581,7 +592,7 @@ $(document).ready(function() {
         	});     
 		});
 
-		var url_chang_pass = "index.php?r=user/chang_pass";		
+		var url_chang_pass = "chang_pass";		
 			$( "#chang_pass" ).click(function() {
 				var fID = $(this).data("id");
         	$.get(url_chang_pass,{id: fID},function (data){

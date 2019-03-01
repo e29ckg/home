@@ -18,14 +18,10 @@ use yii\helpers\Url;
 </div>
 <div class="profile-form text-center">
 <?php
-	if (!empty($model->img)){
-		if(file_exists('uploads/weblink/'.$model->img)){
-			echo '<img src="uploads/weblink/'.$model->img.'" alt="Pic" class="img-thumbnail">';
-		}else{
-			echo '<img src="uploads/user/none.png" alt="Pic" class="img-thumbnail">';
-		}
+	if (!empty($model->img)){		
+		echo Html::img('@web/uploads/weblink/'.$model->img, ['alt' => 'My logo1','height'=>'400']);
 	}else{
-		echo '<img src="uploads/user/none.png" alt="Pic" class="img-thumbnail">';
+		echo Html::img('@web/img/none.png', ['alt' => 'My logo1']);
 	}
 ?>
 </div>

@@ -42,13 +42,15 @@ $this->params['breadcrumbs'][] = $this->title;
 			<!-- sparks -->
 			<ul id="sparks">
 				<li class="sparks-info">
-					<h5><a href="index.php?r=user/index"> All User</a><span class="txt-color-blue"><?=$userAll?></span></h5>
+
+					<h5>
+					<?= Html::a('All User', ['user/index']) ?><span class="txt-color-blue"><?=$userAll?></span></h5>
 					<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
 									
 					</div>
 				</li>
 				<li class="sparks-info">
-					<h5><a href="index.php?r=user/index_dis"> Disable User</a> <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;<?=$userDis?></span></h5>
+					<h5><?= Html::a('Disable User', ['user/index_dis']) ?> <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;<?=$userDis?></span></h5>
 					<div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">
 									
 					</div>
@@ -104,15 +106,31 @@ $this->params['breadcrumbs'][] = $this->title;
 										<tr>
                        						<td class="text-center" ><?=$model->id ?></td>		
 											<td class="text-center" >
-												<img src="<?=file_exists('uploads/user/'.$model->getProfileImg()) ? 'uploads/user/'.$model->getProfileImg() : 'img/avatars/sunny-big.png' ?>" height="42" alt="demo user">
+											<?php
+												if (!empty($model->getProfileImg())){
+													echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/uploads/user/'.$model->getProfileImg(), ['alt' => 'My logo1','height'=>'42']).'</a>';													
+												
+												}else{
+													echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/img/none.png', ['alt' => 'My logo','height'=>'42']).'</a>';
+												}
+											?>
 											</td>									
                        						<td >
 											   	<?= $model->getProfileName() ?> 
+												<?= Html::a($model->username.'<i class="fa fa-gear fa-lg"></i>', '#', [
+													'class' => 'act-view btn txt-color-greenLight btn-default btn-xs',
+													'data-id' => $model->id,
+													]) ?>
 											   	<a class="act-view btn txt-color-greenLight btn-default btn-xs" data-id="<?=$model->id?>"><?=$model->username ?> <i class="fa fa-gear fa-lg"></i></a> 
-												<a href="index.php?r=user/reset_pass&id=<?=$model->id?>" class="btn txt-color-greenLight btn-xs" data-id="<?=$model->id?>" data-confirm="Are you sure to ยกเลิก this item?">resetPassword</a> 
+												   <?= Html::a('resetPassword', ['user/reset_pass', 'id' => $model->id], [
+													   'class' => 'btn txt-color-greenLight btn-xs',
+														   'data-confirm'=>'Are you sure to ยกเลิก this item?']) 
+													?>
 											</td>											
                        						<td><?= $model->getProfilePhone()?></td>
                                             <td>
+												<?= Html::a('แก้ไข', ['user/profile', 'id' => $model->id], ['class' => 'btn btn-info btn-xs']) ?>
+												<?= Html::a('ระงับ', ['user/del', 'id' => $model->id], ['class' => 'btn btn-danger btn-xs','data-confirm'=>'Are you sure to ยกเลิก this item?']) ?>
 												<a href="index.php?r=user/profile&id=<?=$model->id?>" class="btn btn-info btn-xs">แก้ไข </a> 
 												<a href="index.php?r=user/del&id=<?=$model->id?>" data-confirm="Are you sure to ยกเลิก this item?" class="btn btn-danger btn-xs"> ระงับ</a> 
 											</td>
@@ -154,7 +172,7 @@ $(document).ready(function() {
 
 	function init_click_handlers(){        	
 		
-		var url_update = "index.php?r=cletter/update";
+		var url_update = "update";
     	$(".act-update").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
@@ -166,7 +184,7 @@ $(document).ready(function() {
         	});
     	});
 
-		var url_line = "index.php?r=cletter/line_alert";		
+		var url_line = "line_alert";		
     	$(".act-line").click(function(e) {			
                 var fID = $(this).data("id");				
                 $.get(url_line,{id: fID},function (data){
@@ -177,7 +195,7 @@ $(document).ready(function() {
                     }
                 );
             }); 
-			var url_rePass = "index.php?r=cletter/line_alert";
+			var url_rePass = "reset_pass";
 			$(".act-resetPass").click(function(e) {			
                 var fID = $(this).data("id");				
                 $.get(url_rePass,{id: fID},function (data){
@@ -189,7 +207,7 @@ $(document).ready(function() {
                 );
             }); 
 
-    	var url_up_un = "index.php?r=user/update_username";		
+    	var url_up_un = "update_username";		
     	$(".act-view").click(function(e) {			
                 var fID = $(this).data("id");
 				
@@ -265,7 +283,7 @@ $(document).ready(function() {
 		    /* END COLUMN FILTER */  
         
     
-			var url_create = "index.php?r=user/create";
+			var url_create = "create";
     	$( "#act-create" ).click(function() {
         	$.get(url_create,function (data){
                 $("#activity-modal").find(".modal-body").html(data);

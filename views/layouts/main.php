@@ -151,9 +151,17 @@ if (Yii::$app->user->identity){
     					<button type="submit"> Save </button>
 					</form> -->
 					<?= !Yii::$app->user->isGuest ? 
-						'<a href="index.php?r=site/logout" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser" ><i class="fa fa-sign-out"></i></a>'
+						// '<a href="index.php?r=site/logout" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser" ><i class="fa fa-sign-out"></i></a>'
+						Html::a('<i class="fa fa-sign-out"></i> Logout', ['site/logout'], [
+							// 'class' => 'btn btn-danger',
+							// 'data-action'=> 'userLogout',
+							// 'data-logout-msg' => 'You can improve your security further after logging out by closing this opened browser',
+							'data-confirm' => 'Are you sure to delete this item?',
+                            'data-method' => 'post',
+							]) 
 						: 
-						'<a href="index.php?r=site/login" class="btn btn-danger">Login</a>'
+						// '<a href="index.php?r=site/login" class="btn btn-danger">Login</a>';
+						Html::a('<i class="fa fa-sign-in"></i> Login', ['site/login'], ['class' => 'btn btn-danger']) ;
 					?>
 							
 					</span>
@@ -200,17 +208,14 @@ if (Yii::$app->user->identity){
 			<!-- User info -->
 			<div class="login-info">
 				<span> <!-- User image size is adjusted inside CSS, it should stay as it --> 
-					
-					<!--a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut"-->
-					<a href="<?= Yii::$app->user->identity ? 'index.php?r=user/profile' : 'index.php?r=site/login'?>" >
-					<img src="<?= file_exists('uploads/user/'.$mdProfile->img) ? 'uploads/user/'.$mdProfile->img : 'img/none.png' ?>" alt="demo user">
-						<!--img src="img/avatars/sunny.png" alt="me" class="online" /--> 
-						<span>
-							<?php echo Yii::$app->user->identity ? $mdProfile->fname.$mdProfile->name.' '.$mdProfile->sname : 'Login'; ?>
-						</span>
-						<i class="fa fa-angle-down"></i>
-					</a> 
-					
+					<?= !Yii::$app->user->isGuest ? 
+						// '<a href="index.php?r=site/logout" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser" ><i class="fa fa-sign-out"></i></a>'
+						Html::img('@web/uploads/user/'.$mdProfile->img, ['alt' => 'My logo']).
+						Html::a('<span>'.$mdProfile->fname.$mdProfile->name.' '.$mdProfile->sname .' </span> <i class="fa fa-angle-down"></i>', ['user/profile'], []) 
+						: 
+						Html::img('@web/img/none.png', ['alt' => 'My logo']).
+						Html::a('<span>Guest <i class="fa fa-sign-in"></i></span>  Login', ['site/login'], ['class' => 'btn btn-danger']) ;
+					?>
 				</span>
 			</div>
 			<!-- end user info -->

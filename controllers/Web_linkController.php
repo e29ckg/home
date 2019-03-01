@@ -51,6 +51,13 @@ class Web_linkController extends Controller
      * Lists all WebLink models.
      * @return mixed
      */
+    public function actionTest()
+    {
+       echo Yii::$app->google->shortUrl('http://www.pkkjc.coj.go.th/');
+    echo Yii::$app->google->expandUrl('https://goo.gl/p1EnW1');
+    return Yii::$app->google->shortUrl('https://pkkjc.coj.go.th/th/page/item/index/id/1');
+    }
+
     public function actionIndex()
     {
         // $sql = 'SELECT * FROM web_link';
@@ -69,12 +76,14 @@ class Web_linkController extends Controller
         ]);
     }
 
+
+
     public function actionAdmin()
     {
         $sql = 'SELECT * FROM web_link';
         // $models = Yii::$app->db->createCommand($sql)->queryAll();
         $models = WebLink::find()->orderBy([
-            'create_at'=>SORT_ASC,
+            'create_at'=>SORT_DESC,
             'id' => SORT_DESC,
             ])->limit(100)->all();
         

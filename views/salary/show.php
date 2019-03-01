@@ -20,12 +20,12 @@ use yii\helpers\Url;
 <?php
 	if (!empty($model->img)){
 		if(file_exists('uploads/weblink/'.$model->img)){
-			echo '<img src="uploads/weblink/'.$model->img.'" alt="Pic" class="img-thumbnail">';
+			echo '<img src="home/web/uploads/weblink/'.$model->img.'" alt="Pic" class="img-thumbnail">';
 		}else{
-			echo '<img src="uploads/user/none.png" alt="Pic" class="img-thumbnail">';
+			echo '<img src="home/web/img/none.png" alt="Pic" class="img-thumbnail">';
 		}
 	}else{
-		echo '<img src="uploads/user/none.png" alt="Pic" class="img-thumbnail">';
+		echo '<img src="home/web/img/none.png" alt="Pic" class="img-thumbnail">';
 	}
 ?>
 </div>

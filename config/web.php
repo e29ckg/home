@@ -18,6 +18,10 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '992999929',
         ],
+        'google' => [
+            'class' => 'app\components\GoogleShortUrl',
+            'apiKey' => 'AIzaSyDO632QT-npFlvhRcAdMsOuIusnLdcgh2c', // apikey AIzaSyDO632QT-npFlvhRcAdMsOuIusnLdcgh2c
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -52,7 +56,7 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+        
         'urlManager' => [    
             'class' => 'yii\web\UrlManager',    
             'showScriptName' => false,
@@ -66,7 +70,7 @@ $config = [
                   'module/<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
          ),
         ],
-        */
+        
     ],
     'params' => $params,
 ];
