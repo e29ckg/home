@@ -149,6 +149,7 @@ class PpssController extends Controller {
                     $model->file = $fileName;
                 } 
             }
+            $model->create_own = Yii::$app->user->identity->id;
             $model->create_at = date("Y-m-d H:i:s");
 
             if($model->save()){
@@ -377,8 +378,9 @@ class PpssController extends Controller {
     
     public function actionDownload_file($i,$file_name,$name_save) {
         $filePath  = Url::to('@webroot/uploads/ppss/');
+        $name_save = str_replace("/","-",$name_save);
         $filePath .= $file_name;
-        $name_s = $i.'-';
+        $name_s = $i.'_';
         $name_s .= $name_save;
         if (is_file($filePath)) {
             $file_parts = pathinfo($filePath);

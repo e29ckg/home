@@ -20,33 +20,35 @@ class m180925_032309_profile extends Migration
  
         $this->createTable('profile', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->string()->notNull()->unique(),
+            'user_id' => $this->string()->notNull()->unique(),            
+            'id_card' => $this->string(),
             'fname' => $this->string(25),
             'name' => $this->string()->notNull(),
             'sname' => $this->string(),
             'img' => $this->string(),
             'birthday' => $this->date(),
-            'id_card' => $this->smallInteger(),
-            'dep' => $this->string(),
+            'bloodtype'=> $this->string(),
+            'dep' => $this->string(),            
             'address' => $this->string(),
             'phone' => $this->string(),            
             'status' => $this->smallInteger()->notNull()->defaultValue(10),
             'created_at' => $this->dateTime(),
             'updated_at' => $this->dateTime(),
+            'st' => $this->smallInteger(),
         ], $tableOptions);
 
         $this->insert('profile', [
             'user_id' => '1',
             'name' => 'Admin',
             'sname' => 'S-Admin',
-            'img' => 'none.png',
+            'img' => '',
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s"),
         ]);
         $this->insert('profile', [
             'user_id' => '2',
             'name' => 'demo',
-            'img' => 'demo.png',
+            'img' => '',
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s"),
         ]);

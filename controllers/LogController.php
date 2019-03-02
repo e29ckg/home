@@ -47,8 +47,7 @@ class LogController extends Controller
         $models = Log::find()->orderBy([
             'create_at'=>SORT_DESC,
             'id' => SORT_DESC,
-            ])->limit(100)->all();
-        
+            ])->limit(100)->all();        
         
         $countAll = Log::getCountAll();
 
@@ -63,10 +62,9 @@ class LogController extends Controller
         $sql = 'SELECT * FROM Log';
         // $models = Yii::$app->db->createCommand($sql)->queryAll();
         $models = Log::find()->orderBy([
-            'create_at'=>SORT_ASC,
+            'create_at'=>SORT_DESC,
             'id' => SORT_DESC,
-            ])->limit(100)->all();
-        
+            ])->limit(100)->all();        
         
         $countAll = Log::getCountAll();
 

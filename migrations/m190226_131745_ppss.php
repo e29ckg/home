@@ -30,7 +30,7 @@ class m190226_131745_ppss extends Migration
             'file' => $this->string(),
             'file2' => $this->string(),
             'create_at' => $this->dateTime(),
-            'create_own' => $this->dateTime(),
+            'create_own' => $this->string(),
         ], $tableOptions);
 
         $this->insert('ppss', [
@@ -40,7 +40,6 @@ class m190226_131745_ppss extends Migration
             'red' => 'Red',
             'persecutor' => 'persecutor',
             'create_at' => date("Y-m-d H:i:s"),
-            'create_own' => date("Y-m-d H:i:s"),
         ]);
     }
 

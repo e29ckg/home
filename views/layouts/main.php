@@ -15,19 +15,18 @@ use yii\bootstrap\Modal;
 
 AppAsset::register($this);
 
-if (Yii::$app->user->identity){
+if (!Yii::$app->user->isGuest){
 	$mdProfile = Profile::find()->where(['user_id'=> Yii::$app->user->id])->one();
-	if($mdProfile->img == ''){
-		$mdProfile->img = 'nopic.png';
-		$mdProfile->save();
-	}
+	
 }else{
-	$mdProfile = Profile::find()->where(['user_id'=> 1])->one();
-	if($mdProfile->img == ''){
-		$mdProfile->img = 'nopic.png';
-		$mdProfile->save();
-	}
+	// $mdProfile = Profile::find()->where(['user_id'=> 1])->one();
+	// if($mdProfile->img == ''){
+	// 	$mdProfile->img = 'nopic.png';
+	// 	$mdProfile->save();
+	// }
 }
+
+				
 ?>
 						
 
@@ -97,7 +96,7 @@ if (Yii::$app->user->identity){
 
 				<!-- Note: The activity badge color changes when clicked and resets the number to 0
 				Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
-				<span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> 21 </b> </span>
+				<span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> 0 </b> </span>
 				
 				</div>
 				<!-- END AJAX-DROPDOWN -->
@@ -107,10 +106,10 @@ if (Yii::$app->user->identity){
 			<div class="project-context hidden-xs">
 
 				<span class="label">Projects:</span>
-				<span class="project-selector dropdown-toggle" data-toggle="dropdown">Recent projects <i class="fa fa-angle-down"></i></span>
+				<span class="project-selector dropdown-toggle" data-toggle="dropdown">Recent projects <i class="fa fa-angle-down"></i></span> 
 
 				<!-- Suggestion: populate this list with fetch and push technique -->
-				<ul class="dropdown-menu">
+				<!-- <ul class="dropdown-menu">
 					<li>
 						<a href="javascript:void(0);">Online e-merchant management system - attaching integration with the iOS</a>
 					</li>
@@ -124,7 +123,7 @@ if (Yii::$app->user->identity){
 					<li>
 						<a href="javascript:void(0);"><i class="fa fa-power-off"></i> Clear</a>
 					</li>
-				</ul>
+				</ul> -->
 				<!-- end dropdown-menu-->
 
 			</div>
@@ -208,14 +207,20 @@ if (Yii::$app->user->identity){
 			<!-- User info -->
 			<div class="login-info">
 				<span> <!-- User image size is adjusted inside CSS, it should stay as it --> 
-					<?= !Yii::$app->user->isGuest ? 
+					<?php
+					if(!Yii::$app->user->isGuest){ 
 						// '<a href="index.php?r=site/logout" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser" ><i class="fa fa-sign-out"></i></a>'
-						Html::img('@web/uploads/user/'.$mdProfile->img, ['alt' => 'My logo']).
-						Html::a('<span>'.$mdProfile->fname.$mdProfile->name.' '.$mdProfile->sname .' </span> <i class="fa fa-angle-down"></i>', ['user/profile'], []) 
-						: 
-						Html::img('@web/img/none.png', ['alt' => 'My logo']).
+						if($mdProfile->img){
+							echo Html::img('@web/uploads/user/'.$mdProfile->img, ['alt' => 'My logo']);
+						}else{
+							echo Html::img('@web/img/none.png', ['alt' => 'My logo']);
+						} 
+						echo Html::a('<span>'.$mdProfile->fname.$mdProfile->name.' '.$mdProfile->sname .' </span> <i class="fa fa-angle-down"></i>', ['user/profile'], []) ;
+					}else{
+						echo Html::img('@web/img/none.png', ['alt' => 'My logo']).
 						Html::a('<span>Guest <i class="fa fa-sign-in"></i></span>  Login', ['site/login'], ['class' => 'btn btn-danger']) ;
-					?>
+					}
+						?>
 				</span>
 			</div>
 			<!-- end user info -->

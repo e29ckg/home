@@ -7,8 +7,9 @@ use yii\helpers\Url;
         <tbody><tr>
                 <th style="width: 10px">ลำดับ</th>
                 <th class="text-center">วันที่</th>
-                <th class="text-center">เรื่อง</th>
-                <th class="text-center" style="width: 200px">ผู้ส่ง</th>
+                <th class="text-center">เลขคดีดำ</th>
+                <th class="text-center">เลขคดีแดง</th>
+                <th class="text-center" tyle="width: 200px">File</th>
                 <th class="text-center" style="width: 200px">ดาว์โหลด</th>
             </tr>
 <?php $i = 1; ?>
@@ -16,38 +17,38 @@ use yii\helpers\Url;
                 <tr>
                     <td class="text-center" ><?= $i ?></td>
                     <td class="text-center" ><?= $ppss->create_at ?></td>
+                    <td class="text-center" ><?= $ppss->name ?></td>
+                    <td class="text-center" ><?= $ppss->red ?></td>
                     <td class="text-center" >
                     <?php 
                         if (!empty($ppss->file)){
                             $filename = Url::to('@webroot/uploads/ppss/').$ppss->file;
                             if (is_file($filename)) {                                
-                                echo '<a href="?r=ppss/show&id='.$ppss->id.'" class="panel-title-right" target="_blank">คำพิพากษา <i class="fa fa-file-pdf-o"></i></a> ';
+                                echo '<a href="'.Url::to(['ppss/show', 'id' => $ppss->id]).'" class="panel-title-right" target="_blank">คำพิพากษา <i class="fa fa-file-pdf-o"></i></a> ';
                             }   
                         }
                         if (!empty($ppss->file2)){
                             $filename = Url::to('@webroot/uploads/ppss/').$ppss->file2;
                             if (is_file($filename)) {                                
-                                echo ' :+: <a href="?r=ppss/show2&id='.$ppss->id.'" class="panel-title-right" target="_blank">ร่าง<i class="fa fa-file-pdf-o"></i></a> ';
+                                echo ' :+: <a href="'.Url::to(['ppss/show2', 'id' => $ppss->id]).'" class="panel-title-right" target="_blank">ร่าง<i class="fa fa-file-pdf-o"></i></a> ';
                             }   
                         }
                     ?>
                     </td>
-                    <td class="" >
-                        <?= $ppss->getProfileName(); ?>
-                    </td>
+                   
                     <th class="text-center" style="width: 200px">
                     <?php 
                         if (!empty($ppss->file)){
                             $filename = Url::to('@webroot/uploads/ppss/').$ppss->file;
                             if (is_file($filename)) {                                
-                                echo '<a href="?r=ppss/download_file&file_name='.$ppss->file.'&i='.$i.'&name_save='.$ppss->name.'-คำพิพากษา"> คำพิพากษา</a>';
+                                echo '<a href="'.Url::to(['ppss/download_file','file_name' => $ppss->file,'i' => $i, 'name_save' => $ppss->name.'_คำพิพากษา']).'"> คำพิพากษา</a>';
                             }   
                         }
                         echo ' :+: ';
                         if (!empty($ppss->file2)){
                             $filename = Url::to('@webroot/uploads/ppss/').$ppss->file2;
                             if (is_file($filename)) {                                
-                                echo '<a href="?r=ppss/download_file&file_name='.$ppss->file2.'&i='.$i.'&name_save='.$ppss->name.'-ร่าง">ร่าง</a>';
+                                echo '<a href="'.Url::to(['ppss/download_file','file_name' => $ppss->file2,'i' => $i, 'name_save' => $ppss->name.'_ราง']).'">ร่าง</a>';
                             }   
                         }
                     ?>
@@ -60,6 +61,6 @@ use yii\helpers\Url;
     </table>
 </div>
 <div>
-<a href="?r=ppss/print&id=<?=$id?>" target="_blank">พิมพ์รายงาน<a>
+<a href="<?=Url::to(['ppss/print', 'id' => $id])?>" target="_blank">พิมพ์รายงาน<a>
 </div>
 

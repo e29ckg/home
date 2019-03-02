@@ -77,6 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<th >เลขดำ</th>
 					                    <th >คำพิพากษา</th>
 										<th >ร่าง</th>
+										<th>ผู้บันทึก</th>
 										<th >Date</th>
 					                    <th ></th>
 					                    
@@ -89,6 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<td><?=$model->name?></td>					                								        
 										<td><?= Html::a($model->file ? 'คำพากษา<i class="fa fa-file-pdf-o"></i>':'',['ppss/show','id' => $model->id],['target' => '_blank']);?></td>
 								        <td><?= Html::a($model->file2 ? 'ร่าง<i class="fa fa-file-pdf-o"></i>':'',['ppss/show2','id' => $model->id],['target' => '_blank']);?></td>
+										<td><?=$model->create_own?></td>
 										<td><?=$model->create_at?></td>
 								        <td>
 											<a herf= "#" class="btn btn-warning act-update" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
@@ -137,8 +139,7 @@ $(document).ready(function() {
 /* BASIC ;*/	
 		$("#viewM1").click(function(e) {
             var data = $(this).attr("data");
-                $.get(
-                    "?r=ppss/viewm1",{year:data},
+                $.get("viewm1",{year:data},
                     function (data)
                     {
                         $("#activity-modal").find(".modal-body").html(data);
@@ -151,8 +152,7 @@ $(document).ready(function() {
         
         $("#viewM2").click(function(e) {
             var data = $(this).attr("data");
-                $.get(
-                    "?r=ppss/viewm2",{year:data},
+                $.get("viewm2",{year:data},
                     function (data)
                     {
                         $("#activity-modal").find(".modal-body").html(data);
@@ -165,7 +165,7 @@ $(document).ready(function() {
        
 	function init_click_handlers(){        	
 		
-		var url_update = "index.php?r=ppss/update";
+		var url_update = "update";
     	$(".act-update").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
@@ -177,7 +177,7 @@ $(document).ready(function() {
         	});
 		});
 		
-		var url_update_admin = "index.php?r=ppss/update_admin";
+		var url_update_admin = "update_admin";
     	$(".act-update-admin").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
@@ -189,7 +189,7 @@ $(document).ready(function() {
         	});
     	});
 
-    	var url_view = "index.php?r=ppss/view";		
+    	var url_view = "view";		
     	$(".act-view").click(function(e) {			
                 var fID = $(this).data("id");
                 $.get(url_view,{id: fID},function (data){
@@ -264,7 +264,7 @@ $(document).ready(function() {
 /* END COLUMN FILTER */  
 
 
-			var url_create = "index.php?r=ppss/create";
+			var url_create = "create";
     	$( "#act-create" ).click(function() {
         	$.get(url_create,function (data){
                 $("#activity-modal").find(".modal-body").html(data);
@@ -276,47 +276,6 @@ $(document).ready(function() {
         	});     
 		}); 
 
-
-//load_data();
-
-var count = 1;
-
-	
-function add_dynamic_input_field(count)
-	{
-		var button = '';
-		if(count > 1)
-		{
-			button = '<button type="button" name="remove" id="'+count+'" class="btn btn-danger btn-xs remove">x</button>';
-		}
-		else
-		{
-			button = '<button type="button" name="add_more" id="add_more" class="btn btn-success btn-xs">+</button>';
-		}
-		output = '<tr id="row'+count+'">';
-		output += '<td><input type="text" name="programming_languages[]" placeholder="Add Programming Languages" class="form-control name_list" /></td>';
-		output += '<td align="center">'+button+'</td></tr>';
-		$('#dynamic_field').append(output);
-	}
-
-	$('#add').click(function(){
-		$('#dynamic_field').html('');
-		add_dynamic_input_field(1);
-		$('.modal-title').text('Add Details');
-		$('#action').val("insert");
-		$('#submit').val('Submit');
-		// $('#add_name')[0].reset();
-		$('#dynamic_field_modal').modal('show');
-	});
-
-	$(document).on('click', '#add_more', function(){
-		count = count + 1;
-		add_dynamic_input_field(count);
-	});
-
-		
-		// DO NOT REMOVE : GLOBAL FUNCTIONS!
-		
 		
 });
 JS;
