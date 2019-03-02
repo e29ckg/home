@@ -68,10 +68,11 @@ $this->params['breadcrumbs'][] = $this->title;
 										<th >file</th>
 					                    <th >ชื่อ</th>
 					                    <th >Link</th>
+										<th >Date</th>
 										<?php
 											if(Yii::$app->user->identity->role == 9){
 										?>
-										<th ></th>
+										<th style="width:80px"></th>
 										<?php } ?>	
 										
 						            </tr>
@@ -85,16 +86,13 @@ $this->params['breadcrumbs'][] = $this->title;
 										
 										<?php
 											if (!empty($model->file)){
-												if(file_exists('uploads/salary/'.$model->file)){
-													echo '<a href="index.php?r=salary/show_admin&id='.$model->id.'" target="_blank"><i class="fa fa-file-text-o"></i></a>';
-													
-												}else{
-													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
-													
-												}
+												// echo '<a href="index.php?r=salary/show_admin&id='.$model->id.'" target="_blank"><i class="fa fa-file-text-o"></i></a>';
+												echo Html::a('<i class="fa fa-file-text-o"></i>', ['salary/show_admin','id'=>$model->id],[
+														'data-id'=> $model->id,
+														'target'=> '_blank',
+														]);												
 											}else{
-												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
-												
+												echo Html::img('@web/img/none.png',['alt' => 'My logo1','height'=>'42']);
 											}
 										?>
 												</td>
@@ -102,23 +100,29 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td>
 										<?php
 											if (!empty($model->file)){
-												if(file_exists('uploads/salary/'.$model->file)){
-													echo '<a href="index.php?r=salary/show_admin&id='.$model->id.'" target="_blank">'.$model->create_at.' : '.$model->file.' <i class="fa fa-file-text-o"></i></a>';
-													
-												}else{
-													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
-													
-												}
+												echo Html::a($model->file.' <i class="fa fa-file-text-o"></i>', ['salary/show_admin','id'=>$model->id],[
+													'data-id'=> $model->id,
+													'target'=> '_blank',
+													]);	
+											
 											}else{
-												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
+												echo '-';
 												
 											}
-										?></td>	
+										?>
+										</td>	
+										<td>
+										<?=$model->create_at?>
+										</td>
+
 										<?php
 											if(Yii::$app->user->identity->role == 9){
 										?>
 										<td>
-											<a href="#" class="act-update btn btn-info btn-xs" data-id=<?=$model['id']?>>แก้ไข</a>
+										<!-- <a href="#" class="act-update btn btn-info btn-xs" data-id=<?=$model['id']?>>แก้ไข</a> -->
+										<?= Html::label('แก้ไข', 'edit', [
+													'class' => 'btn btn-info btn-xs act-update',
+													'data-id' => $model->id]) ?>
 										<?= Html::a('<i class="fa fa-remove"></i> ลบ',['salary/delete','id' => $model->id],
 													[
 														'class' => 'btn btn-danger btn-xs act-update',
@@ -148,7 +152,7 @@ $(document).ready(function() {
 		        
 	function init_click_handlers(){    
 
-		var url_show = "index.php?r=salary/show";				
+		var url_show = "show";				
 			$( ".act-show" ).click(function() {
 				var fID = $(this).data("id");
         	$.get(url_show,{id: fID},function (data){
@@ -161,7 +165,7 @@ $(document).ready(function() {
         	});     
 		});
 
-		var url_update = "index.php?r=salary/update";
+		var url_update = "update";
     	$(".act-update").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
@@ -171,19 +175,7 @@ $(document).ready(function() {
             	$(".modal-title").html("แก้ไขข้อมูลสมาชิก");
             	$("#activity-modal").modal("show");
         	});
-    	});    	
-		
-    	var url_view = "index.php?r=ppss/view";		
-    	$(".act-view").click(function(e) {			
-                var fID = $(this).data("id");
-                $.get(url_view,{id: fID},function (data){
-                        $("#activity-modal").find(".modal-body").html(data);
-                        $(".modal-body").html(data);
-                        $(".modal-title").html("ข้อมูล");
-                        $("#activity-modal").modal("show");
-                    }
-                );
-            });   
+    	}); 
     
 	}
 
@@ -249,7 +241,7 @@ $(document).ready(function() {
 
 /* END COLUMN FILTER */  
 
-		var url_create = "index.php?r=salary/create";
+		var url_create = "create";
     	$( "#act-create" ).click(function() {
         	$.get(url_create,function (data){
                 $("#activity-modal").find(".modal-body").html(data);

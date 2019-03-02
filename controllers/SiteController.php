@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\CLetter;
+use app\models\log;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -117,6 +118,14 @@ class SiteController extends Controller
         
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+            $modelLog = new Log();
+            $modelLog->user_id = Yii::$app->user->identity->id;
+            $modelLog->manager = 'Login';
+            $modelLog->detail = 'เข้าสู่ระบบ';
+            $modelLog->create_at = date("Y-m-d H:i:s");
+            $modelLog->ip = Yii::$app->getRequest()->getUserIP();
+            $modelLog->save();
             return $this->goBack();
         }
         $model->password = '';
@@ -133,6 +142,14 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+        $modelLog = new Log();
+            $modelLog->user_id = Yii::$app->user->identity->id;
+            $modelLog->manager = 'LogOut';
+            $modelLog->detail = 'ออกจากสู่ระบบ';
+            $modelLog->create_at = date("Y-m-d H:i:s");
+            $modelLog->ip = Yii::$app->getRequest()->getUserIP();
+            $modelLog->save();
+
         Yii::$app->user->logout();
 
         return $this->goHome();

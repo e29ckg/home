@@ -93,7 +93,7 @@ class UserController extends Controller{
                 $mP = new Profile();
                 $mP->user_id = $mU->id;
                 $mP->name = $_POST['User']['username'];
-                $mP->img = 'nopic.png';
+                $mP->img = '';
                 $mP->save();
                 return $this->redirect(['index']);
            } 
@@ -173,23 +173,89 @@ class UserController extends Controller{
         $model->status = 10;
         $model->updated_at = date("Y-m-d H:i:s");
         $model->save();
+
+        $modelProfile = Profile::findOne($id);
+        $modelProfile->status = 10;
+        $modelProfile->updated_at = date("Y-m-d H:i:s");
+        $modelProfile->save();
         return $this->redirect(['index']);
     }
 
-    public function actionProfile($id = null){
-        if($id == ''){
-            $mdUser = User::findOne(Yii::$app->user->id);
-            $mdProfile = Profile::find()->where(['user_id' => Yii::$app->user->id])->one();               
-            return $this->render('profile',['mdProfile' => $mdProfile,'mdUser' => $mdUser]);
-        }else{
-            $mdUser = User::findOne($id);
-            $mdProfile = Profile::find()->where(['user_id' => $id])->one();               
-            return $this->render('profile',['mdProfile' => $mdProfile,'mdUser' => $mdUser]);
-        }
-            
-    }
-    public function actionEdit_img($id=null){
+    public function actionUpdate_profile($id){        
         
+        $mdProfile = Profile::find()->where(['user_id' => $id])->one();
+        
+        $filename = $mdProfile->img;
+
+        if ($mdProfile->load(Yii::$app->request->post())) {
+            $f = UploadedFile::getInstance($mdProfile, 'img');
+
+            if(!empty($f)){
+                
+                $dir = Url::to('@webroot/uploads/user/');
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0777, true);
+                }                
+                if($filename && is_file($dir.$filename)){
+                    unlink($dir.$filename);// ลบ รูปเดิม;   
+                }
+                $fileName = md5($f->baseName . time()) . '.' . $f->extension;
+                if($f->saveAs($dir . $fileName)){
+                    $mdProfile->img = $fileName;
+                }
+                if($mdProfile->save()){
+                    Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
+                };   
+                return $this->redirect(['index']);                            
+            }
+            $mdProfile->img = $filename;
+            $mdProfile->fname = $_POST['Profile']['fname'];
+            $mdProfile->name = $_POST['Profile']['name'];
+            $mdProfile->sname = $_POST['Profile']['sname'];
+            $mdProfile->id_card = $_POST['Profile']['id_card'];
+            $mdProfile->dep = $_POST['Profile']['dep'];
+            $mdProfile->address = $_POST['Profile']['address'];
+            $mdProfile->phone = $_POST['Profile']['phone'];
+            if($mdProfile->save()){
+                Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
+            };          
+            return $this->redirect(['index']);
+        }
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_form_edit_profile_admin',[
+                    'model' => $mdProfile,                    
+            ]);
+        }
+        
+        return $this->render('_form_edit_profile_admin',[
+               'model' => $mdProfile,                    
+        ]);
+    }
+
+
+    public function actionProfile(){
+        $mdUser = User::findOne(Yii::$app->user->id);
+        $mdProfile = Profile::find()->where(['user_id' => Yii::$app->user->id])->one();               
+        return $this->render('profile',['mdProfile' => $mdProfile,'mdUser' => $mdUser]);
+    }
+
+    public function actionShow_profile($id){
+        $mdUser = User::findOne($id);
+        $mdProfile = Profile::find()->where(['user_id' => $mdUser->id])->one();       
+
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('show_profile',[
+                'mdProfile' => $mdProfile,
+                'mdUser' => $mdUser                    
+            ]);
+        }        
+        return $this->render('show_profile',[
+            'mdProfile' => $mdProfile,
+            'mdUser' => $mdUser                    
+        ]);
+    }
+
+    public function actionEdit_img($id=null){        
         if($id == ''){
             $mdProfile = Profile::find()->where(['user_id' => Yii::$app->user->id])->one();
         }else{

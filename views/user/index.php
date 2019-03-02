@@ -42,12 +42,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			<!-- sparks -->
 			<ul id="sparks">
 				<li class="sparks-info">
-
-					<h5>
-					<?= Html::a('All User', ['user/index']) ?><span class="txt-color-blue"><?=$userAll?></span></h5>
-					<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
-									
-					</div>
+					<h5><?= Html::a('All User', ['user/index']) ?><span class="txt-color-blue"><?=$userAll?></span></h5>
+					<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm"></div>
 				</li>
 				<li class="sparks-info">
 					<h5><?= Html::a('Disable User', ['user/index_dis']) ?> <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;<?=$userDis?></span></h5>
@@ -97,6 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <th data-hide="phone">ID</th>											
                                             <th><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Name</th>
 											<th data-hide="phone">Username</th>
+											<th data-hide="phone">Email</th>
                                             <th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Phone</th>
 											<th data-hide="phone,tablet">City</th>
 										</tr>
@@ -108,7 +105,11 @@ $this->params['breadcrumbs'][] = $this->title;
 											<td class="text-center" >
 											<?php
 												if (!empty($model->getProfileImg())){
-													echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/uploads/user/'.$model->getProfileImg(), ['alt' => 'My logo1','height'=>'42']).'</a>';													
+													echo Html::a(Html::img('@web/uploads/user/'.$model->getProfileImg(),['alt' => 'My logo1','height'=>'42']), '#',[
+															'data-id'=> $model->id,
+															'class' => 'act-show',
+															]);
+													// echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/uploads/user/'.$model->getProfileImg(), ['alt' => 'My logo1','height'=>'42']).'</a>';													
 												
 												}else{
 													echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/img/none.png', ['alt' => 'My logo','height'=>'42']).'</a>';
@@ -118,21 +119,34 @@ $this->params['breadcrumbs'][] = $this->title;
                        						<td >
 											   	<?= $model->getProfileName() ?> 
 												<?= Html::a($model->username.'<i class="fa fa-gear fa-lg"></i>', '#', [
-													'class' => 'act-view btn txt-color-greenLight btn-default btn-xs',
+													'class' => 'act-update-username btn txt-color-greenLight btn-default btn-xs',
 													'data-id' => $model->id,
-													]) ?>
-											   	<a class="act-view btn txt-color-greenLight btn-default btn-xs" data-id="<?=$model->id?>"><?=$model->username ?> <i class="fa fa-gear fa-lg"></i></a> 
-												   <?= Html::a('resetPassword', ['user/reset_pass', 'id' => $model->id], [
-													   'class' => 'btn txt-color-greenLight btn-xs',
-														   'data-confirm'=>'Are you sure to ยกเลิก this item?']) 
-													?>
+													]) 
+												?>
+												<?= Html::a('resetPassword <i class="fa fa-gear fa-lg"></i>', ['user/reset_pass', 'id' => $model->id], [
+													   'class' => 'btn txt-color-greenLight btn-xs btn-default',
+														'data-confirm'=>'Are you sure to ยกเลิก this item?']) 
+												?>
+													
+											</td>
+											<td>
+												<?= $model->email?>
+												<?= Html::a('แก้ไข Email <i class="fa fa-gear fa-lg"></i>', '#', [
+														'class' => 'act-chang-email btn txt-color-greenLight btn-default btn-xs',
+														'data-id' => $model->id,
+													]) 
+												?>
 											</td>											
-                       						<td><?= $model->getProfilePhone()?></td>
+                       						<td
+											   ><?= $model->getProfilePhone()?>											   
+											</td>
                                             <td>
-												<?= Html::a('แก้ไข', ['user/profile', 'id' => $model->id], ['class' => 'btn btn-info btn-xs']) ?>
+												<?= Html::label('แก้ไข', 'edit-profile', [
+													'class' => 'btn btn-info btn-xs act-update-profile',
+													'data-id' => $model->id]) ?>
 												<?= Html::a('ระงับ', ['user/del', 'id' => $model->id], ['class' => 'btn btn-danger btn-xs','data-confirm'=>'Are you sure to ยกเลิก this item?']) ?>
-												<a href="index.php?r=user/profile&id=<?=$model->id?>" class="btn btn-info btn-xs">แก้ไข </a> 
-												<a href="index.php?r=user/del&id=<?=$model->id?>" data-confirm="Are you sure to ยกเลิก this item?" class="btn btn-danger btn-xs"> ระงับ</a> 
+												<!-- <a href="index.php?r=user/profile&id=<?=$model->id?>" class="btn btn-info btn-xs">แก้ไข </a> 
+												<a href="index.php?r=user/del&id=<?=$model->id?>" data-confirm="Are you sure to ยกเลิก this item?" class="btn btn-danger btn-xs"> ระงับ</a>  -->
 											</td>
                                         </tr>
                                     	<?php  endforeach; ?>
@@ -153,30 +167,33 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $script = <<< JS
 
-$('#eg8').click(function() {
-		
-        $.smallBox({
-            title : "James Simmons liked your comment",
-            content : "<i class='fa fa-clock-o'></i> <i>2 seconds ago...</i>",
-            color : "#296191",
-            iconSmall : "fa fa-thumbs-up bounce animated",
-            timeout : 4000
-        });
-
-    });
-
 
 
      
 $(document).ready(function() {
 
 	function init_click_handlers(){        	
-		
-		var url_update = "update";
-    	$(".act-update").click(function(e) {            
+		$('#activity-modal').on('hidden.bs.modal', function () {
+ 		location.reload();
+	});
+
+		var url_update = "update_profile";
+    	$(".act-update-profile").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
         	$.get(url_update,{id: fID},function (data){
+            	$("#activity-modal").find(".modal-body").html(data);
+            	$(".modal-body").html(data);
+            	$(".modal-title").html("แก้ไขข้อมูล ");
+            	$("#activity-modal").modal("show");
+        	});
+    	});
+
+		var url_show_profile = "show_profile";
+    	$(".act-show").click(function(e) {            
+			var fID = $(this).data("id");
+			// alert(fID);
+        	$.get(url_show_profile,{id: fID},function (data){
             	$("#activity-modal").find(".modal-body").html(data);
             	$(".modal-body").html(data);
             	$(".modal-title").html("แก้ไขข้อมูลสมาชิก");
@@ -208,7 +225,7 @@ $(document).ready(function() {
             }); 
 
     	var url_up_un = "update_username";		
-    	$(".act-view").click(function(e) {			
+    	$(".act-update-username").click(function(e) {			
                 var fID = $(this).data("id");
 				
                 $.get(url_up_un,{id: fID},function (data){
@@ -218,15 +235,25 @@ $(document).ready(function() {
                         $("#activity-modal").modal("show");
                     }
                 );
-            });   
+            });  
+
+		var url_chang_email = "chang_email";		
+			$( ".act-chang-email" ).click(function() {
+				var fID = $(this).data("id");	
+        	$.get(url_chang_email,{id: fID},function (data){
+                $("#activity-modal").find(".modal-body").html(data);
+                $(".modal-body").html(data);
+                $(".modal-title").html("แก้ไข");
+            	// $(".modal-footer").html(footer);
+                $("#activity-modal").modal("show");
+        	});     
+		}); 
     
 	}
 
     init_click_handlers(); //first run
 			
-	$('#activity-modal').on('hidden.bs.modal', function () {
- 		location.reload();
-	})    
+	    
 
     
     /* BASIC ;*/
@@ -295,6 +322,7 @@ $(document).ready(function() {
         	});     
 		}); 
 
+	
 });
 JS;
 $this->registerJs($script);

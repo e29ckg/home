@@ -114,6 +114,8 @@ class SalaryController extends Controller
                 if($f->saveAs($dir . $fileName)){
                     $model->file = $fileName;
                 }               
+            }else{
+                $model->file = '';
             } 
             $model->user_id = $_POST['Salary']['user_id'];
             // $model->link = $_POST['Salary']['link'];
@@ -224,10 +226,14 @@ class SalaryController extends Controller
         return $this->redirect(['admin']);
     }
 
-    public function actionShow($id=null){
+    public function actionShow($id){
 
         $model = $this->findModel($id);
     
+        if(!($model->user_id == Yii::$app->user->identity->id)){
+            Yii::$app->session->setFlash('error', 'ไม่มีสิทธ์');
+            return $this->redirect(['salary/index']);
+        }
         // This will need to be the path relative to the root of your app.
         $filePath = '/web/uploads/salary';
         // Might need to change '@app' for another alias
@@ -245,7 +251,7 @@ class SalaryController extends Controller
         return Yii::$app->response->sendFile($completePath, $model->file, ['inline'=>true]);
         }else{
             Yii::$app->session->setFlash('error', 'ไม่พบ File... ');
-            return $this->redirect(['salary/index',['id' => $completePath]]);
+            return $this->redirect(['salary/index']);
         }
     }
 

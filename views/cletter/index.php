@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					                    <th >เรื่อง</th>
 					                    <th >ประเภท</th>
 					                    <th data-hide="phone">วันที่บันทึก</th>
-										<?php echo Yii::$app->user->identity->role == 9 ? '<th >เครื่องมือ</th>' : ''; ?>
+										<?php echo Yii::$app->user->identity->role == 9 ? '<th  style="width:260px">เครื่องมือ</th>' : ''; ?>
 					                    
 						            </tr>
 								</thead>
@@ -84,7 +84,12 @@ $this->params['breadcrumbs'][] = $this->title;
 											if(Yii::$app->user->identity->role == 9){
 										?>
 										<td>
-											<a href= "index.php?r=cletter/line_alert&id=<?=$model->id?>" class="btn btn-danger" data-id=<?=$model->id?>><i class="fa fa-paper-plane-o"></i> Line</a>
+											<?= Html::a('<i class="fa fa-paper-plane-o"></i> Line',['cletter/line_alert','id' => $model->id],
+													[
+														'class' => 'btn btn-danger act-update',
+														'data-confirm' => 'Are you sure to Line this item?'
+													]);
+											?>
 											<a href= "#" class="btn btn-warning act-update" data-id=<?=$model->id?>><i class="fa fa-pencil-square-o"></i> แก้ไข</a>
 											<a href= "#" class="btn btn-info act-view" data-id=<?=$model->id?>><i class="fa fa-eye"></i> ดู</a>
 											<?= Html::a('<i class="fa fa-remove"></i> ลบ',['cletter/delete','id' => $model->id],
@@ -133,7 +138,7 @@ $(document).ready(function() {
        
 	function init_click_handlers(){        	
 		
-		var url_update = "index.php?r=cletter/update";
+		var url_update = "update";
     	$(".act-update").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
@@ -145,7 +150,7 @@ $(document).ready(function() {
         	});
     	});
 
-		var url_line = "index.php?r=cletter/line_alert";		
+		var url_line = "line_alert";		
     	$(".act-line").click(function(e) {			
                 var fID = $(this).data("id");				
                 $.get(url_line,{id: fID},function (data){
@@ -157,7 +162,7 @@ $(document).ready(function() {
                 );
             }); 
 
-    	var url_view = "index.php?r=cletter/view";		
+    	var url_view = "view";		
     	$(".act-view").click(function(e) {			
                 var fID = $(this).data("id");
 				
@@ -233,7 +238,7 @@ $(document).ready(function() {
 /* END COLUMN FILTER */  
 
 
-			var url_create = "index.php?r=cletter/create";
+			var url_create = "create";
     	$( "#act-create" ).click(function() {
         	$.get(url_create,function (data){
                 $("#activity-modal").find(".modal-body").html(data);

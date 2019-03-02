@@ -40,23 +40,17 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
 			<!-- sparks -->
 			<ul id="sparks">
-				<li class="sparks-info">
-					<h5><a href="index.php?r=user/index"> All User</a> <span class="txt-color-blue"><?=$userAll?></span></h5>
-					<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
-									
-					</div>
+			<li class="sparks-info">
+					<h5><?= Html::a('All User', ['user/index']) ?><span class="txt-color-blue"><?=$userAll?></span></h5>
+					<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm"></div>
 				</li>
 				<li class="sparks-info">
-					<h5><a href="index.php?r=user/index_dis"> Disable User</a> <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;<?=$userDis?></span></h5>
-					<div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">
-									
-					</div>
-					</li>
-					<li class="sparks-info">
+					<h5><?= Html::a('Disable User', ['user/index_dis']) ?> <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;<?=$userDis?></span></h5>
+					<div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm"></div>
+				</li>
+				<li class="sparks-info">
 					<h5> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span></h5>
-					<div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm">
-									
-					</div>
+					<div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm"></div>
 				</li>
 			</ul><!-- end sparks -->
 		</div><!-- end col -->
@@ -106,8 +100,13 @@ $this->params['breadcrumbs'][] = $this->title;
                        						<td  ><?= $model->getProfileName() ?>  </td>
                        						<td><?= $model->getProfilePhone()?></td>
                                             <td>
-												แก้ไข
 												<a href="index.php?r=user/active&id=<?=$model->id?>">SetActive</a> 
+												<?= Html::a('SetActive', ['user/active','id' => $model->id], [
+														'class' => 'btn btn-info btn-xs',
+														'data-confirm'=>'Are you sure to ยกเลิก this item?'
+														])
+												?>
+												
 											</td>
                                         </tr>
                                     	<?php  endforeach; ?>
@@ -245,7 +244,7 @@ $(document).ready(function() {
 		    /* END COLUMN FILTER */  
         
     
-			var url_create = "index.php?r=user/create";
+			var url_create = "create";
     	$( "#act-create" ).click(function() {
         	$.get(url_create,function (data){
                 $("#activity-modal").find(".modal-body").html(data);

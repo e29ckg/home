@@ -79,16 +79,12 @@ $this->params['breadcrumbs'][] = $this->title;
 										<td class="text-center" >
 										<?php
 											if (!empty($model->file)){
-												if(file_exists('uploads/salary/'.$model->file)){
-													echo '<a href="index.php?r=salary/show&id='.$model->id.'" target="_blank"><i class="fa fa-file-text-o"></i></a>';
-													
-												}else{
-													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
-													
-												}
+													echo Html::a('<i class="fa fa-file-text-o"></i>', ['salary/show','id'=>$model->id],[
+														'data-id'=> $model->id,
+														'target'=> '_blank',
+														]);													
 											}else{
-												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
-												
+												echo '-';												
 											}
 										?>
 										</td>
@@ -97,16 +93,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td>
 										<?php
 											if (!empty($model->file)){
-												if(file_exists('uploads/salary/'.$model->file)){
-													echo '<a href="index.php?r=salary/show&id='.$model->id.'">'.$model->file.' <i class="fa fa-file-text-o"></i></a>';
-													
-												}else{
-													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
-													
-												}
+												echo Html::a($model->file.' <i class="fa fa-file-text-o"></i>', ['salary/show','id'=>$model->id],[
+													'data-id'=> $model->id,
+													'target'=> '_blank',
+													]);												
 											}else{
-												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
-												
+												echo '-';												
 											}
 										?>
 										</td>			        

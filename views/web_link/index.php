@@ -78,17 +78,14 @@ $this->params['breadcrumbs'][] = $this->title;
 										<td class="text-center" >
 										<?php
 											if (!empty($model->img)){
-												if(file_exists('uploads/weblink/'.$model->img)){
-													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="uploads/weblink/'.$model->img.'" height="42" alt="Pic"></a>';
-													
-												}else{
-													echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
-													
-												}
+													echo Html::a(Html::img('@web/uploads/weblink/'.$model->img,['alt' => 'My logo1','height'=>'42']), '#',[
+														'data-id'=> $model->id,
+														'class' => 'act-show',
+														]);													
 											}else{
-												echo '<a id="act-show-pic" data-id="'.$model->id.'" href="javascript:void(0);" class="act-show"><img src="img/none.png" height="42" alt="Pic"></a>';
-												
+												echo Html::img('@web/img/none.png'.$model->img,['alt' => 'My logo1','height'=>'42']);
 											}
+											
 										?>
 												</td>
                                         <td><?php  echo '<a href="'.$model['link'].'" target="_blank">'.$model['name'].'</a>'?></td>
@@ -114,7 +111,7 @@ $(document).ready(function() {
 		        
 	function init_click_handlers(){    
 
-		var url_show = "index.php?r=web_link/show";				
+		var url_show = "show";				
 			$( ".act-show" ).click(function() {
 				var fID = $(this).data("id");
         	$.get(url_show,{id: fID},function (data){
@@ -127,7 +124,7 @@ $(document).ready(function() {
         	});     
 		});
 
-		var url_update = "index.php?r=web_link/update";
+		var url_update = "update";
     	$(".act-update").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
@@ -140,7 +137,7 @@ $(document).ready(function() {
     	});
 
 		
-    	var url_view = "index.php?r=web_link/view";		
+    	var url_view = "view";		
     	$(".act-view").click(function(e) {			
                 var fID = $(this).data("id");
 				
@@ -219,7 +216,7 @@ $(document).ready(function() {
 
 /* END COLUMN FILTER */  
 
-		var url_create = "index.php?r=web_link/create";
+		var url_create = "create";
     	$( "#act-create" ).click(function() {
         	$.get(url_create,function (data){
                 $("#activity-modal").find(".modal-body").html(data);
