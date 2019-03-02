@@ -3,5 +3,6 @@
 return [
     'adminEmail' => 'admin@example.com',
     'user.passwordResetTokenExpire' => 3600,
-    'supportEmail' => 'e29ckg@gmail.com'
+    'supportEmail' => 'e29ckg@gmail.com',
+    'bsDependencyEnabled' => false,
 ];
