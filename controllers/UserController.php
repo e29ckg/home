@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use app\models\User;
 use app\models\Profile;
+use app\models\Log;
 use yii\web\UploadedFile;
 use yii\helpers\Url;
 use yii\web\Response;
@@ -154,14 +155,23 @@ class UserController extends Controller{
     }
     public function actionDel($id){
         // $model = User::findOne($id);
-        $model = User::findOne($id);
-        $modelProfile = Profile::findOne($model->id);
-        $model->status = 0;
-        $modelProfile->status = 0;
+        $model = User::findOne($id);        
+        $model->status = 0;        
         $model->updated_at = date("Y-m-d H:i:s");
+
+        $modelProfile = Profile::find()->where(['user_id' => $model->id])->one();
+        $modelProfile->status = 0;
         $modelProfile->updated_at = date("Y-m-d H:i:s");
-        $model->save();
-        $modelProfile->save();
+
+        if($model->save() && $modelProfile->save()){
+            $modelLog = new Log();
+            $modelLog->user_id = Yii::$app->user->identity->id;
+            $modelLog->manager = 'User_DisActive';
+            $modelLog->detail = 'Set DisActive '.$modelProfile->fname.$modelProfile->name.' '.$modelProfile->sname.' UserId : '.$id. ' ProfileId : '.$modelProfile->id ;
+            $modelLog->create_at = date("Y-m-d H:i:s");
+            $modelLog->ip = Yii::$app->getRequest()->getUserIP();
+            $modelLog->save();
+        }
         return $this->redirect(['index']);
     }
 
@@ -170,13 +180,21 @@ class UserController extends Controller{
         $model = User::findOne($id);
         $model->status = 10;
         $model->updated_at = date("Y-m-d H:i:s");
-        $model->save();
 
-        $modelProfile = Profile::findOne($id);
+        $modelProfile = Profile::find()->where(['user_id' => $model->id])->one();
         $modelProfile->status = 10;
         $modelProfile->updated_at = date("Y-m-d H:i:s");
-        $modelProfile->save();
-        return $this->redirect(['index']);
+
+        if($model->save() && $modelProfile->save()){
+            $modelLog = new Log();
+            $modelLog->user_id = Yii::$app->user->identity->id;
+            $modelLog->manager = 'User_Active';
+            $modelLog->detail = 'Set Active '.$modelProfile->fname.$modelProfile->name.' '.$modelProfile->sname.' UserId : '.$id. ' ProfileId : '.$modelProfile->id ;
+            $modelLog->create_at = date("Y-m-d H:i:s");
+            $modelLog->ip = Yii::$app->getRequest()->getUserIP();
+            $modelLog->save();
+        }
+        return $this->redirect(['index_dis']);
     }
 
     public function actionUpdate_profile($id){        

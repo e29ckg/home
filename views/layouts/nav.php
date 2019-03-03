@@ -150,7 +150,7 @@ $menu = [
 				[
 					'label' => 'Log',
 					'url' => ['/log/index'],
-					'template' => '<a target="_blank" href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-wrench"></i> <span class="menu-item-parent">{label}</span></a>',
+					'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-wrench"></i> <span class="menu-item-parent">{label}</span></a>',
 				],
 			],
 		],

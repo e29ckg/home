@@ -65,10 +65,10 @@ $this->params['breadcrumbs'][] = $this->title;
 								<thead>
 									<tr>
 					                    <th data-class="expand"> # </th>
-										<th >User_id</th>
-					                    <th >Manager</th>
+										<th data-hide="phone,tablet">User_id</th>
+					                    <th data-hide="phone,tablet">Manager</th>
 					                    <th >Detail</th>
-										<th >IP</th>	
+										<th data-hide="phone,tablet">IP</th>	
 										<th >Create_At</th>		
 						            </tr>
 								</thead>

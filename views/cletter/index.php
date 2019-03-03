@@ -67,8 +67,8 @@ $this->params['breadcrumbs'][] = $this->title;
 									<tr>
 					                    <th data-class="expand">Id</th>
 					                    <th >เรื่อง</th>
-					                    <th >ประเภท</th>
-					                    <th data-hide="phone">วันที่บันทึก</th>
+					                    <th data-hide="phone,tablet">ประเภท</th>
+					                    <th data-hide="phone,tablet">วันที่บันทึก</th>
 										<?php echo Yii::$app->user->identity->role == 9 ? '<th  style="width:260px">เครื่องมือ</th>' : ''; ?>
 					                    
 						            </tr>
