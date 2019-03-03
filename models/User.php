@@ -207,4 +207,9 @@ class User extends ActiveRecord implements IdentityInterface
     {        
         return User::find()->where(['status' => 0])->count();           
     }
+
+    public function getCountActive()
+    {        
+        return User::find()->where(['status' => 10])->count();           
+    }
 }

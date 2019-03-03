@@ -12,6 +12,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use yii\bootstrap\Modal;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 
@@ -145,24 +146,11 @@ if (!Yii::$app->user->isGuest){
 				<!-- logout button -->
 				<div id="logout" class="btn-header transparent pull-right">
 					<span> 
-					<!-- <form method="post">
-     					<input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
-    					<button type="submit"> Save </button>
-					</form> -->
 					<?= !Yii::$app->user->isGuest ? 
-						// '<a href="index.php?r=site/logout" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser" ><i class="fa fa-sign-out"></i></a>'
-						Html::a('<i class="fa fa-sign-out"></i> Logout', ['site/logout'], [
-							// 'class' => 'btn btn-danger',
-							// 'data-action'=> 'userLogout',
-							// 'data-logout-msg' => 'You can improve your security further after logging out by closing this opened browser',
-							'data-confirm' => 'Are you sure to delete this item?',
-                            'data-method' => 'post',
-							]) 
+						'<a href="'.Url::to(['site/logout']).'" title="Sign Out" data-confirm = "Are you sure ?", data-method = "post" ><i class="fa fa-sign-out"></i></a>'
 						: 
-						// '<a href="index.php?r=site/login" class="btn btn-danger">Login</a>';
-						Html::a('<i class="fa fa-sign-in"></i> Login', ['site/login'], ['class' => 'btn btn-danger']) ;
+						'<a href="'.Url::to(['site/login']).'" class="btn btn-danger"><i class="fa fa-sign-in"></i></a>';
 					?>
-							
 					</span>
 				</div>
 				<!-- end logout button -->

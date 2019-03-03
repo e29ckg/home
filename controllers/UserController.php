@@ -45,13 +45,12 @@ class UserController extends Controller{
         // $sql = "SELECT id, name, sname FROM profile ";       
         // $data = Yii::$app->db->createCommand($sql)->queryAll();
         $models = User::find()->where(['status' => 10])->all();
-        $userAll = User::getCountAll();
-        $userDis = User::getCountDis();
        
         return $this->render('index',[
             'models' => $models,
-            'userAll' => $userAll,
-            'userDis' => $userDis,
+            'userAll' => User::getCountAll(),
+            'userDis' => User::getCountDis(),
+            'userActive' => User::getCountActive(),
         ]);
     }
 
@@ -61,13 +60,12 @@ class UserController extends Controller{
         // $sql = "SELECT id, name, sname FROM profile ";       
         // $data = Yii::$app->db->createCommand($sql)->queryAll();
         $models = User::find()->where(['status' => 0])->all();
-        $userAll = User::getCountAll();
-        $userDis = User::getCountDis();
        
         return $this->render('index_dis',[
             'models' => $models,
-            'userAll' => $userAll,
-            'userDis' => $userDis,
+            'userAll' => User::getCountAll(),
+            'userDis' => User::getCountDis(),
+            'userActive' => User::getCountActive(),
         ]);
     }
 

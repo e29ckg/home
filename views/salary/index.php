@@ -65,29 +65,16 @@ $this->params['breadcrumbs'][] = $this->title;
 								<thead>
 									<tr>
 					                    <th data-class="expand"> # </th>
-										<th >img</th>
-										<th >ชื่อ</th>
+										<th data-hide="phone">ชื่อ</th>
 					                    <th >เดือน</th>
-					                    <th >Link</th>		
+					                    <th data-hide="phone">Link</th>		
 						            </tr>
 								</thead>
 								<tbody>  
 									<?php $i = 1?>                              
 									<?php foreach ($models as $model): ?>
 						            <tr>
-						                <td><?= $i++?></td>
-										<td class="text-center" >
-										<?php
-											if (!empty($model->file)){
-													echo Html::a('<i class="fa fa-file-text-o"></i>', ['salary/show','id'=>$model->id],[
-														'data-id'=> $model->id,
-														'target'=> '_blank',
-														]);													
-											}else{
-												echo '-';												
-											}
-										?>
-										</td>
+						                <td><?= $i++?></td>										
                                         <td><?php  echo $model->getProfileName()?></td>
 										<td><?php  echo $model->getMountName($model->create_at)?></td>
                                         <td>

@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<?php
 											if(Yii::$app->user->identity->role == 9){
 										?>
-										<th style="width:80px"></th>
+										<th style="width:120px"></th>
 										<?php } ?>	
 										
 						            </tr>

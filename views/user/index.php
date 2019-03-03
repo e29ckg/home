@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 		<h1 class="page-title txt-color-blueDark">
 		<!-- PAGE HEADER -->
-			<i class="fa-fw fa fa-puzzle-piece"></i> App Views 
-			<span>  </span>
+			<i class="fa-fw fa fa-user"></i> User 
+			<span> สมาชิก </span>
 		</h1>
 		</div>
 				<!-- end col -->
@@ -42,20 +42,16 @@ $this->params['breadcrumbs'][] = $this->title;
 			<!-- sparks -->
 			<ul id="sparks">
 				<li class="sparks-info">
-					<h5><?= Html::a('All User', ['user/index']) ?><span class="txt-color-blue"><?=$userAll?></span></h5>
+					<h5> All User <span class="txt-color-blue"><i class="fa fa-user" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;<?=$userAll?></span></h5>
 					<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm"></div>
 				</li>
 				<li class="sparks-info">
-					<h5><?= Html::a('Disable User', ['user/index_dis']) ?> <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;<?=$userDis?></span></h5>
-					<div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">
-									
-					</div>
-					</li>
-					<li class="sparks-info">
-					<h5> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span></h5>
-					<div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm">
-									
-					</div>
+					<h5> Active User <span class="txt-color-purple"><i class="fa fa-arrow-circle-up"></i>&nbsp;<?=$userActive?></span></h5>
+					<div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm"></div>
+				</li>
+				<li class="sparks-info">					
+					<h5><a href="<?=Url::to(['user/index_dis']);?>"> Disable User </a><span class="txt-color-greenDark"><i class="fa fa-arrow-circle-down"></i>&nbsp;<?=$userDis?></span></h5>
+					<div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm"></div>
 				</li>
 			</ul><!-- end sparks -->
 		</div><!-- end col -->
@@ -90,12 +86,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                         
                                     <thead>			                
                                         <tr>
-                                            <th data-hide="phone">ID</th>											
-                                            <th><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Name</th>
-											<th data-hide="phone">Username</th>
-											<th data-hide="phone">Email</th>
+                                            <th data-class="expand">ID</th>											
+                                            <th data-hide="phone"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Name</th>
+											<th >Username</th>
+											<th data-hide="phone,tablet">Email</th>
                                             <th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Phone</th>
-											<th data-hide="phone,tablet">City</th>
+											<th ></th>
 										</tr>
                                     </thead>                                        
                                     <tbody>
@@ -105,11 +101,8 @@ $this->params['breadcrumbs'][] = $this->title;
 											<td class="text-center" >
 											<?php
 												if (!empty($model->getProfileImg())){
-													echo Html::a(Html::img('@web/uploads/user/'.$model->getProfileImg(),['alt' => 'My logo1','height'=>'42']), '#',[
-															'data-id'=> $model->id,
-															'class' => 'act-show',
-															]);
-													// echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/uploads/user/'.$model->getProfileImg(), ['alt' => 'My logo1','height'=>'42']).'</a>';													
+													
+													echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/uploads/user/'.$model->getProfileImg(), ['alt' => 'My logo1','height'=>'42']).'</a>';													
 												
 												}else{
 													echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/img/none.png', ['alt' => 'My logo','height'=>'42']).'</a>';
@@ -286,6 +279,7 @@ $(document).ready(function() {
 						responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
 					}
 				},
+				"paging": false,
 				"rowCallback" : function(nRow) {
 					responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
 				},

@@ -41,15 +41,15 @@ $this->params['breadcrumbs'][] = $this->title;
 			<!-- sparks -->
 			<ul id="sparks">
 			<li class="sparks-info">
-					<h5><?= Html::a('All User', ['user/index']) ?><span class="txt-color-blue"><?=$userAll?></span></h5>
+					<h5><a href="<?=Url::to(['user/index']);?>"> All User </a><span class="txt-color-blue"><i class="fa fa-user" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;<?=$userAll?></span></h5>
 					<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm"></div>
 				</li>
 				<li class="sparks-info">
-					<h5><?= Html::a('Disable User', ['user/index_dis']) ?> <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;<?=$userDis?></span></h5>
+					<h5><a href="<?=Url::to(['user/index']);?>"> Active User </a> <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;<?=$userActive?></span></h5>
 					<div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm"></div>
 				</li>
 				<li class="sparks-info">
-					<h5> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span></h5>
+					<h5> Disable User <span class="txt-color-greenDark"><i class="fa fa-arrow-circle-down"></i>&nbsp;<?=$userDis?></span></h5>
 					<div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm"></div>
 				</li>
 			</ul><!-- end sparks -->
@@ -85,11 +85,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                         
                                     <thead>			                
                                         <tr>
-                                            <th data-hide="phone">ID</th>
-											<th data-hide="phone">Username</th>
+                                            <th data-class="expand">ID</th>
+											<th data-hide="phone"> Username</th>
                                             <th><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Name</th>
                                             <th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Phone</th>
-											<th data-hide="phone,tablet">City</th>
+											<th ></th>
 										</tr>
                                     </thead>                                        
                                     <tbody>
@@ -100,13 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
                        						<td  ><?= $model->getProfileName() ?>  </td>
                        						<td><?= $model->getProfilePhone()?></td>
                                             <td>
-												<a href="index.php?r=user/active&id=<?=$model->id?>">SetActive</a> 
-												<?= Html::a('SetActive', ['user/active','id' => $model->id], [
-														'class' => 'btn btn-info btn-xs',
-														'data-confirm'=>'Are you sure to ยกเลิก this item?'
-														])
-												?>
-												
+												<a href="<?=Url::to(['user/active','id' => $model->id])?>" class = "btn btn-info btn-xs" data-confirm = "Are you sure ?" >SetActive</a> 
 											</td>
                                         </tr>
                                     	<?php  endforeach; ?>
@@ -220,6 +214,7 @@ $(document).ready(function() {
 						responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
 					}
 				},
+				"paging": true,
 				"rowCallback" : function(nRow) {
 					responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
 				},

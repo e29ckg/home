@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									<tr>
 					                    <th data-class="expand">Id</th>
 					                    <th >เรื่อง</th>
-					                    <th >ประเภท</th>
+					                    <th data-hide="phone">ประเภท</th>
 					                    <th data-hide="phone">วันที่บันทึก</th>
 						            </tr>
 								</thead>
