@@ -130,8 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
 													]) 
 												?>
 											</td>											
-                       						<td
-											   ><?= $model->getProfilePhone()?>											   
+                       						<td><a href="tel:<?= $model->getProfilePhone()?>"><?= $model->getProfilePhone()?></a>							   
 											</td>
                                             <td>
 												<?= Html::label('แก้ไข', 'edit-profile', [
