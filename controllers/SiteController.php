@@ -255,16 +255,16 @@ class SiteController extends Controller
         
         $res = $this->notify_message($message);    
                 
-        return $this->redirect('index.php');
+        return $this->redirect('index');
         
     }
     
     //ส่งข้อความผ่าน line Notify
     public function notify_message($message) {
         $line_api = 'https://notify-api.line.me/api/notify';
-//        $line_token = 'F0azI4vr7lqONb78603crxxeXCYto8xAQ2XUHhUpdiK'; //pk-test
+        // $line_token = 'FVJfvOHD7nkd9mSTxN5573tVSpVuiK8JTEAIgSAOYZx'; //แบบแซบ
         $line_token = 'FHuxAelw65wEhUAF2W1kiDnX2FchZJdeqW6mQRFcIl2'; //pk-test
-//        $line_token = '4A51UznK0WDNjN1W7JIOMyvcsUl9mu7oTHJ1G1u8ToK'; //ศยจ.ประจวบฯแจ้งทราบ
+        // $line_token = '4A51UznK0WDNjN1W7JIOMyvcsUl9mu7oTHJ1G1u8ToK'; //ศยจ.ประจวบฯแจ้งทราบ
         $queryData = array('message' => $message);
         $queryData = http_build_query($queryData, '', '&');
         $headerOptions = array(
