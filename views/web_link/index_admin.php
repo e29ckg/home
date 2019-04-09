@@ -81,13 +81,13 @@ $this->params['breadcrumbs'][] = $this->title;
 									<?php foreach ($models as $model): ?>
 						            <tr>
 						                <td><?= $i++?></td>
-										<td class="text-center" >
+										<td class="img-weblink" >
 										<?php
 											if (!empty($model->img)){
-												echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/uploads/weblink/'.$model->img, ['alt' => 'My logo1','height'=>'42']).'</a>';													
+												echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/uploads/weblink/'.$model->img, ['alt' => 'My logo1','class'=>'img']).'</a>';													
 												
 											}else{
-												echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/img/none.png', ['alt' => 'My logo','height'=>'42']).'</a>';
+												echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/img/none.png', ['alt' => 'My logo','class'=>'img']).'</a>';
 												
 											}
 										?>

@@ -75,15 +75,15 @@ $this->params['breadcrumbs'][] = $this->title;
 									<?php foreach ($models as $model): ?>
 						            <tr>
 						                <td><?= $i++?></td>
-										<td class="text-center" >
+										<td class="img-weblink" >
 										<?php
 											if (!empty($model->img)){
-													echo Html::a(Html::img('@web/uploads/weblink/'.$model->img,['alt' => 'My logo1','height'=>'42']), '#',[
+													echo Html::a(Html::img('@web/uploads/weblink/'.$model->img,['alt' => 'My logo1']), '#',[
 														'data-id'=> $model->id,
-														'class' => 'act-show',
+														'class' => 'act-show img',
 														]);													
 											}else{
-												echo Html::img('@web/img/none.png'.$model->img,['alt' => 'My logo1','height'=>'42']);
+												echo Html::img('@web/img/none.png'.$model->img,['alt' => 'My logo1']);
 											}
 											
 										?>

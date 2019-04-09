@@ -16,10 +16,10 @@ use yii\helpers\Url;
 
 
 </div>
-<div class="profile-form text-center">
+<div class="text-center">
 <?php
 	if (!empty($model->img)){		
-		echo Html::img('@web/uploads/weblink/'.$model->img, ['alt' => 'My logo1','height'=>'400']);
+		echo Html::img('@web/uploads/weblink/'.$model->img, ['alt' => 'My logo1','class'=>'img-thumbnail']);
 	}else{
 		echo Html::img('@web/img/none.png', ['alt' => 'My logo1']);
 	}

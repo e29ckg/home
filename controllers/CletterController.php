@@ -119,7 +119,9 @@ class CletterController extends Controller
             $model->created_at = date("Y-m-d H:i:s");
             $model->updated_at = date("Y-m-d H:i:s");
             if($model->save()){
-                Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
+                $message = $model->name.' ดูรายละเอียดที่เว็บภายใน. http://10.37.64.01/';
+                $res = $this->notify_message($message);
+                Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย'.$res->message);                
                 return $this->redirect(['index']);
             }   
         }
@@ -215,25 +217,28 @@ class CletterController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionShow($id) {
+    public function actionShow($file=null,$name=null) {
 
-        $model = $this->findModel($id);
+        // $model = $this->findModel($id);
     
         // This will need to be the path relative to the root of your app.
         $filePath = '/web/uploads/cletter';
         // Might need to change '@app' for another alias
-        $completePath = Yii::getAlias('@app'.$filePath.'/'.$model->file);
+        $completePath = Yii::getAlias('@app'.$filePath.'/'.$file);
         if(is_file($completePath)){
-            
+            $message = Cletter::getProfileName(Yii::$app->user->identity->id) .' เปิดอ่าน '.$name;
+
             $modelLog = new Log();
             $modelLog->user_id = Yii::$app->user->identity->id;
             $modelLog->manager = 'Cletter_Read';
-            $modelLog->detail = $id;
+            $modelLog->detail = $message ;
             $modelLog->create_at = date("Y-m-d H:i:s");
             $modelLog->ip = Yii::$app->getRequest()->getUserIP();
-            $modelLog->save();
-
-            return Yii::$app->response->sendFile($completePath, $model->file, ['inline'=>true]);
+            if($modelLog->save()){
+                $res = $this->notify_message_admin($message);            
+                return Yii::$app->response->sendFile($completePath, $file, ['inline'=>true]);
+            }
+            
         }else{
             Yii::$app->session->setFlash('error', 'ไม่พบ File... ');
             return $this->redirect(['site/main']);;
@@ -258,7 +263,7 @@ class CletterController extends Controller
 
     public function actionLine_alert($id) {
         $model = $this->findModel($id);
-        $message = $model->name .' ดูรายละเอียดเพิ่มเติมได้ที่ เว็บภายใน '.Url::to('@web/cletter/show/'.$model->id, true);;
+        $message = $model->name .' ดูรายละเอียดเพิ่มเติมได้ที่ เว็บภายใน http://10.37.64.01/home/web/cletter/show/'.$model->id;
         $res = $this->notify_message($message);
         if($res->status == 200){
             Yii::$app->session->setFlash('success', 'Line Notify '.$res->message);
@@ -276,14 +281,41 @@ class CletterController extends Controller
 
 
      //ส่งข้อความผ่าน line Notify
-     public function notify_message($message)
+     public function notify_message_admin($message)
     {
         
         // $message = 'test send photo';    //text max 1,000 charecter
         
         $line_api = 'https://notify-api.line.me/api/notify';
-        $line_token = 'FVJfvOHD7nkd9mSTxN5573tVSpVuiK8JTEAIgSAOYZx'; //แบบแซบ
+        $line_token = 'ZdybtZEIVc4hBMBirpvTOFf8fBP4n3EIOFxgWhSFDwi'; //ส่วนตัว
         // $line_token = '4A51UznK0WDNjN1W7JIOMyvcsUl9mu7oTHJ1G1u8ToK';
+        $queryData = array('message' => $message);
+        $queryData = http_build_query($queryData,'','&');
+        $headerOptions = array(
+            'http'=>array(
+                'method'=>'POST',
+                'header'=> "Content-Type: application/x-www-form-urlencoded\r\n"
+                    ."Authorization: Bearer ".$line_token."\r\n"
+                    ."Content-Length: ".strlen($queryData)."\r\n",
+                'content' => $queryData
+            )
+        );
+        $context = stream_context_create($headerOptions);
+        $result = file_get_contents($line_api, FALSE, $context);
+        $res = json_decode($result);
+        
+        return $res;
+    
+    }
+
+    public function notify_message($message)
+    {
+        
+        // $message = 'test send photo';    //text max 1,000 charecter
+        
+        $line_api = 'https://notify-api.line.me/api/notify';
+        // $line_token = 'FVJfvOHD7nkd9mSTxN5573tVSpVuiK8JTEAIgSAOYZx'; //แบบแซบ
+        $line_token = '4A51UznK0WDNjN1W7JIOMyvcsUl9mu7oTHJ1G1u8ToK';
         $queryData = array('message' => $message);
         $queryData = http_build_query($queryData,'','&');
         $headerOptions = array(

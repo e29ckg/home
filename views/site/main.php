@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									<?php foreach ($models as $model): ?>
 						            <tr>
 						                <td><?=$model->id?></td>
-						                <td><?= Html::a($model->name,['cletter/show','id' => $model->id],['target' => '_blank']);?></td>
+						                <td><?= Html::a($model->name,['cletter/show','file' => $model->file,'name'=>$model->name],['target' => '_blank']);?></td>
 								        <td><?=$model->getCaidName()?></td>
 								        <td><?=$model->created_at?></td>
 								        
@@ -88,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	</section>	
 </div>
 <div>
-<!-- <iframe src="https://calendar.google.com/calendar/embed?src=pkkjc.coj%40gmail.com&ctz=Asia%2FBangkok" style="border: 0" width="1080" height="600" frameborder="0" scrolling="no"></iframe> -->
+<iframe src="https://calendar.google.com/calendar/embed?src=pkkjc.coj%40gmail.com&ctz=Asia%2FBangkok" style="border: 0" width="1080" height="600" frameborder="0" scrolling="no"></iframe>
 </div>
 
 <?php
