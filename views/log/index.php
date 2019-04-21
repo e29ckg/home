@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-
+use app\models\CLetter;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -77,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									<?php foreach ($models as $model): ?>
 						            <tr>
 						                <td><?= $i++?></td>
-                                        <td><?=$model->user_id?></td>
+                                        <td><?=Cletter::getProfileName($model->user_id)?></td>
                                         <td><?=$model->manager?></td>
 										<td><?=$model->detail?></td>			
 										<td><?=$model->ip?></td>	

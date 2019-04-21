@@ -92,7 +92,7 @@ if (!Yii::$app->user->isGuest){
 
 				<!-- PLACE YOUR LOGO HERE <span id="logo"> <img src="img/logo.png" alt="SmartAdmin"> -->
 				
-				<span id="logo"><?= Html::img('@web/img/logo.png', ['alt' => 'My logo']) ?></span>
+				<span id="logo"><img src="<?=Url::to('@web/img/logo-pkkjc.png')?>" width="437" alt="pkkjc"></span>
 				<!-- END LOGO PLACEHOLDER -->
 
 				<!-- Note: The activity badge color changes when clicked and resets the number to 0

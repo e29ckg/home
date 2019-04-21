@@ -251,8 +251,23 @@ class UserController extends Controller{
 
     public function actionProfile(){
         $mdUser = User::findOne(Yii::$app->user->id);
-        $mdProfile = Profile::find()->where(['user_id' => Yii::$app->user->id])->one();               
-        return $this->render('profile',['mdProfile' => $mdProfile,'mdUser' => $mdUser]);
+        $mdProfile = Profile::find()->where(['user_id' => Yii::$app->user->id])->one();   
+        
+        $modelLogs = Log::find()
+                        ->where(['user_id' => Yii::$app->user->id])
+                        ->orderBy([
+                            'create_at'=>SORT_DESC,
+                            'id' => SORT_DESC,
+                            ])
+                        ->limit(50)
+                        ->all();        
+        
+
+        return $this->render('profile',[
+            'mdProfile' => $mdProfile,
+            'mdUser' => $mdUser,
+            'modelLogs' => $modelLogs
+            ]);
     }
 
     public function actionShow_profile($id){
@@ -342,8 +357,9 @@ class UserController extends Controller{
                 if($mdUser->save()){
                     Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
                 }; 
-            }    
-            return $this->redirect(['profile']);                    
+            }  
+            return $this->redirect(['profile']);              
+                                
         }
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('_form_chang_pass',[
@@ -375,9 +391,10 @@ class UserController extends Controller{
                     Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
                 }else{
                     Yii::$app->session->setFlash('error', 'ไม่สำเร็จ');
-                }  
-               
-            return $this->redirect(['profile']);                    
+                } 
+              
+            return $this->redirect(['profile']);   
+                                   
         }
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('_form_chang_email',[
@@ -411,8 +428,8 @@ class UserController extends Controller{
                 }else{
                     Yii::$app->session->setFlash('error', 'ไม่สำเร็จ');
                 } 
-               
-            return $this->redirect(['profile']);                    
+           
+            return $this->redirect(['profile']); 
         }
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('_form_edit_profile',[

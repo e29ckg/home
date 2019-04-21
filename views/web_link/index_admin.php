@@ -99,8 +99,13 @@ $this->params['breadcrumbs'][] = $this->title;
 										?>
 										<td>
 										<a href="#" class="act-update btn btn-info btn-xs" data-id=<?=$model['id']?>>แก้ไข</a> 
-										<a href="index.php?r=web_link/delete&id=<?=$model->id?>" class="btn btn-danger btn-xs" data-method='post' data-id=<?=$model['id']?> data-confirm='Are you sure to delete this item?'><i class="fa fa-remove"></i> ลบ</a> 
-										
+										<?= Html::a('<i class="fa fa-remove"></i> ลบ',['web_link/delete','id' => $model->id],
+													[
+														'class' => 'btn btn-danger btn-xs',
+														'data-confirm' => 'Are you sure to delete this item?',
+                                    					'data-method' => 'post',
+													]);
+											?>
 											</td>
 										<?php } ?>					        
 									</tr>

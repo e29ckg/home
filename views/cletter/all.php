@@ -77,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									<?php foreach ($models as $model): ?>
 						            <tr>
 						                <td><?=$model->id?></td>
-										<td><?= Html::a($model->name,['cletter/show','file' => $model->file],['target' => '_blank']);?></td>
+										<td><?= Html::a($model->name,['cletter/show','file' => $model->file,'name'=>$model->name],['target' => '_blank']);?></td>
 								        <td><?=$model->getCaidName()?></td>
 								        <td><?=$model->created_at?></td>
 										<?php
@@ -221,9 +221,7 @@ $(document).ready(function() {
 		    });
 		    
 		    // custom toolbar
-			// $("div.toolbar").html('<div class="text-right"><a href="/home/web/cletter/all" id="act-create" class="btn btn-success btn-md" alt="act-All"><i class="fa fa-plus "></i> ทั้งหมด</a></div>');
-		    
-		    $("div.toolbar").html('<div class="text-right"><a href="/home/web/cletter/all" class="btn btn-success btn-md" alt="act-All"><i class="fa fa-plus "></i> ทั้งหมด</a> <button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> act-create</button></div>');
+		    $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> act-create</button></div>');
 		    	   
 		    // Apply the filter
 		    $("#datatable_fixed_column thead th input[type=text]").on( 'keyup change', function () {

@@ -31,10 +31,10 @@ class CletterController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','create','show'],
+                'only' => ['index','create','show','all'],
                 'rules' => [
                     [
-                        'actions' => ['index','create','show'],
+                        'actions' => ['index','create','show','all'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -56,9 +56,27 @@ class CletterController extends Controller
     public function actionIndex()
     {
         $model = CLetter::find()->orderBy([
-            'created_at'=>SORT_ASC,
+            // 'created_at'=>SORT_ASC,
             'id' => SORT_DESC,
-            ])->limit(100)->all();
+            ])->limit(10)->all();
+        
+            $countAll = CLetter::getCountAll();
+        
+        return $this->render('index',[
+            'models' => $model,
+            'countAll' => $countAll,
+        ]);
+
+    }
+
+    public function actionAll()
+    {
+        $model = CLetter::find()->orderBy([
+            // 'created_at'=>SORT_ASC,
+            'id' => SORT_DESC,
+            ])
+            // ->limit(10)
+            ->all();
         
             $countAll = CLetter::getCountAll();
         
@@ -119,7 +137,7 @@ class CletterController extends Controller
             $model->created_at = date("Y-m-d H:i:s");
             $model->updated_at = date("Y-m-d H:i:s");
             if($model->save()){
-                $message = $model->name.' ดูรายละเอียดที่เว็บภายใน. http://10.37.64.01/';
+                $message = $model->name.' ดูรายละเอียดที่เว็บภายใน. http://10.37.64.01/cletter.php?ref='.$fileName;
                 $res = $this->notify_message($message);
                 Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย'.$res->message);                
                 return $this->redirect(['index']);
@@ -180,10 +198,21 @@ class CletterController extends Controller
             }
             $model->file = $filename;
             if($model->save()){
+                $message = Cletter::getProfileName(Yii::$app->user->identity->id) .' แก้ไข '.$model->name;
+            $modelLog = new Log();
+            $modelLog->user_id = Yii::$app->user->identity->id;
+            $modelLog->manager = 'Cletter_Update';
+            $modelLog->detail =  'แกไข '.$model->name;
+            $modelLog->create_at = date("Y-m-d H:i:s");
+            $modelLog->ip = Yii::$app->getRequest()->getUserIP();
+            if($modelLog->save()){
+                $res = $this->notify_message_admin($message);
+            }
                 Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
             };          
             return $this->redirect(['index', 'id' => $filename]);
         }
+
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('update',[
                     'model' => $model,                    
@@ -212,7 +241,18 @@ class CletterController extends Controller
             unlink($dir.$filename);// ลบ รูปเดิม;                    
         }
         
-        $model->delete();
+        if($model->delete()){
+            $message = Cletter::getProfileName(Yii::$app->user->identity->id) .' ลบ '.$model->name;
+            $modelLog = new Log();
+            $modelLog->user_id = Yii::$app->user->identity->id;
+            $modelLog->manager = 'Cletter_delete';
+            $modelLog->detail =  'ลบ '.$model->name;
+            $modelLog->create_at = date("Y-m-d H:i:s");
+            $modelLog->ip = Yii::$app->getRequest()->getUserIP();
+            if($modelLog->save()){
+                $res = $this->notify_message_admin($message);            
+            }
+        }        
 
         return $this->redirect(['index']);
     }
@@ -220,18 +260,24 @@ class CletterController extends Controller
     public function actionShow($file=null,$name=null) {
 
         // $model = $this->findModel($id);
-    
+        // if($name=null){
+            $modelF = Cletter::find()->where(['file' => $file])->one();            
+        // } else{
+        //     $modelF = Cletter::find()->where(['file' => $file])->one();  
+        // }
+        
         // This will need to be the path relative to the root of your app.
         $filePath = '/web/uploads/cletter';
         // Might need to change '@app' for another alias
         $completePath = Yii::getAlias('@app'.$filePath.'/'.$file);
         if(is_file($completePath)){
-            $message = Cletter::getProfileName(Yii::$app->user->identity->id) .' เปิดอ่าน '.$name;
+            
+            $message = Cletter::getProfileName(Yii::$app->user->identity->id) .' เปิดอ่าน '.$modelF->name;
 
             $modelLog = new Log();
             $modelLog->user_id = Yii::$app->user->identity->id;
             $modelLog->manager = 'Cletter_Read';
-            $modelLog->detail = $message ;
+            $modelLog->detail =  'เปิดอ่าน '.$modelF->name;
             $modelLog->create_at = date("Y-m-d H:i:s");
             $modelLog->ip = Yii::$app->getRequest()->getUserIP();
             if($modelLog->save()){
@@ -263,7 +309,7 @@ class CletterController extends Controller
 
     public function actionLine_alert($id) {
         $model = $this->findModel($id);
-        $message = $model->name .' ดูรายละเอียดเพิ่มเติมได้ที่ เว็บภายใน http://10.37.64.01/home/web/cletter/show/'.$model->id;
+        $message = $model->name .' ดูรายละเอียดเพิ่มเติมได้ที่ เว็บภายใน http://10.37.64.01/home/web/cletter/show/'.$model->file;
         $res = $this->notify_message($message);
         if($res->status == 200){
             Yii::$app->session->setFlash('success', 'Line Notify '.$res->message);

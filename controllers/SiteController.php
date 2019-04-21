@@ -77,9 +77,9 @@ class SiteController extends Controller
     public function actionMain()
     {
         $model = CLetter::find()->orderBy([
-            'created_at'=>SORT_ASC,
+            // 'created_at'=>SORT_ASC,
             'id' => SORT_DESC,
-            ])->limit(100)->all();
+            ])->limit(50)->all();
     
         $countAll = CLetter::getCountAll();
     
@@ -87,6 +87,23 @@ class SiteController extends Controller
             'models' => $model,
             'countAll' => $countAll,
         ]);
+    }
+    public function actionAll()
+    {
+        $model = CLetter::find()->orderBy([
+            // 'created_at'=>SORT_ASC,
+            'id' => SORT_DESC,
+            ])
+            // ->limit(10)
+            ->all();
+        
+            $countAll = CLetter::getCountAll();
+        
+        return $this->render('main',[
+            'models' => $model,
+            'countAll' => $countAll,
+        ]);
+
     }
     /**
      * Login action.
@@ -114,18 +131,19 @@ class SiteController extends Controller
         }
         
         
-        $model = new LoginForm();
-        
+        $model = new LoginForm();        
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-
+            $message = Cletter::getProfileName(Yii::$app->user->identity->id) .' เข้าสู่ระบบ';
             $modelLog = new Log();
             $modelLog->user_id = Yii::$app->user->identity->id;
             $modelLog->manager = 'Login';
-            $modelLog->detail = Yii::$app->user->identity->username .' เข้าสู่ระบบ';
+            $modelLog->detail = 'เข้าสู่ระบบ';
             $modelLog->create_at = date("Y-m-d H:i:s");
             $modelLog->ip = Yii::$app->getRequest()->getUserIP();
-            $modelLog->save();
+            if($modelLog->save()){
+                $res = $this->notify_message_admin($message); 
+            }
             return $this->goBack();
         }
         $model->password = '';
@@ -143,12 +161,15 @@ class SiteController extends Controller
     public function actionLogout()
     {
         $modelLog = new Log();
+        $message = Cletter::getProfileName(Yii::$app->user->identity->id) .' ออกจากสู่ระบบ';
             $modelLog->user_id = Yii::$app->user->identity->id;
             $modelLog->manager = 'LogOut';
-            $modelLog->detail = Yii::$app->user->identity->username .' ออกจากสู่ระบบ';
+            $modelLog->detail = 'ออกจากสู่ระบบ';
             $modelLog->create_at = date("Y-m-d H:i:s");
             $modelLog->ip = Yii::$app->getRequest()->getUserIP();
-            $modelLog->save();
+            if($modelLog->save()){
+                $res = $this->notify_message_admin($message); 
+            }
 
         Yii::$app->user->logout();
 
@@ -280,5 +301,32 @@ class SiteController extends Controller
         $result = file_get_contents($line_api, FALSE, $context);
         $res = json_decode($result);
         return $res;
+    }
+    //ส่งข้อความผ่าน line Notify
+    public function notify_message_admin($message)
+    {
+        
+        // $message = 'test send photo';    //text max 1,000 charecter
+        
+        $line_api = 'https://notify-api.line.me/api/notify';
+        $line_token = 'ZdybtZEIVc4hBMBirpvTOFf8fBP4n3EIOFxgWhSFDwi'; //ส่วนตัว
+        // $line_token = '4A51UznK0WDNjN1W7JIOMyvcsUl9mu7oTHJ1G1u8ToK';
+        $queryData = array('message' => $message);
+        $queryData = http_build_query($queryData,'','&');
+        $headerOptions = array(
+            'http'=>array(
+                'method'=>'POST',
+                'header'=> "Content-Type: application/x-www-form-urlencoded\r\n"
+                    ."Authorization: Bearer ".$line_token."\r\n"
+                    ."Content-Length: ".strlen($queryData)."\r\n",
+                'content' => $queryData
+            )
+        );
+        $context = stream_context_create($headerOptions);
+        $result = file_get_contents($line_api, FALSE, $context);
+        $res = json_decode($result);
+        
+        return $res;
+    
     }
 }

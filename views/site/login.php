@@ -6,6 +6,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
 
 $this->title = 'Login';
 ?>
@@ -38,7 +39,9 @@ $fieldOptions2 = [
         ],
         'enableAjaxValidation' => true,
 	]);  ?>
-<header>Sign In</header>
+<header>
+<span > <img src="<?=Url::to('@web/img/head_login.png')?>" alt="pkkjc"> </span>
+</header>
 	<fieldset>
 		<section>
             <?= $form->field($model, 'username', $fieldOptions1)->textInput(['autofocus' => true,])?>
