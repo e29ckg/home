@@ -70,9 +70,15 @@ class LeavesController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('create_p',[
+                    'model' => $model,                    
+            ]);
+        }else{
+            return $this->render('create_p',[
+                'model' => $model,                    
+            ]); 
+        }
     }
 
     /**
