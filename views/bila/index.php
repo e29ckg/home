@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -65,15 +65,11 @@ $this->params['breadcrumbs'][] = $this->title;
 								<thead>
 									<tr>
 					                    <th data-class="expand"> # </th>
-										<th data-hide="phone,tablet">img</th>
-					                    <th >ชื่อ</th>
-					                    <th data-hide="phone,tablet">Link</th>
-										<?php
-											if(Yii::$app->user->identity->role == 9){
-										?>
+										<th data-hide="phone,tablet">ประเภทการลา</th>
+					                    <th >ลาตั้งแต่</th>
+					                    <th data-hide="phone,tablet">ถึงวันที่</th>
+										<th data-hide="phone,tablet">รวมการลา</th>										
 										<th style="width:120px"></th>
-										<?php } ?>	
-										
 						            </tr>
 								</thead>
 								<tbody>  
@@ -82,24 +78,22 @@ $this->params['breadcrumbs'][] = $this->title;
 						            <tr>
 						                <td><?= $i++?></td>
 										<td class="img-weblink" >
-										
+										<?=$model->cat?>
 										</td>
-                                        <td><?php  echo '<a href="'.$model['user_id'].'" target="_blank">'.$model['user_id'].'</a>'?></td>
-                                        <td><?php  echo $model['user_id'];?></td>		
-										<?php
-											if(Yii::$app->user->identity->role == 9){
-										?>
+                                        <td><?=$model->date_begin?></td>
+                                        <td><?=$model->date_end?></td>	
+										<td><?=$model->date_total?></td>
 										<td>
-										<a href="#" class="act-update btn btn-info btn-xs" data-id=<?=$model['id']?>>แก้ไข</a> 
-										<?= Html::a('<i class="fa fa-remove"></i> ลบ',['bila/delete','id' => $model->id],
+											<a href="<?=Url::to('print1/'.$model->id)?>" class="btn btn-info btn-xs" target="_blank" data-id=<?=$model->id?>>print</a> 
+											<a href="#" class="act-update btn btn-info btn-xs" data-id=<?=$model->id?>>แก้ไข</a> 
+											<?= Html::a('<i class="fa fa-remove"></i> ลบ',['bila/delete','id' => $model->id],
 													[
 														'class' => 'btn btn-danger btn-xs',
 														'data-confirm' => 'Are you sure to delete this item?',
                                     					'data-method' => 'post',
 													]);
-											?>
-											</td>
-										<?php } ?>					        
+											?>						        
+										</td>
 									</tr>
 									<?php  endforeach; ?>
 								</tbody>	
@@ -205,7 +199,7 @@ $(document).ready(function() {
 		    
 		    // custom toolbar
 												
-		    $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> act-create</button></div>');
+		    $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> เพิ่มใบลาป่วย</button> <button id="act-create-b" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> เพิ่มใบลาพักผ่อน</button></div>');
 			   
 		    // Apply the filter
 		    $("#datatable_fixed_column thead th input[type=text]").on( 'keyup change', function () {
@@ -222,8 +216,19 @@ $(document).ready(function() {
 /* END COLUMN FILTER */  
 
 		// var url_create = "index.php?r=bila/create";
-		var url_create = "bila/create";
+		var url_create = "create";
     	$( "#act-create" ).click(function() {
+        	$.get(url_create,function (data){
+                $("#activity-modal").find(".modal-body").html(data);
+                $(".modal-body").html(data);
+                $(".modal-title").html("เพิ่มข้อมูล");
+            	// $(".modal-footer").html(footer);
+                $("#activity-modal").modal("show");
+                //   $("#myModal").modal('toggle');
+        	});     
+		}); 
+		var url_create = "createb";
+    	$( "#act-create-b" ).click(function() {
         	$.get(url_create,function (data){
                 $("#activity-modal").find(".modal-body").html(data);
                 $(".modal-body").html(data);

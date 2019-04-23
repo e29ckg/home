@@ -190,7 +190,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getProfileAddress(){
         $model=$this->profile;
-        return $model ? $model->address : '-';
+        return $model ? $model->address : '';
     }
 
     public function getProfilePhone(){
@@ -211,5 +211,24 @@ class User extends ActiveRecord implements IdentityInterface
     public function getCountActive()
     {        
         return User::find()->where(['status' => 10])->count();           
+    }
+
+    public function getProfileNameById($id)
+    {
+        $model = Profile::find()->where(['user_id' => $id])->one();
+        return $model->name ? $model->fname.$model->name.' '.$model->sname : '' ;
+    }
+    public function getProfileDepById($id)
+    {
+        $model = Profile::find()->where(['user_id' => $id])->one();
+        return $model->dep ? $model->dep : '' ;
+    }
+    public function getProfileAddressById($id){
+        $model = Profile::find()->where(['user_id' => $id])->one();
+        return $model->address ? $model->address : '' ;
+    }
+    public function getProfilePhoneById($id){
+        $model = Profile::find()->where(['user_id' => $id])->one();
+        return $model->phone ? 'โทร.'.$model->phone : '' ;
     }
 }

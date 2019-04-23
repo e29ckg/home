@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
 use kartik\mpdf\Pdf;
 
 /**
- * Web_linkController implements the CRUD actions for WebLink model.
+ * Web_linkController implements the CRUD actions for Bila model.
  */
 class BilaController extends Controller
 {
@@ -29,10 +29,10 @@ class BilaController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['admin'],
+                'only' => ['admin','index'],
                 'rules' => [
                     [
-                        'actions' => ['admin'],
+                        'actions' => ['admin','index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -47,24 +47,14 @@ class BilaController extends Controller
         ];
     }
 
-    /**
-     * Lists all WebLink models.
-     * @return mixed
-     */
-    public function actionTest()
-    {
-       echo Yii::$app->google->shortUrl('http://www.pkkjc.coj.go.th/');
-    echo Yii::$app->google->expandUrl('https://goo.gl/p1EnW1');
-    return Yii::$app->google->shortUrl('https://pkkjc.coj.go.th/th/page/item/index/id/1');
-    }
-
+    
     public function actionIndex()
     {
-        // $sql = 'SELECT * FROM web_link';
-        // $models = Yii::$app->db->createCommand($sql)->queryAll();
-        $models = Bila::find()->orderBy([
-            'date_create'=>SORT_DESC,
-            'id' => SORT_DESC,
+        $models = Bila::find()
+            ->where(['user_id' => Yii::$app->user->id])
+            ->orderBy([
+                'date_create'=>SORT_DESC,
+                'id' => SORT_DESC,
             ])->limit(100)->all();
         
         
@@ -76,19 +66,16 @@ class BilaController extends Controller
         ]);
     }
 
-
-
     public function actionAdmin()
     {
         $sql = 'SELECT * FROM web_link';
         // $models = Yii::$app->db->createCommand($sql)->queryAll();
-        $models = WebLink::find()->orderBy([
+        $models = Bila::find()->orderBy([
             'create_at'=>SORT_DESC,
             'id' => SORT_DESC,
-            ])->limit(100)->all();
+            ])->limit(100)->all();        
         
-        
-        $countAll = WebLink::getCountAll();
+        $countAll = Bila::getCountAll();
 
         return $this->render('index_admin', [
             'models' => $models,
@@ -98,7 +85,7 @@ class BilaController extends Controller
     
 
     /**
-     * Displays a single WebLink model.
+     * Displays a single Bila model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -111,7 +98,7 @@ class BilaController extends Controller
     }
 
     /**
-     * Creates a new WebLink model.
+     * Creates a new Bila model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -127,19 +114,19 @@ class BilaController extends Controller
      
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
-            $model->user_id =  Yii::$app->user->id;;
+            $model->user_id =  $_POST['Bila']['user_id'];
             $model->cat = 'ลาป่วย';
             $model->date_begin = $_POST['Bila']['date_begin'];
-            $model->date_finish = $_POST['Bila']['date_finish'];
+            $model->date_end = $_POST['Bila']['date_end'];
             $model->date_total = $_POST['Bila']['date_total'];
             $model->dateO_begin = $_POST['Bila']['dateO_begin'];
-            $model->dateO_finish = $_POST['Bila']['dateO_finish'];
+            $model->dateO_end = $_POST['Bila']['dateO_end'];
             $model->dateO_total = $_POST['Bila']['dateO_total'];
             $model->address = $_POST['Bila']['address'];
             $model->t1 = $_POST['Bila']['t1'];
             $model->t2 = $_POST['Bila']['date_total'];
             $model->t3 = $_POST['Bila']['date_total']+$_POST['Bila']['t1'];
-            $model->date_create = date("Y-m-d");
+            $model->date_create = $_POST['Bila']['date_create'];
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
                 return $this->redirect(['index']);
@@ -157,8 +144,49 @@ class BilaController extends Controller
         }
     }
 
-    /**
-     * Updates an existing WebLink model.
+    public function actionCreateb()
+    {
+        $model = new Bila();
+
+        //Add This For Ajax Email Exist Validation 
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+          } 
+     
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            
+            $model->user_id =  $_POST['Bila']['user_id'];
+            $model->cat = 'ลาป่วย';
+            $model->date_begin = $_POST['Bila']['date_begin'];
+            $model->date_end = $_POST['Bila']['date_end'];
+            $model->date_total = $_POST['Bila']['date_total'];
+            $model->dateO_begin = $_POST['Bila']['dateO_begin'];
+            $model->dateO_end = $_POST['Bila']['dateO_end'];
+            $model->dateO_total = $_POST['Bila']['dateO_total'];
+            $model->address = $_POST['Bila']['address'];
+            $model->t1 = $_POST['Bila']['t1'];
+            $model->t2 = $_POST['Bila']['date_total'];
+            $model->t3 = $_POST['Bila']['date_total']+$_POST['Bila']['t1'];
+            $model->date_create = $_POST['Bila']['date_create'];
+            if($model->save()){
+                Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
+                return $this->redirect(['index']);
+            }   
+        }
+        // $model->tel = explode(',', $model->tel);
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('create_b',[
+                    'model' => $model,                    
+            ]);
+        }else{
+            return $this->render('create_b',[
+                'model' => $model,                    
+            ]); 
+        }
+    }
+/**
+     * Updates an existing Bila model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -168,8 +196,6 @@ class BilaController extends Controller
     {
         $model = $this->findModel($id);
 
-        $fileName = $model->img;
-
         //Add This For Ajax Email Exist Validation 
         if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -178,31 +204,24 @@ class BilaController extends Controller
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-           if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
-            $f = UploadedFile::getInstance($model, 'img');
-            if(!empty($f)){
-                $dir = Url::to('@webroot/uploads/weblink/');
-                if (!is_dir($dir)) {
-                    mkdir($dir, 0777, true);
-                }
-                if($fileName && is_file($dir.$fileName)){
-                    unlink($dir.$fileName);// ลบ รูปเดิม;   
-                }
-                $fileName = md5($f->baseName . time()) . '.' . $f->extension;
-                if($f->saveAs($dir . $fileName)){
-                    $model->img = $fileName;
-                }               
-            } 
-            $model->name = $_POST['WebLink']['name'];
-            $model->link = $_POST['WebLink']['link'];
-            $model->img = $fileName;
-            $model->update_at = date("Y-m-d H:i:s");
+            $model->user_id =  Yii::$app->user->id;
+            $model->cat = 'ลาป่วย';
+            $model->date_begin = $_POST['Bila']['date_begin'];
+            $model->date_end = $_POST['Bila']['date_end'];
+            $model->date_total = $_POST['Bila']['date_total'];
+            $model->dateO_begin = $_POST['Bila']['dateO_begin'];
+            $model->dateO_end = $_POST['Bila']['dateO_end'];
+            $model->dateO_total = $_POST['Bila']['dateO_total'];
+            $model->address = $_POST['Bila']['address'];
+            $model->t1 = $_POST['Bila']['t1'];
+            $model->t2 = $_POST['Bila']['date_total'];
+            $model->t3 = $_POST['Bila']['date_total']+$_POST['Bila']['t1'];
+            $model->date_create = $_POST['Bila']['date_create'];
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
-                return $this->redirect(['admin']);
+                return $this->redirect(['index']);
             }   
-        }
         }
 
         if(Yii::$app->request->isAjax){
@@ -219,7 +238,7 @@ class BilaController extends Controller
     }
 
     /**
-     * Deletes an existing WebLink model.
+     * Deletes an existing Bila model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -231,7 +250,7 @@ class BilaController extends Controller
     {
         $model = $this->findModel($id);
         $fileName = $model->img;
-        $dir = Url::to('@webroot/uploads/weblink/');
+        $dir = Url::to('@webroot/uploads/Bila/');
         if (!is_dir($dir)) {
             mkdir($dir, 0777, true);
         }
@@ -245,84 +264,62 @@ class BilaController extends Controller
     }
 
     public function actionShow($id=null){
-        $mdWebLink = WebLink::find()->where(['id' => $id])->one();
+        $mdBila = Bila::find()->where(['id' => $id])->one();
 
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('show',[
-                    'model' => $mdWebLink,                    
+                    'model' => $mdBila,                    
             ]);
         }
         
         return $this->render('show',[
-               'model' => $mdWebLink,                    
+               'model' => $mdBila,                    
         ]);
     }
 
     /**
-     * Finds the WebLink model based on its primary key value.
+     * Finds the Bila model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return WebLink the loaded model
+     * @return Bila the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = WebLink::findOne($id)) !== null) {
+        if (($model = Bila::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
-
-    public function actionPrint($id = null)
+    
+    public function actionPrint1($id=null)
     {
-        // $this->layout = 'cart_shop';   
-        // $user_id = Yii::$app->user->id;
-        // $model = $this->findModel($id);
-        $user_id = Yii::$app->user->id;
-        // $model_lists = OrderList::find()->where(['order_code'=> $model->order_code])->all();
 
-        // $destination = Pdf::DEST_BROWSER;
-        // $destination = Pdf::DEST_DOWNLOAD;
-        $destination = Pdf::DEST_FILE;
-// 
-        $filename = Yii::$app->basePath .'/web/uploads/a1.pdf';
+        $model = $this->findModel($id);
+        if($model->cat =='ลาป่วย'){
+            $Pdf_print = '_pdf_A';
+        }else if($model->cat =='ลาพักผ่อน'){
+            $Pdf_print = '_pdf_B';
+        }
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
-    $pdf = new Pdf([
-        'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
-        'content' => $this->renderPartial('print',[]),
-        // portrait orientation
-        'orientation' => Pdf::ORIENT_PORTRAIT,
-        // stream to browser inline
-        'destination' => $destination,
-        'filename' => $filename,
-        // 'cssFile' => 'css/pdf.css',
-        'options' => [
-            // any mpdf options you wish to set
-        ],
-        'methods' => [
-            // 'SetTitle' => 'Privacy Policy - Krajee.com',
-            // 'SetSubject' => 'Generating PDF files via yii2-mpdf extension has never been easy',
-            // 'SetHeader' => ['Krajee Privacy Policy||Generated On: ' . date("r")],
-            // 'SetFooter' => ['|Page {PAGENO}|'],
-            // 'SetAuthor' => 'Kartik Visweswaran',
-            // 'SetCreator' => 'Kartik Visweswaran',
-            // 'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
-        ]
-    ]);
-    // $mpdf = $pdf->api;
-     // fetches mpdf api
-    //  $html = self::generateTablePdf($id);
-    //  $mpdf->shrink_tables_to_fit = 8;
-    //  $mpdf->use_kwt = true;
-    //  $mpdf->table_keep_together = true;
-    //  $mpdf->WriteHtml($html);
-     // call mpdf write html
-    //  $filename = \Yii::$app->basePath . '/web/uploads/1.pdf';
-    //  $mpdf->Output($filename, 'F');
-    $pdf->render();
-    // return $pdf->render();
-    return $this->redirect(['index']);
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+            'content' => $this->renderPartial($Pdf_print,['model'=>$model]),
+            'cssFile' => 'css/pdf.css',
+            'options' => [
+                // any mpdf options you wish to set
+            ],
+            'methods' => [
+                // 'SetTitle' => 'Privacy Policy - Krajee.com',
+                // 'SetSubject' => 'Generating PDF files via yii2-mpdf extension has never been easy',
+                // 'SetHeader' => ['Krajee Privacy Policy||Generated On: ' . date("r")],
+                // 'SetFooter' => ['|Page {PAGENO}|'],
+                // 'SetAuthor' => 'Kartik Visweswaran',
+                // 'SetCreator' => 'Kartik Visweswaran',
+                // 'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
+            ]
+        ]);
+        return $pdf->render();
     }
 }

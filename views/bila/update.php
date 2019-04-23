@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\WebLink */
 
-$this->title = 'Update Web Link: ' . $model->name;
+$this->title = 'ใบลาเลขที่ : ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Web Links', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="web-link-update">

@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
-    'language' => 'th',
+    'language' => 'th_TH',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     //'defaultRoute' => '/site/index',
@@ -21,7 +21,9 @@ $config = [
                 ],
             ],
         ],
-
+        'thaiFormatter'=>[
+            'class'=>'dixonsatit\thaiYearFormatter\ThaiYearFormatter',
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '992999929',
@@ -69,7 +71,7 @@ $config = [
             'class' => 'yii\web\UrlManager',    
             'showScriptName' => false,
             'enablePrettyUrl' => true,
-            // 'enableStrictParsing' => true,
+            'enableStrictParsing' => true,
             // 'suffix' => '.html',
             'rules' => array(
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
