@@ -6,7 +6,7 @@ use yii\helpers\Html;
 <table class="table_bordered" width="100%" border="0" cellpadding="2" cellspacing="0">
     <thead>
 		<tr class="cart_menu">
-	    	<th class="">แบบใบลาป่วย , ลากิจส่วนตัว , ลาคลอดบุตร </th>			
+	    	<th class="">ใบลาพักผ่อน </th>			
 		</tr>
 	</thead>    
 </table>
@@ -31,15 +31,15 @@ use yii\helpers\Html;
     </tr>
     <tr>
         <td colspan="7" style="text-align:right">วันที่</td>
-        <td colspan="1" class="TableLine" style="text-align:center"> </td>
+        <td colspan="1" class="TableLine" style="text-align:center"></td>
         <td colspan="1" style="text-align:center">เดือน</td>
-        <td colspan="1" class="TableLine" style="text-align:center"> </td>
+        <td colspan="1" class="TableLine" style="text-align:center"></td>
         <td colspan="1" style="text-align:center">พ.ศ.</td>
-        <td colspan="1" class="TableLine" style="text-align:center"> </td>
+        <td colspan="1" class="TableLine" style="text-align:center"></td>
     </tr>
     <tr>
         <td colspan="1" >เรื่อง</td>
-        <td colspan="11">ขออนุญาตลาป่วย</td>
+        <td colspan="11">ขออนุญาตลาพักผ่อน</td>
     </tr>
     <tr>
         <td colspan="1">เรียน</td>
@@ -48,103 +48,67 @@ use yii\helpers\Html;
     <tr>
         <td colspan="2" ></td>
         <td colspan="1" >ข้าพเจ้า</td>
-        <td colspan="3" class="TableLine" style="text-align:center"> </td>
+        <td colspan="3" class="TableLine" style="text-align:center"></td>
         <td colspan="1" >ตำแหน่ง</td>
-        <td colspan="5" class="TableLine" style="text-align:center"> </td>
+        <td colspan="5" class="TableLine" style="text-align:center"></td>
     </tr>
     <tr>
         <td colspan="1" >สังกัด</td>
         <td colspan="11" class="TableLine">สำนักงานประจำศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์</td>
     </tr>
     <tr>
-        <td colspan="2" ></td>
-        <td colspan="10" >[ X ] ลาป่วย</td>
-    </tr>
-    <tr>
-        <td colspan="2" ></td>
-        <td colspan="3" >[ &nbsp; ] ลากิจส่วนตัว</td>
-        <td colspan="1" >เนื่องจาก</td>
-        <td colspan="6" class="TableLine" style="text-align:center"></td>
-    </tr>
-    <tr>
-        <td colspan="2" ></td>
-        <td colspan="10" >[ &nbsp; ] ลาคลอดบุตร</td>
-    </tr>
-    <tr>
-        <td colspan="2" >ตั้งแต่วันที่ </td>
-        <td colspan="2" class="TableLine" style="text-align:center"> </td>
-        <td colspan="1" >ถึงวันที่</td>
-        <td colspan="3" class="TableLine" style="text-align:center"> </td>
-        <td colspan="2" >มีกำหนด</td>
-        <td colspan="1" class="TableLine" style="text-align:center"> </td>
-        <td colspan="1" >วัน</td>
-    </tr>
-    <tr>
-        <td colspan="2" >ข้าพเจ้าได้ลา </td>
-        <td colspan="2" >[ X ] ลาป่วย</td>
-        <td colspan="2" >[ &nbsp; ] ลากิจส่วนตัว</td>
-        <td colspan="2" >[ &nbsp; ] ลาคลอดบุตร</td>
-        <td colspan="4" >ครั้งสุดท้ายตั้งแต่</td>
-    </tr>
-    <tr>
-        <td colspan="2" >ตั้งแต่วันที่ </td>
+        <td colspan="2" >มีวันลาพักผ่อนสะสม</td>
         <td colspan="2" class="TableLine" style="text-align:center"></td>
-        <td colspan="1" >ถึงวันที่</td>
-        <td colspan="3" class="TableLine" style="text-align:center"></td>
-        <td colspan="2" >มีกำหนด</td>
+        <td colspan="6" >วัน มีสิทธิลาพักผ่อนประจำปีนี้อีก 10 วันทำการ รวมเป็น</td>
         <td colspan="1" class="TableLine" style="text-align:center"></td>
         <td colspan="1" >วัน</td>
     </tr>
     <tr>
-        <td colspan="3" >ระหว่างนี้ติดต่อข้าพเจ้าได้ที่</td>
+        <td colspan="3" >ขอลาพักผ่อนตั้งแต่วันที่ </td>
+        <td colspan="3" class="TableLine" style="text-align:center"></td>
+        <td colspan="1" >ถึงวันที่</td>
+        <td colspan="2" class="TableLine" style="text-align:center"></td>
+        <td colspan="1" >มีกำหนด</td>
+        <td colspan="1" class="TableLine" style="text-align:center"></td>
+        <td colspan="1" >วัน</td>
+    </tr>    
+    
+    <tr>
+        <td colspan="3" >ระหว่างลาจะติดต่อข้าพเจ้าได้ที่</td>
         <td colspan="9" class="TableLine" style="text-align:center"></td>
     </tr>
     <tr>
         <td colspan="12" class="TableLine" style="text-align:right">.</td>
     </tr>
+    
     <tr>
         <td colspan="6" style="text-align:center">
         - ทราบ<br><br><br>
             (ลงชื่อ)................................................................<br>
             (นางรัชดาวดี กาญจนขจิต)<br>
             ตำแหน่ง ผู้พิพากษาหัวหน้าคณะชั้นต้นในศาลแขวงราชบุรี <br>ช่วยทำงานชั่วคราวในตำแหน่งผู้พิพากษาหัวหน้าศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์<br>
-            <br>
+            <br><br>
         </td>
         
-        <td colspan="6" style="text-align:center">
+        <td colspan="6" style="text-align:center;">
             ขอแสดงความนับถือ<br><br><br>
-            (ลงชื่อ)................................................................<br>
-            (.....................................................................)<br>
-        </td>
+            (ลงชื่อ)................................................................<br><br>
+            (....................................................................)
+        </td>        
     </tr>
-    
+   
     <tr>
         <td colspan="6"> 
-            
             <table class="table_bordered" width="100%" border="0" cellpadding="2" cellspacing="0">
                 <tr>
-                    <td colspan="8" style="text-align:center">สถิติการลาในปีงบประมาณนี้</td>
+                    <td colspan="6" style="text-align:center">สถิติการลาในปีงบประมาณนี้</td>
                 </tr>
                 <tr>
-                    <td colspan="2" style="text-align:center">ประเภทการลา</td>
                     <td colspan="2" style="text-align:center">ลามาแล้ว<br>(วันทำการ)</td>
                     <td colspan="2" style="text-align:center">ลาครั้งนี้<br>(วันทำการ)</td>
                     <td colspan="2" style="text-align:center">รวมเป็น<br>(วันทำการ)</td>
                 </tr>
                 <tr>
-                    <td colspan="2">ลาป่วย</td>
-                    <td colspan="2" style="text-align:center"></td>
-                    <td colspan="2" style="text-align:center"></td>
-                    <td colspan="2" style="text-align:center"></td>
-                </tr>
-                <tr>
-                    <td colspan="2">ลากิจ</td>
-                    <td colspan="2" style="text-align:center"></td>
-                    <td colspan="2" style="text-align:center"></td>
-                    <td colspan="2" style="text-align:center"></td>
-                </tr>
-                <tr>
-                    <td colspan="2">ลาคลอดบุตร</td>
                     <td colspan="2" style="text-align:center"></td>
                     <td colspan="2" style="text-align:center"></td>
                     <td colspan="2" style="text-align:center"></td>
@@ -173,6 +137,12 @@ use yii\helpers\Html;
                     
                     (นางสาวสิริลักษณ์ จานุกิจ)<br>
                     ผู้อำนวยการสำนักงานประจำศาลเยาวชนและครอบครัว<br>จังหวัดประจวบคีรีขันธ์
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8"><br><br> <br> <br>                     
+                    - รับทราบ<br><br>
+                    (ลงชื่อ)...............................................ผู้ปฏิบัติงานแทน
                     </td>
                 </tr>
             </table>

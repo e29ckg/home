@@ -68,25 +68,6 @@ $menu = [
 			
 		],	
 		[
-			'label' => 'ใบลา',  
-			'url' => ['#'],
-			'template' => '<a href="#" title="{label}"><i class="fa fa-lg fa-fw fa-cab"></i> <span class="menu-item-parent">{label}</span></a>',
-			'items' => [
-				[
-					'label' => 'ลาป่วย',
-					'url' => ['/leaves/index'],
-					'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-warning"></i> <span class="menu-item-parent">{label}</span></a>',
-					
-				],			
-				[
-					'label' => 'ลาพักผ่อน',
-					'url' => ['/leaves/index'],
-					'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-phone"></i> <span class="menu-item-parent">{label}</span></a>',
-					
-				],
-			]
-		],
-		[
 			'label' => 'WebLink',
 			'url' => ['/web_link/index'],
 			'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-external-link"></i> <span class="menu-item-parent">{label}</span></a>',
@@ -110,6 +91,18 @@ $menu = [
 			'url' => ['#'],
 			'template' => '<a href="#" title="{label}"><i class="fa fa-lg fa-fw fa-cab"></i> <span class="menu-item-parent">{label}</span></a>',
 			'items' => [
+				[
+					'label' => 'ใบลาพักผ่อน',
+					'url' => ['/log/test1'],
+					'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-warning"></i> <span class="menu-item-parent">{label}</span></a>',
+					
+				],
+				[
+					'label' => 'ใบลาป่วย',
+					'url' => ['/log/test'],
+					'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-warning"></i> <span class="menu-item-parent">{label}</span></a>',
+					
+				],
 				[
 					'label' => 'ระบบรักษาความปลอดภัย',
 					'url' => '/scrt/web',
@@ -194,43 +187,36 @@ $menu = [
 			'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-external-link"></i> <span class="menu-item-parent">{label}</span></a>',
 			
 		],
-		[
-			'label' => 'ใบลา',  
-			'url' => ['#'],
-			'template' => '<a href="#" title="{label}"><i class="fa fa-lg fa-fw fa-cab"></i> <span class="menu-item-parent">{label}</span></a>',
-			'items' => [
-				[
-					'label' => 'ลาป่วย',
-					'url' => ['/leaves/index'],
-					'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-warning"></i> <span class="menu-item-parent">{label}</span></a>',
-					
-				],			
-				[
-					'label' => 'ลาพักผ่อน',
-					'url' => ['/leaves/index'],
-					'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-phone"></i> <span class="menu-item-parent">{label}</span></a>',
-					
-				],
-			]
-		],
-		[
+		// [
 	
-			'label' => 'ส่งสำเนาคำพิพากษาไปภาค7',
-			'url' => ['/ppss/index'],
-			'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-paper-plane-o"></i> <span class="menu-item-parent">{label}</span></a>',
+		// 	'label' => 'ส่งสำเนาคำพิพากษาไปภาค7',
+		// 	'url' => ['/ppss/index'],
+		// 	'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-paper-plane-o"></i> <span class="menu-item-parent">{label}</span></a>',
 			
-		],
-		[
-			'label' => 'เบิกของ Cartx',
-			'url' => '/cartx/web',
-			'template' => '<a href="{url}" title="{label}" target="_blank"> <i class="fa fa-lg fa-fw fa-shopping-cart"></i> <span class="menu-item-parent">{label}</span></a>',
+		// ],
+		// [
+		// 	'label' => 'เบิกของ Cartx',
+		// 	'url' => '/cartx/web',
+		// 	'template' => '<a href="{url}" title="{label}" target="_blank"> <i class="fa fa-lg fa-fw fa-shopping-cart"></i> <span class="menu-item-parent">{label}</span></a>',
 		
-		],		
+		// ],		
 		[
 			'label' => 'ช่วยอำนวยการพัฒนา',  
 			'url' => ['#'],
 			'template' => '<a href="#" title="{label}"><i class="fa fa-lg fa-fw fa-cab"></i> <span class="menu-item-parent">{label}</span></a>',
 			'items' => [
+				[
+					'label' => 'ใบลาพักผ่อน',
+					'url' => ['/log/test1'],
+					'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-warning"></i> <span class="menu-item-parent">{label}</span></a>',
+					
+				],
+				[
+					'label' => 'ใบลาป่วย',
+					'url' => ['/log/test'],
+					'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-warning"></i> <span class="menu-item-parent">{label}</span></a>',
+					
+				],
 				[
 					'label' => 'ระบบรักษาความปลอดภัย',
 					'url' => '/scrt/web',
