@@ -13,8 +13,14 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="web-link-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
+<?php
+if($model->cat == 'ลาป่วย'){
+    $_form = '_form_a_update';
+}else if($model->cat == 'ลาพักผ่อน'){
+    $_form = '_form_b_update';
+}
+?>
+    <?= $this->render($_form, [
         'model' => $model,
     ]) ?>
 

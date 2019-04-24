@@ -7,9 +7,6 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\WebLink */
 /* @var $form yii\widgets\ActiveForm */
-use kartik\date\DatePicker;
-
-
 ?>
 
 <div class="web-link-form">
@@ -32,7 +29,6 @@ use kartik\date\DatePicker;
 
 <div>
 
-
 <?= $form->field($model, 'name', [
     'inputOptions' => [
         'placeholder' => $model->getAttributeLabel('name')
@@ -46,14 +42,14 @@ use kartik\date\DatePicker;
 <div>
     <?= $form->field($model, 'link', [
     'inputOptions' => [
-        'placeholder' => $model->getAttributeLabel('link')
+        'placeholder' => $model->getAttributeLabel('link'),
     ],
     'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('link').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
     ])->label(false);
     ?>
 
-
 </div> 
+
 
 <?= $form->field($model, 'img',[
    'inputOptions' => [

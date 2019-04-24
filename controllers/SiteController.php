@@ -142,7 +142,7 @@ class SiteController extends Controller
             $modelLog->create_at = date("Y-m-d H:i:s");
             $modelLog->ip = Yii::$app->getRequest()->getUserIP();
             if($modelLog->save()){
-                 // $res = $this->notify_message_admin($message); 
+                $res = $this->notify_message_admin($message); 
             }
             return $this->goBack();
         }
@@ -168,7 +168,7 @@ class SiteController extends Controller
             $modelLog->create_at = date("Y-m-d H:i:s");
             $modelLog->ip = Yii::$app->getRequest()->getUserIP();
             if($modelLog->save()){
-                // $res = $this->notify_message_admin($message); 
+                $res = $this->notify_message_admin($message); 
             }
 
         Yii::$app->user->logout();

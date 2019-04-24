@@ -137,7 +137,6 @@ $this->title = 'Login';
 									<a href="javascript:void(alert('Thank you.'));" class="btn btn-warning btn-circle"><i class="fa fa-linkedin"></i></a>
 								</li>
 							</ul>
-						
 					</div>
 				</div>
 			</div>
@@ -179,8 +178,6 @@ $this->title = 'Login';
 
 		<!-- MAIN APP JS FILE -->
 		<script src="<?=Url::to('@web/js/app.min.js')?>"></script>
-
-		
 
 	</body>
 </html>

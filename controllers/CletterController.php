@@ -309,7 +309,7 @@ class CletterController extends Controller
 
     public function actionLine_alert($id) {
         $model = $this->findModel($id);
-        $message = $model->name .' ดูรายละเอียดเพิ่มเติมได้ที่ เว็บภายใน http://10.37.64.01/home/web/cletter/show/'.$model->file;
+        $message = $model->name .' ดูรายละเอียดเพิ่มเติมได้ที่ เว็บภายใน http://10.37.64.01/cletter.php?ref='.$model->file;
         $res = $this->notify_message($message);
         if($res->status == 200){
             Yii::$app->session->setFlash('success', 'Line Notify '.$res->message);

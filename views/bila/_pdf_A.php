@@ -4,6 +4,9 @@ use app\models\User;
 
 function DateThai_full($strDate)
 	{
+        if($strDate == ''){
+            return "-";
+        }
 		$strYear = date("Y",strtotime($strDate))+543;
 		$strMonth= date("n",strtotime($strDate));
 		$strDay= date("j",strtotime($strDate));
@@ -17,6 +20,9 @@ function DateThai_full($strDate)
     }
 function DateThai_month_full($strDate)
 	{
+        if($strDate == ''){
+            return "-";
+        }
 		$strYear = date("Y",strtotime($strDate))+543;
 		$strMonth= date("n",strtotime($strDate));
 		$strDay= date("j",strtotime($strDate));
@@ -26,7 +32,8 @@ function DateThai_month_full($strDate)
 		$strMonthCut = Array("","มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม",
                             "สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม");
 		$strMonthThai=$strMonthCut[$strMonth];
-		return "$strMonthThai";
+        // return "$strMonthThai";
+        return "$strDate";
 	}
 
 ?>
@@ -103,10 +110,7 @@ function DateThai_month_full($strDate)
         <td colspan="10" >[ &nbsp; ] ลาคลอดบุตร</td>
     </tr>
     <tr>
-        <td colspan="2" >ตั้งแต่วันที่ </td>
-        <?php
-            $date_begin = date_create($model->date_begin);  //echo date_format($date_create,"Y/m/d H:i:s");
-        ?>
+        <td colspan="2" >ตั้งแต่วันที่ </td>        
         <td colspan="2" class="TableLine" style="text-align:center"><?=DateThai_full($model->date_begin);?> </td>
         <td colspan="1" >ถึงวันที่</td>
         <td colspan="3" class="TableLine" style="text-align:center"><?=DateThai_full($model->date_end);?></td>
@@ -127,15 +131,18 @@ function DateThai_month_full($strDate)
         <td colspan="1" >ถึงวันที่</td>
         <td colspan="3" class="TableLine" style="text-align:center"><?=DateThai_full($model->dateO_end);?></td>
         <td colspan="2" >มีกำหนด</td>
-        <td colspan="1" class="TableLine" style="text-align:center"><?=$model->dateO_total;?></td>
+        <td colspan="1" class="TableLine" style="text-align:center"><?=$model->dateO_total ? $model->dateO_total : '-';?></td>
         <td colspan="1" >วัน</td>
     </tr>
     <tr>
         <td colspan="3" >ระหว่างนี้ติดต่อข้าพเจ้าได้ที่</td>
-        <td colspan="9" class="TableLine"><?=User::getProfileAddressById($model->user_id);?> </td>
+        <td colspan="9" class="TableLine"><?=$model->address;?> </td>
     </tr>
     <tr>
         <td colspan="12" class="TableLine" style="text-align:center"><?= User::getProfilePhoneById($model->user_id)?>.</td>
+    </tr>
+    <tr>
+        <td colspan="12" ><?= $model->comment ? '( หมายเหตุ ' .$model->comment. ' )' : '' ;?></td>
     </tr>
     <tr>
         <td colspan="6" style="text-align:center">

@@ -161,6 +161,52 @@ class Web_linkController extends Controller
         }
     }
 
+    public function actionC2()
+    {
+        $model = new WebLink();
+
+        //Add This For Ajax Email Exist Validation 
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+          } 
+     
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            
+            $f = UploadedFile::getInstance($model, 'img');
+            if(!empty($f)){
+                $dir = Url::to('@webroot/uploads/weblink/');
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0777, true);
+                } 
+                                
+                $fileName = md5($f->baseName . time()) . '.' . $f->extension;
+                if($f->saveAs($dir . $fileName)){
+                    $model->img = $fileName;
+                }               
+            } 
+            $model->name = $_POST['WebLink']['name'];
+            $model->link = $_POST['WebLink']['link'];
+            $model->create_at = date("Y-m-d H:i:s");
+            $model->update_at = date("Y-m-d H:i:s");
+            if($model->save()){
+                Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
+                return $this->redirect(['admin']);
+            }   
+        }
+
+        // $model->tel = explode(',', $model->tel);
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('f2',[
+                    'model' => $model,                    
+            ]);
+        }else{
+            return $this->render('f2',[
+                'model' => $model,                    
+            ]); 
+        }
+    }
+
     /**
      * Updates an existing WebLink model.
      * If update is successful, the browser will be redirected to the 'view' page.

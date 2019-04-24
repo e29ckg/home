@@ -1,7 +1,9 @@
+
 <?php
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -78,6 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								<thead>
 									<tr>
 					                    <th data-class="expand"> # </th>
+										<th >ชื่อ</th>
 										<th style="width:50px">ประเภทการลา</th>
 					                    <th data-hide="phone,tablet">ลาตั้งแต่</th>
 					                    <th data-hide="phone,tablet">ถึงวันที่</th>
@@ -90,7 +93,10 @@ $this->params['breadcrumbs'][] = $this->title;
 									<?php foreach ($models as $model): ?>
 						            <tr>
 						                <td><?= $i++?></td>
-										<td class="img-weblink" >
+										<td  >
+										<?= User::getProfileNameById($model->user_id);?>
+										</td>
+										<td  >
 										<?=$model->cat?>
 										</td>										
                                         <td><?=DateThai_full($model->date_begin)?></td>										
@@ -240,9 +246,9 @@ $(document).ready(function() {
                 //   $("#myModal").modal('toggle');
         	});     
 		}); 
-		var url_createb = "createb";
+		var url_create = "createb";
     	$( "#act-create-b" ).click(function() {
-        	$.get(url_createb,function (data){
+        	$.get(url_create,function (data){
                 $("#activity-modal").find(".modal-body").html(data);
                 $(".modal-body").html(data);
                 $(".modal-title").html("เพิ่มข้อมูล");
