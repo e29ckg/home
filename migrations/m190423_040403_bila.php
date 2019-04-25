@@ -35,6 +35,7 @@ class m190423_040403_bila extends Migration
             't1' => $this->string(),
             't2' => $this->string(),
             't3' => $this->string(),
+            'comment' => $this->string(),
             'po' => $this->string(),
             'bigboss' => $this->string(),
             'date_create' => $this->string(),
