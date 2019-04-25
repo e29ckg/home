@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use kartik\select2\Select2;
+use kartik\file\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\CLetter */
@@ -64,13 +65,20 @@ echo $form->field($model, 'caid')->widget(Select2::classname(), [
 
 
 <div>
-<?= $form->field($model, 'file',[
-   'inputOptions' => [
-        'placeholder' => $model->getAttributeLabel('file'),
-        'onchange'=>'this.parentNode.nextSibling.value = this.value'
-    ],
-    'template' => '<section><label class="label">{label}</label><div class="input input-file"><span class="button">{input}Browse</span><input type="text" placeholder="Include some files" readonly=""><div class="invalid">{error}{hint}</div></div></section>'
-])->fileInput()->label(false) ?>
+<?php
+echo $form->field($model, 'file')->widget(FileInput::classname(), [
+    'options' => ['accept' => 'image/*'],
+]);
+?>
+<?php
+// echo $form->field($model, 'file',[
+//    'inputOptions' => [
+//         'placeholder' => $model->getAttributeLabel('file'),
+//         'onchange'=>'this.parentNode.nextSibling.value = this.value'
+//     ],
+//     'template' => '<section><label class="label">{label}</label><div class="input input-file"><span class="button">{input}Browse</span><input type="text" placeholder="Include some files" readonly=""><div class="invalid">{error}{hint}</div></div></section>'
+// ])->fileInput()->label(false) 
+?>
 </div>
 <?php 
 if (!empty($model->file)){

@@ -21,6 +21,7 @@
         "kartik-v/yii2-mpdf": "dev-master",
         "kartik-v/yii2-widget-select2": "@dev",
         "kartik-v/yii2-widget-datepicker": "@dev",
+        "kartik-v/yii2-widget-fileinput": "@dev",
         "dixonsatit/yii2-thai-year-formatter": "*"
     },
     "require-dev": {

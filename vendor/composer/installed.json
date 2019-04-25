@@ -256,17 +256,17 @@
     },
     {
         "name": "codeception/base",
-        "version": "2.5.5",
-        "version_normalized": "2.5.5.0",
+        "version": "2.5.6",
+        "version_normalized": "2.5.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/Codeception/base.git",
-            "reference": "17c3e2fc627b18dceec393b4b42e47c45be31ac2"
+            "reference": "aace5bab5593c93d8473b620f70754135a1eb4f0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Codeception/base/zipball/17c3e2fc627b18dceec393b4b42e47c45be31ac2",
-            "reference": "17c3e2fc627b18dceec393b4b42e47c45be31ac2",
+            "url": "https://api.github.com/repos/Codeception/base/zipball/aace5bab5593c93d8473b620f70754135a1eb4f0",
+            "reference": "aace5bab5593c93d8473b620f70754135a1eb4f0",
             "shasum": ""
         },
         "require": {
@@ -310,7 +310,7 @@
             "stecman/symfony-console-completion": "For BASH autocompletion",
             "symfony/phpunit-bridge": "For phpunit-bridge support"
         },
-        "time": "2019-03-23T18:30:45+00:00",
+        "time": "2019-04-24T11:36:34+00:00",
         "bin": [
             "codecept"
         ],
@@ -774,6 +774,61 @@
         ]
     },
     {
+        "name": "kartik-v/bootstrap-fileinput",
+        "version": "v5.0.2",
+        "version_normalized": "5.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
+            "reference": "1d40e3e772e4de0f0777655eaf108a41c1d4cfd3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/1d40e3e772e4de0f0777655eaf108a41c1d4cfd3",
+            "reference": "1d40e3e772e4de0f0777655eaf108a41c1d4cfd3",
+            "shasum": ""
+        },
+        "time": "2019-04-18T19:58:53+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "5.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "kartik\\plugins\\fileinput\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Kartik Visweswaran",
+                "email": "kartikv2@gmail.com",
+                "homepage": "http://www.krajee.com/"
+            }
+        ],
+        "description": "An enhanced HTML 5 file input for Bootstrap 3.x with features for file preview for many file types, multiple selection, ajax uploads, and more.",
+        "homepage": "https://github.com/kartik-v/bootstrap-fileinput",
+        "keywords": [
+            "ajax",
+            "bootstrap",
+            "delete",
+            "file",
+            "image",
+            "input",
+            "jquery",
+            "multiple",
+            "preview",
+            "progress",
+            "upload"
+        ]
+    },
+    {
         "name": "kartik-v/yii2-krajee-base",
         "version": "v2.0.5",
         "version_normalized": "2.0.5.0",
@@ -933,6 +988,63 @@
             "picker",
             "plugin",
             "select2",
+            "widget",
+            "yii2"
+        ]
+    },
+    {
+        "name": "kartik-v/yii2-widget-fileinput",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kartik-v/yii2-widget-fileinput.git",
+            "reference": "fcf5bf41fac35363d3f24a01a34f228c2534c7b7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kartik-v/yii2-widget-fileinput/zipball/fcf5bf41fac35363d3f24a01a34f228c2534c7b7",
+            "reference": "fcf5bf41fac35363d3f24a01a34f228c2534c7b7",
+            "shasum": ""
+        },
+        "require": {
+            "kartik-v/bootstrap-fileinput": ">=5.0.0",
+            "kartik-v/yii2-krajee-base": ">=2.0.0"
+        },
+        "time": "2019-04-19T11:45:08+00:00",
+        "type": "yii2-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "kartik\\file\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Kartik Visweswaran",
+                "email": "kartikv2@gmail.com",
+                "homepage": "http://www.krajee.com/"
+            }
+        ],
+        "description": "An enhanced FileInput widget for Bootstrap 3.x & 4.x with file preview, multiple selection, and more features (sub repo split from yii2-widgets)",
+        "homepage": "https://github.com/kartik-v/yii2-widget-fileinput",
+        "keywords": [
+            "extension",
+            "file",
+            "form",
+            "input",
+            "jquery",
+            "plugin",
+            "upload",
             "widget",
             "yii2"
         ]
@@ -2193,17 +2305,17 @@
     },
     {
         "name": "sebastian/environment",
-        "version": "4.1.0",
-        "version_normalized": "4.1.0.0",
+        "version": "4.2.1",
+        "version_normalized": "4.2.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/sebastianbergmann/environment.git",
-            "reference": "6fda8ce1974b62b14935adc02a9ed38252eca656"
+            "reference": "3095910f0f0fb155ac4021fc51a4a7a39ac04e8a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6fda8ce1974b62b14935adc02a9ed38252eca656",
-            "reference": "6fda8ce1974b62b14935adc02a9ed38252eca656",
+            "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/3095910f0f0fb155ac4021fc51a4a7a39ac04e8a",
+            "reference": "3095910f0f0fb155ac4021fc51a4a7a39ac04e8a",
             "shasum": ""
         },
         "require": {
@@ -2215,11 +2327,11 @@
         "suggest": {
             "ext-posix": "*"
         },
-        "time": "2019-02-01T05:27:49+00:00",
+        "time": "2019-04-25T07:55:20+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "4.1-dev"
+                "dev-master": "4.2-dev"
             }
         },
         "installation-source": "dist",
