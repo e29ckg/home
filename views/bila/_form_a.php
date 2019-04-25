@@ -185,33 +185,33 @@ use yii\helpers\ArrayHelper;
             <div class="row">
             <section class="col col-6">
 				<label class="input">
-            <?php 
-echo $form->field($model, 'po')->widget(Select2::classname(), [
-    'data' => Bila::getSignList(),
-    'language' => 'th',
-    'options' => ['placeholder' => ' เลือก ผอ.'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]);
-?>
-</label>
+                    <?php 
+                        echo $form->field($model, 'po')->widget(Select2::classname(), [
+                                'data' => Bila::getSignList(),
+                                'language' => 'th',
+                                'options' => ['placeholder' => ' เลือก ผอ.'],
+                                'pluginOptions' => [
+                                'allowClear' => true
+                                ],
+                            ]);
+                    ?>
+                </label>
 			</section>
             <section class="col col-6">
 				<label class="input">
-<?php 
-echo $form->field($model, 'bigboss')->widget(Select2::classname(), [
-    'data' => Bila::getSignList(),
-    'language' => 'th',
-    'options' => ['placeholder' => ' เลือก หัวหน้าศาลฯ'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]);
-?>
-</label>
+                    <?php 
+                        echo $form->field($model, 'bigboss')->widget(Select2::classname(), [
+                            'data' => Bila::getSignList(),
+                            'language' => 'th',
+                            'options' => ['placeholder' => ' เลือก หัวหน้าศาลฯ'],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ]);
+                    ?>
+                </label>
 			</section>
-            </div>
+        </div>
 		</fieldset>
 
  

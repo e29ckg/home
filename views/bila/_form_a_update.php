@@ -61,19 +61,9 @@ use yii\helpers\ArrayHelper;
                             ],
                             'template' => '<section class="col col-2"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('date_total').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
                         ]);
-                    ?>
-				<!-- <section class="col col-2">
-					<label class="input">                                                        
-						<input type="text" placeholder="มีกำหนด(วัน)" data-cip-id="cIPJQ342845641">
-					</label>
-				</section> -->
+                    ?>				
             </div>
             <div>
-				<!-- <section >
-					<label class="input">
-						<input type="text" placeholder="เนื่องจาก" data-cip-id="cIPJQ342845642">
-					</label>
-				</section>	 -->
                 <?= $form->field($model, 'due', [
                             'inputOptions' => [
                                 'placeholder' => $model->getAttributeLabel('due')
@@ -113,28 +103,18 @@ use yii\helpers\ArrayHelper;
                             ],
                             'template' => '<section class="col col-2"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('date_total').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
                         ]);
-                    ?>
-                <!-- <section class="col col-2">
-					<label class="input">
-						<input type="text" placeholder="มีกำหนด(วัน)" data-cip-id="cIPJQ342845644">
-					</label>
-				</section> -->
+                ?>
+                
 			</div>
                                         
 			<div class="row">
             <?= $form->field($model, 't1', [
-                            'inputOptions' => [
-                                'placeholder' => $model->getAttributeLabel('t1')
-                            ],
-                            'template' => '<section class="col col-2"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('t1').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
-                        ]);
-                    ?>
-
-				<!-- <section class="col col-3">
-					<label class="input">
-						<input type="text" placeholder="เคยลามาแล้วรวม" data-cip-id="cIPJQ342845645">
-					</label>
-				</section> -->
+                    'inputOptions' => [
+                        'placeholder' => $model->getAttributeLabel('t1')
+                    ],
+                    'template' => '<section class="col col-2"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('t1').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+                ]);
+            ?>
             </div>
         </fieldset>
         <fieldset>   
@@ -147,52 +127,47 @@ use yii\helpers\ArrayHelper;
                             ],
                             'template' => '<section class="col col-5"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('address').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
                         ]);
-                    echo $form->field($model, 'comment', [
+                echo $form->field($model, 'comment', [
                             'inputOptions' => [
                                 'placeholder' => $model->getAttributeLabel('comment'),
                             ],
                             'template' => '<section class="col col-5"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('comment').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
                         ]);
             ?>
-			<!-- <section>
-				<label class="input">
-					<input type="text" placeholder="ระหว่างลาติดต่อได้ที่.." data-cip-id="cIPJQ342845654">
-				</label>
-			</section> -->
+			
             </div> 
             <div class="row">
             <section class="col col-6">
 				<label class="input">
-            <?php 
-echo $form->field($model, 'po')->widget(Select2::classname(), [
-    'data' => Bila::getSignList(),
-    'language' => 'th',
-    'options' => ['placeholder' => ' เลือก ผอ.'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]);
-?>
-</label>
+                    <?php 
+                        echo $form->field($model, 'po')->widget(Select2::classname(), [
+                                'data' => Bila::getSignList(),
+                                'language' => 'th',
+                                'options' => ['placeholder' => ' เลือก ผอ.'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                    ],
+                                ]);
+                    ?>
+                </label>
 			</section>
             <section class="col col-6">
 				<label class="input">
-<?php 
-echo $form->field($model, 'bigboss')->widget(Select2::classname(), [
-    'data' => Bila::getSignList(),
-    'language' => 'th',
-    'options' => ['placeholder' => ' เลือก หัวหน้าศาลฯ'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]);
-?>
-</label>
+                    <?php 
+                        echo $form->field($model, 'bigboss')->widget(Select2::classname(), [
+                            'data' => Bila::getSignList(),
+                            'language' => 'th',
+                            'options' => ['placeholder' => ' เลือก หัวหน้าศาลฯ'],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ]);
+                    ?>
+                </label>
 			</section>
             </div>
 		</fieldset>
 
- 
 <fieldset class="text-right"> 
     <?= Html::resetButton('Reset', ['class' => 'btn btn-warning btn-lg']) ?> <?= Html::submitButton('Save', ['class' => 'btn btn-primary btn-lg']) ?>
 </fieldset>

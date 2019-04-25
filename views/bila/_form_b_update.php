@@ -3,8 +3,11 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-
+use app\models\User;
+use app\models\Bila;
+use kartik\select2\Select2;
 use kartik\date\DatePicker;
+use yii\helpers\ArrayHelper;
 
 
 ?>
@@ -123,6 +126,36 @@ use kartik\date\DatePicker;
 				</label>
 			</section> -->
             </div> 
+            <div class="row">
+            <section class="col col-6">
+				<label class="input">
+                    <?php 
+                        echo $form->field($model, 'po')->widget(Select2::classname(), [
+                                'data' => Bila::getSignList(),
+                                'language' => 'th',
+                                'options' => ['placeholder' => ' เลือก ผอ.'],
+                                'pluginOptions' => [
+                                'allowClear' => true
+                                ],
+                            ]);
+                    ?>
+                </label>
+			</section>
+            <section class="col col-6">
+				<label class="input">
+                    <?php 
+                        echo $form->field($model, 'bigboss')->widget(Select2::classname(), [
+                            'data' => Bila::getSignList(),
+                            'language' => 'th',
+                            'options' => ['placeholder' => ' เลือก หัวหน้าศาลฯ'],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ]);
+                    ?>
+                </label>
+			</section>
+        </div>
 		</fieldset>
  
 <fieldset class="text-right"> 

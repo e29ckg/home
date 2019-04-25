@@ -31,7 +31,7 @@ class SignBossName extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'status'], 'required'],
             [['status'], 'integer'],
             [['name', 'dep1', 'dep2', 'dep3', 'date_create'], 'string', 'max' => 255],
         ];

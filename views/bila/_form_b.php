@@ -4,13 +4,15 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use app\models\User;
+use app\models\Bila;
+use kartik\select2\Select2;
 use kartik\date\DatePicker;
+use yii\helpers\ArrayHelper;
 
 
 ?>
 <h1>ใบลาพักผ่อน</h1>
 <div class="widget-body no-padding">
-
     <?php 
     $form = ActiveForm::begin([
 		'id' => 'weblink-form',
@@ -82,8 +84,7 @@ use kartik\date\DatePicker;
             </div>
            
         </fieldset>
-        <fieldset>    
-                                                    
+        <fieldset>                                  
 			<div class="row">
             <?php if(!empty($model_cat->t3)){
                         $t3 = $model_cat->t3;
@@ -128,6 +129,36 @@ use kartik\date\DatePicker;
 				</label>
 			</section> -->
             </div> 
+        <div class="row">
+            <section class="col col-6">
+				<label class="input">
+                    <?php 
+                        echo $form->field($model, 'po')->widget(Select2::classname(), [
+                                'data' => Bila::getSignList(),
+                                'language' => 'th',
+                                'options' => ['placeholder' => ' เลือก ผอ.'],
+                                'pluginOptions' => [
+                                'allowClear' => true
+                                ],
+                            ]);
+                    ?>
+                </label>
+			</section>
+            <section class="col col-6">
+				<label class="input">
+                    <?php 
+                        echo $form->field($model, 'bigboss')->widget(Select2::classname(), [
+                            'data' => Bila::getSignList(),
+                            'language' => 'th',
+                            'options' => ['placeholder' => ' เลือก หัวหน้าศาลฯ'],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ]);
+                    ?>
+                </label>
+			</section>
+        </div>
 		</fieldset>
 
  

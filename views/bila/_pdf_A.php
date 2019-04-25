@@ -168,8 +168,7 @@ function DateThai_month_full($strDate)
     </tr>
     
     <tr>
-        <td colspan="6"> 
-            
+        <td colspan="6">             
             <table class="table_bordered" width="100%" border="0" cellpadding="2" cellspacing="0">
                 <tr>
                     <td colspan="8" style="text-align:center">สถิติการลาในปีงบประมาณนี้</td>
@@ -198,8 +197,6 @@ function DateThai_month_full($strDate)
                     <td colspan="2" style="text-align:center"></td>
                     <td colspan="2" style="text-align:center"></td>
                 </tr>
-                 
-
             </table>
             <table class="bl_detail" width="100%" cellpadding="2" cellspacing="0">
                 <tr>
@@ -219,15 +216,14 @@ function DateThai_month_full($strDate)
                 </tr>
                 <tr>
                     <td colspan="8" style="text-align:center">
-                    <br>               
-                    
+                    <br> 
                     <?php 
-                    if(!empty($model->po)){
-                        $model_s_po = SignBossName::find()->where(['id' => $model->po])->one();
-                        echo '('.$model_s_po->name.')<br>'.$model_s_po->dep1.'<br>'.$model_s_po->dep2.'<br>'.$model_s_po->dep3; 
-                    }else{
-                        echo '';
-                    }
+                        if(!empty($model->po)){
+                            $model_s_po = SignBossName::find()->where(['id' => $model->po])->one();
+                            echo '('.$model_s_po->name.')<br>'.$model_s_po->dep1.'<br>'.$model_s_po->dep2.'<br>'.$model_s_po->dep3; 
+                        }else{
+                            echo '';
+                        }
                     ?>
                     </td>
                 </tr>
@@ -246,11 +242,9 @@ function DateThai_month_full($strDate)
                         ตำแหน่ง....................................................................<br><br>
                         วันที่.........................................................................<br>
                     </td>
-                </tr>
-                
+                </tr>                
             </table>
-            <table class="table_bordered" width="100%" border="0" cellpadding="2" cellspacing="0">
-               
+            <table class="table_bordered" width="100%" border="0" cellpadding="2" cellspacing="0">               
                 <tr>
                     <td colspan="8"><br>
                         คำสั่ง   &nbsp;&nbsp;&nbsp;[ &nbsp; ] อนุญาต  &nbsp;&nbsp;&nbsp;[ &nbsp; ] ไม่อนุญาต<br><br>
@@ -260,10 +254,8 @@ function DateThai_month_full($strDate)
                         ตำแหน่ง...................................................................<br><br>
                         วันที่.........................................................................<br>
                     </td>
-                </tr>
-                
+                </tr>                
             </table>
         </td>
-    </tr>
-    
+    </tr>    
 </table>
