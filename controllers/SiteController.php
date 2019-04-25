@@ -127,7 +127,8 @@ class SiteController extends Controller
         $this->layout = 'loginl';
 
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            // return $this->goHome();
+            return $this->redirect('site/index');
         }
         
         

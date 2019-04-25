@@ -41,9 +41,10 @@ class Bila extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'date_begin', 'date_end', 'date_total','t1'], 'required'],
-            [['user_id'], 'integer'],
-            [['t3'], 'safe'],
-            [['cat', 'date_begin', 'date_end', 'date_total', 'dateO_begin', 'dateO_end', 'dateO_total', 'address', 't1', 't2', 'po', 'bigboss', 'date_create'], 'string', 'max' => 255],
+            [['user_id',], 'integer'],
+            [['p1','date_total','dateO_total', 't1'], 'number'],
+            [['t3','p2'], 'safe'],
+            [['cat', 'date_begin', 'comment','date_end', 'dateO_begin', 'dateO_end', 'due', 'address', 't2', 'po', 'bigboss', 'date_create'], 'string', 'max' => 255],
         ];
     }
 
@@ -55,10 +56,13 @@ class Bila extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'cat' => 'Cat',
+            'cat' => 'ประเภทการลา',
+            'p1' => 'มีวันลาพักผ่อนสะสม',
+            'p2' => 'พักผ่อนสะสมรวม',
             'date_begin' => 'ลาตั้งแต่วันที่',
             'date_end' => 'ถึงวันที่',
             'date_total' => 'มีกำหนด(วัน)',
+            'due' => 'เนื่องจาก',
             'dateO_begin' => 'ลาครั้งสุดท้าย ตั้งแต่วันที่',
             'dateO_end' => 'ถึงวันที่',
             'dateO_total' => 'มีกำหนด(วัน)',
@@ -66,6 +70,7 @@ class Bila extends \yii\db\ActiveRecord
             't1' => 'เคยลามาแล้วรวม',
             't2' => 'T2',
             't3' => 'T3',
+            'comment' => 'หมายเหตุ',
             'po' => 'Po',
             'bigboss' => 'Bigboss',
             'date_create' => 'Date Create',

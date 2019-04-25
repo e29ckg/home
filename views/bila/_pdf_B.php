@@ -1,5 +1,7 @@
 <?php
 use yii\helpers\Html;
+use app\models\User;
+
 function DateThai_full($strDate)
 	{
 		$strYear = date("Y",strtotime($strDate))+543;
@@ -27,7 +29,6 @@ function DateThai_month_full($strDate)
 		return "$strMonthThai";
 	}
 
-?>
 ?>
 
 <!-- <div class="text-center"><H3> </H3></div> -->
@@ -57,13 +58,17 @@ function DateThai_month_full($strDate)
     <tr>
         <td colspan="12" style="text-align:right">สำนักงานประจำศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์</td>
     </tr>
+    <?php
+        $date_create=date_create($model->date_create); 
+        //echo date_format($date_create,"Y/m/d H:i:s");
+    ?>
     <tr>
         <td colspan="7" style="text-align:right">วันที่</td>
-        <td colspan="1" class="TableLine" style="text-align:center"></td>
+        <td colspan="1" class="TableLine" style="text-align:center"><?=date_format($date_create,"d");?></td>
         <td colspan="1" style="text-align:center">เดือน</td>
-        <td colspan="1" class="TableLine" style="text-align:center"></td>
+        <td colspan="1" class="TableLine" style="text-align:center"><?=DateThai_month_full($model->date_create);?></td>
         <td colspan="1" style="text-align:center">พ.ศ.</td>
-        <td colspan="1" class="TableLine" style="text-align:center"></td>
+        <td colspan="1" class="TableLine" style="text-align:center"><?=date_format($date_create,"Y")+543;?></td>
     </tr>
     <tr>
         <td colspan="1" >เรื่อง</td>
@@ -76,9 +81,9 @@ function DateThai_month_full($strDate)
     <tr>
         <td colspan="2" ></td>
         <td colspan="1" >ข้าพเจ้า</td>
-        <td colspan="3" class="TableLine" style="text-align:center"></td>
+        <td colspan="3" class="TableLine" style="text-align:center"><?= User::getProfileNameById($model->user_id);?></td>
         <td colspan="1" >ตำแหน่ง</td>
-        <td colspan="5" class="TableLine" style="text-align:center"></td>
+        <td colspan="5" class="TableLine" style="text-align:center"><?=User::getProfileDepById($model->user_id);?></td>
     </tr>
     <tr>
         <td colspan="1" >สังกัด</td>
@@ -86,42 +91,44 @@ function DateThai_month_full($strDate)
     </tr>
     <tr>
         <td colspan="2" >มีวันลาพักผ่อนสะสม</td>
-        <td colspan="2" class="TableLine" style="text-align:center"></td>
+        <td colspan="2" class="TableLine" style="text-align:center"><?=$model->p1;?></td>
         <td colspan="6" >วัน มีสิทธิลาพักผ่อนประจำปีนี้อีก 10 วันทำการ รวมเป็น</td>
-        <td colspan="1" class="TableLine" style="text-align:center"></td>
+        <td colspan="1" class="TableLine" style="text-align:center"><?=$model->p2;?></td>
         <td colspan="1" >วัน</td>
     </tr>
     <tr>
         <td colspan="3" >ขอลาพักผ่อนตั้งแต่วันที่ </td>
-        <td colspan="3" class="TableLine" style="text-align:center"></td>
+        <td colspan="3" class="TableLine" style="text-align:center"><?=DateThai_full($model->date_begin);?></td>
         <td colspan="1" >ถึงวันที่</td>
-        <td colspan="2" class="TableLine" style="text-align:center"></td>
+        <td colspan="2" class="TableLine" style="text-align:center"><?=DateThai_full($model->date_end);?></td>
         <td colspan="1" >มีกำหนด</td>
-        <td colspan="1" class="TableLine" style="text-align:center"></td>
+        <td colspan="1" class="TableLine" style="text-align:center"><?=$model->date_total;?></td>
         <td colspan="1" >วัน</td>
     </tr>    
     
     <tr>
         <td colspan="3" >ระหว่างลาจะติดต่อข้าพเจ้าได้ที่</td>
-        <td colspan="9" class="TableLine" style="text-align:center"></td>
+        <td colspan="9" class="TableLine" ><?=User::getProfileAddressById($model->user_id);?></td>
     </tr>
     <tr>
-        <td colspan="12" class="TableLine" style="text-align:right">.</td>
+        <td colspan="12" class="TableLine" style="text-align:center"><?= User::getProfilePhoneById($model->user_id)?>.</td>
     </tr>
-    
+    <tr>
+        <td colspan="12" ><?= $model->comment ? '( หมายเหตุ ' .$model->comment. ' )' : '' ;?></td>
+    </tr>
     <tr>
         <td colspan="6" style="text-align:center">
         - ทราบ<br><br><br>
             (ลงชื่อ)................................................................<br>
             (นางรัชดาวดี กาญจนขจิต)<br>
-            ตำแหน่ง ผู้พิพากษาหัวหน้าคณะชั้นต้นในศาลแขวงราชบุรี <br>ช่วยทำงานชั่วคราวในตำแหน่งผู้พิพากษาหัวหน้าศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์<br>
+            ผู้พิพากษาหัวหน้าศาลเยาวชนและครอบครัว<br>จังหวัดประจวบคีรีขันธ์<br>
             <br><br>
         </td>
         
         <td colspan="6" style="text-align:center;">
             ขอแสดงความนับถือ<br><br><br>
             (ลงชื่อ)................................................................<br><br>
-            (....................................................................)
+            ( <?= User::getProfileNameById($model->user_id);?> )
         </td>        
     </tr>
    
@@ -137,9 +144,9 @@ function DateThai_month_full($strDate)
                     <td colspan="2" style="text-align:center">รวมเป็น<br>(วันทำการ)</td>
                 </tr>
                 <tr>
-                    <td colspan="2" style="text-align:center"></td>
-                    <td colspan="2" style="text-align:center"></td>
-                    <td colspan="2" style="text-align:center"></td>
+                    <td colspan="2" style="text-align:center"><?=$model->t1;?></td>
+                    <td colspan="2" style="text-align:center"><?=$model->t2;?></td>
+                    <td colspan="2" style="text-align:center"><?=$model->t3;?></td>
                 </tr>
                  
 

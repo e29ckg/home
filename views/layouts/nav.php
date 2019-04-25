@@ -42,7 +42,13 @@ $menu = [
 			// 	'url' => '/scrt/web',
 			// 	'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-warning"></i> <span class="menu-item-parent">{label}</span></a>',
 				
-			// ],			
+			// ],	
+			[
+				'label' => 'เขียนใบลา',
+				'url' => ['/bila/index'],
+				'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-suitcase"></i> <span class="menu-item-parent">{label}</span></a>',
+				
+			],		
 			[
 				'label' => 'Contact',
 				'url' => ['/co/index'],
@@ -92,17 +98,11 @@ $menu = [
 			'template' => '<a href="#" title="{label}"><i class="fa fa-lg fa-fw fa-cab"></i> <span class="menu-item-parent">{label}</span></a>',
 			'items' => [
 				[
-					'label' => 'ใบลาพักผ่อน',
-					'url' => ['/log/test1'],
-					'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-warning"></i> <span class="menu-item-parent">{label}</span></a>',
+					'label' => 'เขียนใบลา',
+					'url' => ['/bila/index'],
+					'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-suitcase"></i> <span class="menu-item-parent">{label}</span></a>',
 					
-				],
-				[
-					'label' => 'ใบลาป่วย',
-					'url' => ['/log/test'],
-					'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-warning"></i> <span class="menu-item-parent">{label}</span></a>',
-					
-				],
+				],				
 				[
 					'label' => 'ระบบรักษาความปลอดภัย',
 					'url' => '/scrt/web',
@@ -206,15 +206,9 @@ $menu = [
 			'template' => '<a href="#" title="{label}"><i class="fa fa-lg fa-fw fa-cab"></i> <span class="menu-item-parent">{label}</span></a>',
 			'items' => [
 				[
-					'label' => 'ใบลาพักผ่อน',
-					'url' => ['/log/test1'],
-					'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-warning"></i> <span class="menu-item-parent">{label}</span></a>',
-					
-				],
-				[
-					'label' => 'ใบลาป่วย',
-					'url' => ['/log/test'],
-					'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-warning"></i> <span class="menu-item-parent">{label}</span></a>',
+					'label' => 'เขียนใบลา',
+					'url' => ['/bila/index'],
+					'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-suitcase"></i> <span class="menu-item-parent">{label}</span></a>',
 					
 				],
 				[

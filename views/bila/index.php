@@ -5,8 +5,21 @@ use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+function DateThai_full($strDate)
+	{
+		$strYear = date("Y",strtotime($strDate))+543;
+		$strMonth= date("n",strtotime($strDate));
+		$strDay= date("j",strtotime($strDate));
+		$strHour= date("H",strtotime($strDate));
+		$strMinute= date("i",strtotime($strDate));
+		$strSeconds= date("s",strtotime($strDate));
+		$strMonthCut = Array("","มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม",
+                            "สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม");
+		$strMonthThai=$strMonthCut[$strMonth];
+		return "$strDay $strMonthThai $strYear";
+    }
 
-$this->title = 'Web Links';
+$this->title = 'เขียนใบลา';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -65,10 +78,10 @@ $this->params['breadcrumbs'][] = $this->title;
 								<thead>
 									<tr>
 					                    <th data-class="expand"> # </th>
-										<th data-hide="phone,tablet">ประเภทการลา</th>
-					                    <th >ลาตั้งแต่</th>
+										<th style="width:50px">ประเภทการลา</th>
+					                    <th data-hide="phone,tablet">ลาตั้งแต่</th>
 					                    <th data-hide="phone,tablet">ถึงวันที่</th>
-										<th data-hide="phone,tablet">รวมการลา</th>										
+										<th data-hide="phone,tablet">รวมการลา(วัน)</th>										
 										<th style="width:120px"></th>
 						            </tr>
 								</thead>
@@ -79,9 +92,9 @@ $this->params['breadcrumbs'][] = $this->title;
 						                <td><?= $i++?></td>
 										<td class="img-weblink" >
 										<?=$model->cat?>
-										</td>
-                                        <td><?=$model->date_begin?></td>
-                                        <td><?=$model->date_end?></td>	
+										</td>										
+                                        <td><?=DateThai_full($model->date_begin)?></td>										
+                                        <td><?=DateThai_full($model->date_end)?></td>	
 										<td><?=$model->date_total?></td>
 										<td>
 											<a href="<?=Url::to('print1/'.$model->id)?>" class="btn btn-info btn-xs" target="_blank" data-id=<?=$model->id?>>print</a> 
@@ -199,7 +212,7 @@ $(document).ready(function() {
 		    
 		    // custom toolbar
 												
-		    $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> เพิ่มใบลาป่วย</button> <button id="act-create-b" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> เพิ่มใบลาพักผ่อน</button></div>');
+		    $("div.toolbar").html('<div class="text-right"><button id="act-create-a" class="btn btn-danger btn-md" alt="act-create"><i class="fa fa-plus "></i> เพิ่มใบลาป่วย</button> <button id="act-create-b" class="btn btn-primary btn-md" alt="act-create"><i class="fa fa-plus "></i> เพิ่มใบลาพักผ่อน</button></div>');
 			   
 		    // Apply the filter
 		    $("#datatable_fixed_column thead th input[type=text]").on( 'keyup change', function () {
@@ -216,9 +229,9 @@ $(document).ready(function() {
 /* END COLUMN FILTER */  
 
 		// var url_create = "index.php?r=bila/create";
-		var url_create = "create";
-    	$( "#act-create" ).click(function() {
-        	$.get(url_create,function (data){
+		var url_create_a = "create_a";
+    	$( "#act-create-a" ).click(function() {
+        	$.get(url_create_a,function (data){
                 $("#activity-modal").find(".modal-body").html(data);
                 $(".modal-body").html(data);
                 $(".modal-title").html("เพิ่มข้อมูล");
@@ -227,9 +240,9 @@ $(document).ready(function() {
                 //   $("#myModal").modal('toggle');
         	});     
 		}); 
-		var url_create = "createb";
+		var url_createb = "createb";
     	$( "#act-create-b" ).click(function() {
-        	$.get(url_create,function (data){
+        	$.get(url_createb,function (data){
                 $("#activity-modal").find(".modal-body").html(data);
                 $(".modal-body").html(data);
                 $(".modal-title").html("เพิ่มข้อมูล");

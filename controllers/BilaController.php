@@ -55,8 +55,7 @@ class BilaController extends Controller
             ->orderBy([
                 'date_create'=>SORT_DESC,
                 'id' => SORT_DESC,
-            ])->limit(100)->all();
-        
+            ])->limit(100)->all();        
         
         $countAll = Bila::getCountAll();
 
@@ -68,10 +67,8 @@ class BilaController extends Controller
 
     public function actionAdmin()
     {
-        $sql = 'SELECT * FROM web_link';
-        // $models = Yii::$app->db->createCommand($sql)->queryAll();
         $models = Bila::find()->orderBy([
-            'create_at'=>SORT_DESC,
+            'date_create'=>SORT_DESC,
             'id' => SORT_DESC,
             ])->limit(100)->all();        
         
@@ -102,8 +99,9 @@ class BilaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate_a()
     {
+        
         $model = new Bila();
 
         //Add This For Ajax Email Exist Validation 
@@ -119,13 +117,14 @@ class BilaController extends Controller
             $model->date_begin = $_POST['Bila']['date_begin'];
             $model->date_end = $_POST['Bila']['date_end'];
             $model->date_total = $_POST['Bila']['date_total'];
+            $model->due = $_POST['Bila']['due'];
             $model->dateO_begin = $_POST['Bila']['dateO_begin'];
             $model->dateO_end = $_POST['Bila']['dateO_end'];
             $model->dateO_total = $_POST['Bila']['dateO_total'];
             $model->address = $_POST['Bila']['address'];
             $model->t1 = $_POST['Bila']['t1'];
             $model->t2 = $_POST['Bila']['date_total'];
-            $model->t3 = $_POST['Bila']['date_total']+$_POST['Bila']['t1'];
+            $model->t3 = $_POST['Bila']['date_total'] + $_POST['Bila']['t1'];
             $model->date_create = $_POST['Bila']['date_create'];
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
@@ -133,13 +132,24 @@ class BilaController extends Controller
             }   
         }
         // $model->tel = explode(',', $model->tel);
+        $model_cat = Bila::find()
+            ->where(['user_id' => Yii::$app->user->id,
+                'cat'=>'ลาป่วย'
+                ])
+            ->orderBy([
+                'date_create'=>SORT_DESC,
+                'id' => SORT_DESC,
+            ])->one(); 
+        
         if(Yii::$app->request->isAjax){
-            return $this->renderAjax('create',[
-                    'model' => $model,                    
+            return $this->renderAjax('_form_a',[
+                    'model' => $model,
+                    'model_cat' => $model_cat,                    
             ]);
         }else{
-            return $this->render('create',[
-                'model' => $model,                    
+            return $this->render('_form_a',[
+                'model' => $model,  
+                'model_cat' => $model_cat,                  
             ]); 
         }
     }
@@ -157,17 +167,21 @@ class BilaController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
             $model->user_id =  $_POST['Bila']['user_id'];
-            $model->cat = 'ลาป่วย';
+            $model->cat = 'ลาพักผ่อน';
             $model->date_begin = $_POST['Bila']['date_begin'];
             $model->date_end = $_POST['Bila']['date_end'];
             $model->date_total = $_POST['Bila']['date_total'];
-            $model->dateO_begin = $_POST['Bila']['dateO_begin'];
-            $model->dateO_end = $_POST['Bila']['dateO_end'];
-            $model->dateO_total = $_POST['Bila']['dateO_total'];
+            if($_POST['Bila']['p1'] == ""){
+                $model->p1 = 0;
+                $model->p2 = 10;
+            }else{
+                $model->p1 = $_POST['Bila']['p1'];
+                $model->p2 = $_POST['Bila']['p1'] + 10;
+            }                       
             $model->address = $_POST['Bila']['address'];
             $model->t1 = $_POST['Bila']['t1'];
             $model->t2 = $_POST['Bila']['date_total'];
-            $model->t3 = $_POST['Bila']['date_total']+$_POST['Bila']['t1'];
+            $model->t3 = $_POST['Bila']['t1'] + $_POST['Bila']['date_total'] ;
             $model->date_create = $_POST['Bila']['date_create'];
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
@@ -175,13 +189,23 @@ class BilaController extends Controller
             }   
         }
         // $model->tel = explode(',', $model->tel);
+        $model_cat = Bila::find()
+            ->where(['user_id' => Yii::$app->user->id,
+                'cat'=>'ลาพักผ่อน'
+                ])
+            ->orderBy([
+                'date_create'=>SORT_DESC,
+                'id' => SORT_DESC,
+            ])->one(); 
         if(Yii::$app->request->isAjax){
-            return $this->renderAjax('create_b',[
-                    'model' => $model,                    
+            return $this->renderAjax('_form_b',[
+                    'model' => $model,   
+                    'model_cat' => $model_cat,                    
             ]);
         }else{
-            return $this->render('create_b',[
-                'model' => $model,                    
+            return $this->render('_form_b',[
+                'model' => $model,               
+                'model_cat' => $model_cat,        
             ]); 
         }
     }
@@ -204,20 +228,38 @@ class BilaController extends Controller
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            
-            $model->user_id =  Yii::$app->user->id;
-            $model->cat = 'ลาป่วย';
-            $model->date_begin = $_POST['Bila']['date_begin'];
-            $model->date_end = $_POST['Bila']['date_end'];
-            $model->date_total = $_POST['Bila']['date_total'];
-            $model->dateO_begin = $_POST['Bila']['dateO_begin'];
-            $model->dateO_end = $_POST['Bila']['dateO_end'];
-            $model->dateO_total = $_POST['Bila']['dateO_total'];
+            if($model->cat == 'ลาป่วย'){
+                $model->date_begin = $_POST['Bila']['date_begin'];
+                $model->date_end = $_POST['Bila']['date_end'];
+                $model->date_total = $_POST['Bila']['date_total'];
+                $model->due = $_POST['Bila']['due'];
+                $model->dateO_begin = $_POST['Bila']['dateO_begin'];
+                $model->dateO_end = $_POST['Bila']['dateO_end'];
+                $model->dateO_total = $_POST['Bila']['dateO_total'];
+                $model->address = $_POST['Bila']['address'];
+                $model->t1 = $_POST['Bila']['t1'];
+                $model->t2 = $_POST['Bila']['date_total'];
+                $model->t3 = $model->t1 + $model->t2;
+                $model->date_create = $_POST['Bila']['date_create'];
+            }
+            if($model->cat == 'ลาพักผ่อน'){
+                $model->date_begin = $_POST['Bila']['date_begin'];
+                $model->date_end = $_POST['Bila']['date_end'];
+                $model->date_total = $_POST['Bila']['date_total'];
+            if($_POST['Bila']['p1'] == ""){
+                $model->p1 = 0;
+                $model->p2 = 10;
+            }else{
+                $model->p1 = $_POST['Bila']['p1'];
+                $model->p2 = $_POST['Bila']['p1'] + 10;
+            }              
+                      
             $model->address = $_POST['Bila']['address'];
             $model->t1 = $_POST['Bila']['t1'];
             $model->t2 = $_POST['Bila']['date_total'];
-            $model->t3 = $_POST['Bila']['date_total']+$_POST['Bila']['t1'];
+            $model->t3 = $_POST['Bila']['t1'] + $_POST['Bila']['date_total'] ;
             $model->date_create = $_POST['Bila']['date_create'];
+            }            
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
                 return $this->redirect(['index']);
@@ -249,18 +291,10 @@ class BilaController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $fileName = $model->img;
-        $dir = Url::to('@webroot/uploads/Bila/');
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-        if($fileName && is_file($dir.$fileName)){
-            unlink($dir.$fileName);// ลบ รูปเดิม;   
-        }        
         
         $model->delete();
 
-        return $this->redirect(['admin']);
+        return $this->redirect(['index']);
     }
 
     public function actionShow($id=null){
