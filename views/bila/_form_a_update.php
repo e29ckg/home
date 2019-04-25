@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use app\models\User;
-
+use app\models\Bila;
+use kartik\select2\Select2;
 use kartik\date\DatePicker;
-
-
+use yii\helpers\ArrayHelper;
 ?>
 
 <div class="widget-body no-padding">
@@ -126,7 +126,7 @@ use kartik\date\DatePicker;
                             'inputOptions' => [
                                 'placeholder' => $model->getAttributeLabel('t1')
                             ],
-                            'template' => '<section class="col col-3"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('t1').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+                            'template' => '<section class="col col-2"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('t1').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
                         ]);
                     ?>
 
@@ -145,13 +145,13 @@ use kartik\date\DatePicker;
                                 'placeholder' => $model->getAttributeLabel('address'),
                                 // 'value' => User::getProfileAddressById(Yii::$app->user->identity->id)
                             ],
-                            'template' => '<section class="col col-6"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('address').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+                            'template' => '<section class="col col-5"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('address').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
                         ]);
                     echo $form->field($model, 'comment', [
                             'inputOptions' => [
                                 'placeholder' => $model->getAttributeLabel('comment'),
                             ],
-                            'template' => '<section class="col col-6"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('comment').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+                            'template' => '<section class="col col-5"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('comment').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
                         ]);
             ?>
 			<!-- <section>
@@ -160,6 +160,36 @@ use kartik\date\DatePicker;
 				</label>
 			</section> -->
             </div> 
+            <div class="row">
+            <section class="col col-6">
+				<label class="input">
+            <?php 
+echo $form->field($model, 'po')->widget(Select2::classname(), [
+    'data' => Bila::getSignList(),
+    'language' => 'th',
+    'options' => ['placeholder' => ' เลือก ผอ.'],
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+]);
+?>
+</label>
+			</section>
+            <section class="col col-6">
+				<label class="input">
+<?php 
+echo $form->field($model, 'bigboss')->widget(Select2::classname(), [
+    'data' => Bila::getSignList(),
+    'language' => 'th',
+    'options' => ['placeholder' => ' เลือก หัวหน้าศาลฯ'],
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+]);
+?>
+</label>
+			</section>
+            </div>
 		</fieldset>
 
  

@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "bila".
  *
@@ -71,13 +71,18 @@ class Bila extends \yii\db\ActiveRecord
             't2' => 'T2',
             't3' => 'T3',
             'comment' => 'หมายเหตุ',
-            'po' => 'Po',
-            'bigboss' => 'Bigboss',
+            'po' => 'ผู้อำนวยการ',
+            'bigboss' => 'ผู้พิพากษาศาลหัวหน้าศาล',
             'date_create' => 'Date Create',
         ];
     }
     public function getCountAll()
     {        
         return Bila::find()->count();           
+    }
+
+    public function getSignList(){
+        $model = SignBossName::find()->where(['status' => '1'])->orderBy('id')->all();
+        return ArrayHelper::map($model,'id','name');
     }
 }

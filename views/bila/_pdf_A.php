@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use app\models\User;
+use app\models\SignBossName;
 
 function DateThai_full($strDate)
 	{
@@ -145,14 +146,20 @@ function DateThai_month_full($strDate)
         <td colspan="12" ><?= $model->comment ? '( หมายเหตุ ' .$model->comment. ' )' : '' ;?></td>
     </tr>
     <tr>
+    </tr>
+    <tr>
         <td colspan="6" style="text-align:center">
         - ทราบ<br><br><br>
-            (ลงชื่อ)................................................................<br>
-            (นางรัชดาวดี กาญจนขจิต)<br>
-            ผู้พิพากษาหัวหน้าศาลเยาวชนและครอบครัว<br>จังหวัดประจวบคีรีขันธ์<br>
-            <br>
-        </td>
-        
+            (ลงชื่อ)................................................................
+            <?php 
+                    if(!empty($model->bigboss)){
+                        $model_s_bigboss = SignBossName::find()->where(['id' => $model->bigboss])->one();
+                        echo '<br>('.$model_s_bigboss->name.')<br>'.$model_s_bigboss->dep1.'<br>'.$model_s_bigboss->dep2.'<br>'.$model_s_bigboss->dep3; 
+                    }else{
+                        echo '';
+                    }
+                    ?>
+        </td>        
         <td colspan="6" style="text-align:center">
             ขอแสดงความนับถือ<br><br><br>
             (ลงชื่อ)................................................................<br>
@@ -211,10 +218,17 @@ function DateThai_month_full($strDate)
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="8" style="text-align:center"><br>
+                    <td colspan="8" style="text-align:center">
+                    <br>               
                     
-                    (นางสาวสิริลักษณ์ จานุกิจ)<br>
-                    ผู้อำนวยการสำนักงานประจำศาลเยาวชนและครอบครัว<br>จังหวัดประจวบคีรีขันธ์
+                    <?php 
+                    if(!empty($model->po)){
+                        $model_s_po = SignBossName::find()->where(['id' => $model->po])->one();
+                        echo '('.$model_s_po->name.')<br>'.$model_s_po->dep1.'<br>'.$model_s_po->dep2.'<br>'.$model_s_po->dep3; 
+                    }else{
+                        echo '';
+                    }
+                    ?>
                     </td>
                 </tr>
             </table>

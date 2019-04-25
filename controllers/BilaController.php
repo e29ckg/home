@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Bila;
+use app\models\SignBossName;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -15,6 +16,7 @@ use yii\helpers\Url;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 use kartik\mpdf\Pdf;
+use yii\helpers\ArrayHelper;
 
 /**
  * Web_linkController implements the CRUD actions for Bila model.
@@ -141,15 +143,26 @@ class BilaController extends Controller
                 'id' => SORT_DESC,
             ])->one(); 
         
+        $model_sign = SignBossName::find()
+            ->where(['status' => 4])
+            ->orderBy([
+                'date_create'=>SORT_DESC,
+                'id' => SORT_DESC,
+                ])
+            ->limit(100)
+            ->all();
+        
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('_form_a',[
                     'model' => $model,
-                    'model_cat' => $model_cat,                    
+                    'model_cat' => $model_cat,
+                    'model_sign' => $model_sign,                    
             ]);
         }else{
             return $this->render('_form_a',[
                 'model' => $model,  
-                'model_cat' => $model_cat,                  
+                'model_cat' => $model_cat, 
+                'model_sign' => $model_sign,                  
             ]); 
         }
     }
@@ -329,7 +342,6 @@ class BilaController extends Controller
     
     public function actionPrint1($id=null)
     {
-
         $model = $this->findModel($id);
         if($model->cat =='ลาป่วย'){
             $Pdf_print = '_pdf_A';
@@ -339,7 +351,9 @@ class BilaController extends Controller
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
         $pdf = new Pdf([
             'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
-            'content' => $this->renderPartial($Pdf_print,['model'=>$model]),
+            'content' => $this->renderPartial($Pdf_print,[
+                'model'=>$model,
+            ]),
             'cssFile' => 'css/pdf.css',
             'options' => [
                 // any mpdf options you wish to set

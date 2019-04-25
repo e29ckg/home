@@ -46,7 +46,7 @@ $menu = [
 			[
 				'label' => 'เขียนใบลา',
 				'url' => ['/bila/index'],
-				'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-suitcase"></i> <span class="menu-item-parent">{label}</span></a>',
+				'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-suitcase"></i> <span class="menu-item-parent">{label}</span></a>',
 				
 			],		
 			[
@@ -100,7 +100,7 @@ $menu = [
 				[
 					'label' => 'เขียนใบลา',
 					'url' => ['/bila/index'],
-					'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-suitcase"></i> <span class="menu-item-parent">{label}</span></a>',
+					'template' => '<a href="{url}" title="{label}" ><i class="fa fa-lg fa-fw fa-suitcase"></i> <span class="menu-item-parent">{label}</span></a>',
 					
 				],				
 				[
@@ -142,6 +142,11 @@ $menu = [
 				[
 					'label' => 'สลิปเงินเดือน',
 					'url' => ['/salary/admin'],
+					'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
+				],
+				[
+					'label' => 'ชื่อผู้ลงนาม',
+					'url' => ['/sign_boss_name/admin'],
 					'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
 				],
 				[
@@ -208,7 +213,7 @@ $menu = [
 				[
 					'label' => 'เขียนใบลา',
 					'url' => ['/bila/index'],
-					'template' => '<a href="{url}" title="{label}" target="_blank"><i class="fa fa-lg fa-fw fa-suitcase"></i> <span class="menu-item-parent">{label}</span></a>',
+					'template' => '<a href="{url}" title="{label}" ><i class="fa fa-lg fa-fw fa-suitcase"></i> <span class="menu-item-parent">{label}</span></a>',
 					
 				],
 				[
