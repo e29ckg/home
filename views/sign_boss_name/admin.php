@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<td><?=$model->status?></td>
 										<td>
 										<a href="#" class="act-update btn btn-info btn-xs" data-id=<?=$model['id']?>>แก้ไข</a> 
-										<?= Html::a('<i class="fa fa-remove"></i> ลบ',['web_link/delete','id' => $model->id],
+										<?= Html::a('<i class="fa fa-remove"></i> ลบ',['sign_boss_name/delete','id' => $model->id],
 													[
 														'class' => 'btn btn-danger btn-xs',
 														'data-confirm' => 'Are you sure to delete this item?',

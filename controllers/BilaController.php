@@ -60,10 +60,14 @@ class BilaController extends Controller
             ])->limit(100)->all();        
         
         $countAll = Bila::getCountAll();
+        $countA = Bila::getCountA();
+        $countB = Bila::getCountB();
 
         return $this->render('index', [
             'models' => $models,
             'countAll' => $countAll,
+            'countA' => $countA,
+            'countB' => $countB,
         ]);
     }
 

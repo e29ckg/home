@@ -154,7 +154,7 @@ function DateThai_month_full($strDate)
             <?php 
                     if(!empty($model->bigboss)){
                         $model_s_bigboss = SignBossName::find()->where(['id' => $model->bigboss])->one();
-                        echo '<br>('.$model_s_bigboss->name.')<br>'.$model_s_bigboss->dep1.'<br>'.$model_s_bigboss->dep2.'<br>'.$model_s_bigboss->dep3; 
+                        echo $model_s_bigboss ? '<br>('.$model_s_bigboss->name.')<br>'.$model_s_bigboss->dep1.'<br>'.$model_s_bigboss->dep2.'<br>'.$model_s_bigboss->dep3 : '<br><br><br><br><br><br><br>'; 
                     }else{
                         echo '';
                     }
@@ -220,7 +220,9 @@ function DateThai_month_full($strDate)
                     <?php 
                         if(!empty($model->po)){
                             $model_s_po = SignBossName::find()->where(['id' => $model->po])->one();
-                            echo '('.$model_s_po->name.')<br>'.$model_s_po->dep1.'<br>'.$model_s_po->dep2.'<br>'.$model_s_po->dep3; 
+                            if($model_s_po){
+                                echo '('.$model_s_po->name.')<br>'.$model_s_po->dep1.'<br>'.$model_s_po->dep2.'<br>'.$model_s_po->dep3; 
+                            }
                         }else{
                             echo '';
                         }

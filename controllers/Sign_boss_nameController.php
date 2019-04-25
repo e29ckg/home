@@ -267,14 +267,6 @@ class Sign_boss_nameController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $fileName = $model->img;
-        $dir = Url::to('@webroot/uploads/SignBossName/');
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-        if($fileName && is_file($dir.$fileName)){
-            unlink($dir.$fileName);// ลบ รูปเดิม;   
-        }        
         
         $model->delete();
 

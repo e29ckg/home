@@ -71,14 +71,24 @@ class Bila extends \yii\db\ActiveRecord
             't2' => 'T2',
             't3' => 'T3',
             'comment' => 'หมายเหตุ',
-            'po' => 'ผู้อำนวยการ',
-            'bigboss' => 'ผู้พิพากษาศาลหัวหน้าศาล',
+            'po' => 'ผู้อำนวยการลงนาม',
+            'bigboss' => 'ผู้พิพากษาศาลหัวหน้าศาลลงนาม',
             'date_create' => 'Date Create',
         ];
     }
     public function getCountAll()
     {        
         return Bila::find()->count();           
+    }
+
+    public function getCountA()
+    {        
+        return Bila::find()->where(['cat' => 'ลาป่วย'])->count();           
+    }
+    
+    public function getCountB()
+    {        
+        return Bila::find()->where(['cat' => 'ลาพักผ่อน'])->count();           
     }
 
     public function getSignList(){
