@@ -38,11 +38,7 @@ class ComposerStaticInitca92174f94924455cc80624f2ab12859
         ),
         'k' => 
         array (
-            'kartik\\select2\\' => 15,
             'kartik\\plugins\\fileinput\\' => 25,
-            'kartik\\mpdf\\' => 12,
-            'kartik\\file\\' => 12,
-            'kartik\\date\\' => 12,
             'kartik\\base\\' => 12,
         ),
         'd' => 
@@ -140,25 +136,9 @@ class ComposerStaticInitca92174f94924455cc80624f2ab12859
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
-        'kartik\\select2\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-select2/src',
-        ),
         'kartik\\plugins\\fileinput\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/bootstrap-fileinput',
-        ),
-        'kartik\\mpdf\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/kartik-v/yii2-mpdf/src',
-        ),
-        'kartik\\file\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-fileinput/src',
-        ),
-        'kartik\\date\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-datepicker/src',
         ),
         'kartik\\base\\' => 
         array (

@@ -261,7 +261,8 @@ class CletterController extends Controller
 
         // $model = $this->findModel($id);
         // if($name=null){
-            $modelF = Cletter::find()->where(['file' => $file])->one();            
+            $modelF = Cletter::find()->where(['file' => $file])->one();   
+            $name = $modelF ? $modelF->name : $file;          
         // } else{
         //     $modelF = Cletter::find()->where(['file' => $file])->one();  
         // }
@@ -272,12 +273,12 @@ class CletterController extends Controller
         $completePath = Yii::getAlias('@app'.$filePath.'/'.$file);
         if(is_file($completePath)){
             
-            $message = Cletter::getProfileName(Yii::$app->user->identity->id) .' เปิดอ่าน '.$modelF->name;
+            $message = Cletter::getProfileName(Yii::$app->user->identity->id) .' เปิดอ่าน '.$name;
 
             $modelLog = new Log();
             $modelLog->user_id = Yii::$app->user->identity->id;
             $modelLog->manager = 'Cletter_Read';
-            $modelLog->detail =  'เปิดอ่าน '.$modelF->name;
+            $modelLog->detail =  'เปิดอ่าน '.$name;
             $modelLog->create_at = date("Y-m-d H:i:s");
             $modelLog->ip = Yii::$app->getRequest()->getUserIP();
             if($modelLog->save()){
