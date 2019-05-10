@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use app\models\SignBossName;
 
 
 /* @var $this yii\web\View */
@@ -84,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td><?=$model->dep1?></td>		
 										<td><?=$model->dep2?></td>	
 										<td><?=$model->dep3?></td>	
-										<td><?=$model->status?></td>
+										<td><?=SignBossName::getStName($model->status);?></td>
 										<td>
 										<a href="#" class="act-update btn btn-info btn-xs" data-id=<?=$model['id']?>>แก้ไข</a> 
 										<?= Html::a('<i class="fa fa-remove"></i> ลบ',['sign_boss_name/delete','id' => $model->id],

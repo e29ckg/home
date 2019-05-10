@@ -67,7 +67,7 @@ class Bila extends \yii\db\ActiveRecord
             'dateO_end' => 'ถึงวันที่',
             'dateO_total' => 'มีกำหนด(วัน)',
             'address' => 'ระหว่างลาติดต่อได้ที่',
-            't1' => 'เคยลามาแล้วรวม',
+            't1' => 'เคยลามาแล้ว',
             't2' => 'T2',
             't3' => 'T3',
             'comment' => 'หมายเหตุ',

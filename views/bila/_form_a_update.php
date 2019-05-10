@@ -115,10 +115,7 @@ use yii\helpers\ArrayHelper;
                     'template' => '<section class="col col-2"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('t1').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
                 ]);
             ?>
-            </div>
-        </fieldset>
-        <fieldset>   
-        <div class="row">
+            
             <?php 
                 echo $form->field($model, 'address', [
                             'inputOptions' => [
@@ -136,6 +133,8 @@ use yii\helpers\ArrayHelper;
             ?>
 			
             </div> 
+            </fieldset>
+        <fieldset>
             <div class="row">
             <section class="col col-6">
 				<label class="input">

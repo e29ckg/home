@@ -56,4 +56,14 @@ class SignBossName extends \yii\db\ActiveRecord
     {        
         return SignBossName::find()->count();           
     }
+
+    public function getStName($st)
+    {     
+        if($st == 1){
+            return "ใช้งาน";
+        }else{
+            return "ยกเลิก";
+        }    
+        return $st;           
+    }
 }

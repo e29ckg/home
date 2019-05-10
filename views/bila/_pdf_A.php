@@ -21,9 +21,6 @@ function DateThai_full($strDate)
     }
 function DateThai_month_full($strDate)
 	{
-        if($strDate == ''){
-            return "-";
-        }
 		$strYear = date("Y",strtotime($strDate))+543;
 		$strMonth= date("n",strtotime($strDate));
 		$strDay= date("j",strtotime($strDate));
@@ -33,8 +30,7 @@ function DateThai_month_full($strDate)
 		$strMonthCut = Array("","มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม",
                             "สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม");
 		$strMonthThai=$strMonthCut[$strMonth];
-        // return "$strMonthThai";
-        return "$strDate";
+		return "$strMonthThai";
 	}
 
 ?>
@@ -104,7 +100,7 @@ function DateThai_month_full($strDate)
         <td colspan="2" ></td>
         <td colspan="3" >[ &nbsp; ] ลากิจส่วนตัว</td>
         <td colspan="1" >เนื่องจาก</td>
-        <td colspan="6" class="TableLine" style="text-align:center"></td>
+        <td colspan="6" class="TableLine" style="text-align:center"><?=$model->due;?> </td>
     </tr>
     <tr>
         <td colspan="2" ></td>

@@ -52,7 +52,7 @@ function DateThai_month_full($strDate)
         <td width="50px"></td>
         <td width="50px"></td>
         <td width="50px"></td>
-        <td width="50px"></td>
+        <td width="75px"></td>
         <td width="50px"></td>
         <td width="50px"></td>
     </tr>
@@ -65,7 +65,7 @@ function DateThai_month_full($strDate)
     ?>
     <tr>
         <td colspan="7" style="text-align:right">วันที่</td>
-        <td colspan="1" class="TableLine" style="text-align:center"><?=date_format($date_create,"d");?></td>
+        <td colspan="1" class="TableLine" style="text-align:center"><?=date_format($date_create,"j");?></td>
         <td colspan="1" style="text-align:center">เดือน</td>
         <td colspan="1" class="TableLine" style="text-align:center"><?=DateThai_month_full($model->date_create);?></td>
         <td colspan="1" style="text-align:center">พ.ศ.</td>

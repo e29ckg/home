@@ -35,9 +35,15 @@ use yii\helpers\ArrayHelper;
     <fieldset>
     
             <div class="row">
+            <?php if(!empty($model_cat->p1)){
+                        $p1 = $model_cat->p1;
+                     }else{
+                        $p1 = '';
+                     } ?>
             <?= $form->field($model, 'p1', [
                             'inputOptions' => [
-                                'placeholder' => $model->getAttributeLabel('p1')
+                                'placeholder' => $model->getAttributeLabel('p1'),
+                                'value' => $p1
                             ],
                             'template' => '<section class="col col-3"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('p1').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
                         ]);
@@ -76,11 +82,7 @@ use yii\helpers\ArrayHelper;
                             'template' => '<section class="col col-2"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('date_total').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
                         ]);
                     ?>
-				<!-- <section class="col col-2">
-					<label class="input">                                                        
-						<input type="text" placeholder="มีกำหนด(วัน)" data-cip-id="cIPJQ342845641">
-					</label>
-				</section> -->
+				
             </div>
            
         </fieldset>

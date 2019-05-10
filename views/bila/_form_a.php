@@ -139,16 +139,12 @@ use yii\helpers\ArrayHelper;
                             'template' => '<section class="col col-2"><label class="input">{label}</label> <label class="input">{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('dateO_total').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
                         ]);
                     ?>
-                <!-- <section class="col col-2">
-					<label class="input">
-						<input type="text" placeholder="มีกำหนด(วัน)" data-cip-id="cIPJQ342845644">
-					</label>
-				</section> -->
+                
+
 			</div>
                                         
 			
-        </fieldset>
-        <fieldset>  
+         
         <div class="row">
         <?php if(!empty($model_cat->t3)){
                         $t3 = $model_cat->t3;
@@ -182,6 +178,8 @@ use yii\helpers\ArrayHelper;
             ?>
 			
             </div> 
+            </fieldset>
+        <fieldset> 
             <div class="row">
             <section class="col col-6">
 				<label class="input">
