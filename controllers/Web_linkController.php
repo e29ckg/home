@@ -17,6 +17,7 @@ use yii\web\Response;
 use yii\widgets\ActiveForm;
 use kartik\mpdf\Pdf;
 
+
 /**
  * Web_linkController implements the CRUD actions for WebLink model.
  */
@@ -176,18 +177,36 @@ class Web_linkController extends Controller
           } 
      
         if ($modelFile->load(Yii::$app->request->post()) && $modelFile->validate()) {
-            $modelFile->web_link_id = $model->id;           
-            $modelFile->name = $_POST['WebLink']['name'];
-            $modelFile->type = $_POST['WebLink']['link'];
-            $modelFile->file = date("Y-m-d H:i:s");
-            $modelFile->sort = date("Y-m-d H:i:s");
+
+            $f = UploadedFile::getInstance($modelFile, 'file');
+            if(!empty($f)){
+                $dir = Url::to('@webroot/uploads/weblink/');
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0777, true);
+                } 
+                                
+                $fileName = md5($f->baseName . time()) . '.' . $f->extension;
+                if($f->saveAs($dir . $fileName)){
+                    $modelFile->file = $fileName;                    
+                    $modelFile->type = $f->extension;
+                    $modelFile->name  = $f->baseName;
+                }               
+            } 
+
+            $modelFile->web_link_id = $model->id;                      
+            
+            if(!($_POST['WebLinkFile']['name'])==''){
+                $modelFile->name = $_POST['WebLinkFile']['name'];
+            }
+                
+            $modelFile->sort = 1;
             if($modelFile->save()){
-                Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
+                Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย'.$_POST['WebLinkFile']['name']);
                 return $this->redirect(['admin']);
             }   
+
         }
 
-        // $model->tel = explode(',', $model->tel);
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('_form_file',[
                     'modelFile' => $modelFile,                    
@@ -339,6 +358,24 @@ class Web_linkController extends Controller
         return $this->redirect(['admin']);
     }
 
+    
+public function actionDeletefile($id)
+    {
+        $model = $this->findModelFile($id);
+        $fileName = $model->file;
+        $dir = Url::to('@webroot/uploads/weblink/');
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        if($fileName && is_file($dir.$fileName)){
+            unlink($dir.$fileName);// ลบ รูปเดิม;   
+        }        
+        
+        $model->delete();
+
+        return $this->redirect(['admin']);
+    }
+
     public function actionShow($id=null){
         $mdWebLink = WebLink::find()->where(['id' => $id])->one();
 
@@ -363,6 +400,15 @@ class Web_linkController extends Controller
     protected function findModel($id)
     {
         if (($model = WebLink::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function findModelFile($id)
+    {
+        if (($model = WebLinkFile::findOne($id)) !== null) {
             return $model;
         }
 

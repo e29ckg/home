@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use kartik\file\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\WebLink */
@@ -19,7 +20,7 @@ use yii\helpers\Url;
             'novalidate'=>'novalidate',
             'enctype' => 'multipart/form-data'
         ],
-        //'layout' => 'horizontal',
+        //'layout' => 'horiz\ontal',
         'fieldConfig' => [
             //'template' => "{label}{input}{error}",
             'labelOptions' => ['class' => 'label'],
@@ -36,21 +37,25 @@ use yii\helpers\Url;
     'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">'.$modelFile->getAttributeLabel('name').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
     ])->label(false);
     ?>
-
-
 </div> 
  
+
 <div>
-    <?= $form->field($modelFile, 'file', [
-    'inputOptions' => [
-        'placeholder' => $modelFile->getAttributeLabel('file'),
-    ],
-    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">'.$modelFile->getAttributeLabel('file').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
-    ])->label(false);
-    ?>
-
-</div> 
-
+<?php
+echo $form->field($modelFile, 'file')->widget(FileInput::classname(), [
+    'options' => ['accept' => 'image/*'],
+]);
+?>
+<?php
+// echo $form->field($model, 'file',[
+//    'inputOptions' => [
+//         'placeholder' => $model->getAttributeLabel('file'),
+//         'onchange'=>'this.parentNode.nextSibling.value = this.value'
+//     ],
+//     'template' => '<section><label class="label">{label}</label><div class="input input-file"><span class="button">{input}Browse</span><input type="text" placeholder="Include some files" readonly=""><div class="invalid">{error}{hint}</div></div></section>'
+// ])->fileInput()->label(false) 
+?>
+</div>
 
  
 <fieldset class="text-right"> 

@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-
+use app\models\WebLinkFile;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -91,13 +91,24 @@ $this->params['breadcrumbs'][] = $this->title;
 												
 											}
 										?>
-												</td>
+										</td>
                                         <td>
 											<?= '<a href="'.$model['link'].'" target="_blank">'.$model['name'].'</a>'?>
 											<br><?= '<a href="'.$model['link'].'" target="_blank">'.$model['link'].'</a>'?>
 										</td>
                                         <td>
-										
+											<?php 
+												$modelFiles = WebLinkFile::find()->where(['web_link_id'=>$model->id])->orderBy(['sort'=>SORT_ASC,'id' => SORT_ASC])->all(); 
+												foreach ($modelFiles as $modelFile):
+													echo $modelFile->name.Html::a('<i class="fa fa-remove"></i> ลบ',['web_link/deletefile','id' => $modelFile->id],
+													[
+														'class' => 'btn btn-danger btn-xs',
+														'data-confirm' => 'Are you sure to delete this item?',
+                                    					'data-method' => 'post',
+													]).
+											'<br>';
+												endforeach;
+											?>
 											<button class="act-create-file btn btn-success btn-xs" alt="act-create" data-id=<?=$model['id']?>><i class="fa fa-plus "></i> เพิ่มfile</button>
 										</td>		
 										<?php
@@ -131,6 +142,12 @@ $script = <<< JS
     
 $(document).ready(function() {	
 /* BASIC ;*/	
+
+	init_click_handlers(); //first run
+			
+	// $('#activity-modal').on('hidden.bs.modal', function () {
+ 	// 	location.reload();
+	// })
 		        
 	function init_click_handlers(){    
 
@@ -187,11 +204,7 @@ $(document).ready(function() {
     
 	}
 
-    init_click_handlers(); //first run
-			
-	$('#activity-modal').on('hidden.bs.modal', function () {
- 		location.reload();
-	})
+    
 
 				var responsiveHelper_dt_basic = undefined;
 				var responsiveHelper_datatable_fixed_column = undefined;
