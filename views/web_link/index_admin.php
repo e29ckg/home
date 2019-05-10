@@ -92,8 +92,14 @@ $this->params['breadcrumbs'][] = $this->title;
 											}
 										?>
 												</td>
-                                        <td><?php  echo '<a href="'.$model['link'].'" target="_blank">'.$model['name'].'</a>'?></td>
-                                        <td><?php  echo $model['link'];?></td>		
+                                        <td>
+											<?= '<a href="'.$model['link'].'" target="_blank">'.$model['name'].'</a>'?>
+											<br><?= '<a href="'.$model['link'].'" target="_blank">'.$model['link'].'</a>'?>
+										</td>
+                                        <td>
+										
+											<button class="act-create-file btn btn-success btn-xs" alt="act-create" data-id=<?=$model['id']?>><i class="fa fa-plus "></i> เพิ่มfile</button>
+										</td>		
 										<?php
 											if(Yii::$app->user->identity->role == 9){
 										?>
@@ -128,6 +134,20 @@ $(document).ready(function() {
 		        
 	function init_click_handlers(){    
 
+		var url_create_file = "createfile";
+    	$( ".act-create-file" ).click(function() {
+        	var fID = $(this).data("id");
+			// alert(fID);
+        	$.get(url_create_file,{id: fID},function (data){
+                $("#activity-modal").find(".modal-body").html(data);
+                $(".modal-body").html(data);
+                $(".modal-title").html("เพิ่มข้อมูล");
+            	// $(".modal-footer").html(footer);
+                $("#activity-modal").modal("show");
+                //   $("#myModal").modal('toggle');
+        	});     
+		}); 
+		
 		var url_show = "show";				
 			$( ".act-show" ).click(function() {
 				var fID = $(this).data("id");

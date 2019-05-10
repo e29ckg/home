@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\WebLink;
+use app\models\WebLinkFile;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -161,25 +162,68 @@ class Web_linkController extends Controller
         }
     }
 
+    
+    public function actionCreatefile($id)
+    {
+        $model = $this->findModel($id);
+
+        $modelFile = new WebLinkFile();
+
+        //Add This For Ajax Email Exist Validation 
+        if(Yii::$app->request->isAjax && $modelFile->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($modelFile);
+          } 
+     
+        if ($modelFile->load(Yii::$app->request->post()) && $modelFile->validate()) {
+            $modelFile->web_link_id = $model->id;           
+            $modelFile->name = $_POST['WebLink']['name'];
+            $modelFile->type = $_POST['WebLink']['link'];
+            $modelFile->file = date("Y-m-d H:i:s");
+            $modelFile->sort = date("Y-m-d H:i:s");
+            if($modelFile->save()){
+                Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
+                return $this->redirect(['admin']);
+            }   
+        }
+
+        // $model->tel = explode(',', $model->tel);
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_form_file',[
+                    'modelFile' => $modelFile,                    
+            ]);
+        }else{
+            return $this->render('_form_file',[
+                'modelFile' => $modelFile,                    
+            ]); 
+        }
+    }
+
     public function actionC2()
     {
-        $model = new WebLink();
+        $model = $this->findModel($id);
+
+        $fileName = $model->img;
 
         //Add This For Ajax Email Exist Validation 
         if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
-          } 
-     
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+          }
+
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+           if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
             $f = UploadedFile::getInstance($model, 'img');
             if(!empty($f)){
                 $dir = Url::to('@webroot/uploads/weblink/');
                 if (!is_dir($dir)) {
                     mkdir($dir, 0777, true);
-                } 
-                                
+                }
+                if($fileName && is_file($dir.$fileName)){
+                    unlink($dir.$fileName);// ลบ รูปเดิม;   
+                }
                 $fileName = md5($f->baseName . time()) . '.' . $f->extension;
                 if($f->saveAs($dir . $fileName)){
                     $model->img = $fileName;
@@ -187,12 +231,13 @@ class Web_linkController extends Controller
             } 
             $model->name = $_POST['WebLink']['name'];
             $model->link = $_POST['WebLink']['link'];
-            $model->create_at = date("Y-m-d H:i:s");
+            $model->img = $fileName;
             $model->update_at = date("Y-m-d H:i:s");
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
                 return $this->redirect(['admin']);
             }   
+        }
         }
 
         // $model->tel = explode(',', $model->tel);
