@@ -223,10 +223,12 @@ class User extends ActiveRecord implements IdentityInterface
         $model = Profile::find()->where(['user_id' => $id])->one();
         return $model->dep ? $model->dep : '' ;
     }
+
     public function getProfileAddressById($id){
         $model = Profile::find()->where(['user_id' => $id])->one();
         return $model->address ? $model->address : '' ;
     }
+    
     public function getProfilePhoneById($id){
         $model = Profile::find()->where(['user_id' => $id])->one();
         return $model->phone ? 'โทร.'.$model->phone : '' ;

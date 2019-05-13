@@ -84,4 +84,32 @@ class CLetter extends \yii\db\ActiveRecord
         $model = CLetterCaid::find()->select('id, name')->orderBy('id')->all();
         return ArrayHelper::map($model,'id','name');
     }
+
+    //ส่งข้อความผ่าน line Notify
+    public function notify_message_admin($message)
+    {
+        
+        // $message = 'test send photo';    //text max 1,000 charecter
+        
+        $line_api = 'https://notify-api.line.me/api/notify';
+        $line_token = 'ZdybtZEIVc4hBMBirpvTOFf8fBP4n3EIOFxgWhSFDwi'; //ส่วนตัว
+        // $line_token = '4A51UznK0WDNjN1W7JIOMyvcsUl9mu7oTHJ1G1u8ToK';
+        $queryData = array('message' => $message);
+        $queryData = http_build_query($queryData,'','&');
+        $headerOptions = array(
+            'http'=>array(
+                'method'=>'POST',
+                'header'=> "Content-Type: application/x-www-form-urlencoded\r\n"
+                    ."Authorization: Bearer ".$line_token."\r\n"
+                    ."Content-Length: ".strlen($queryData)."\r\n",
+                'content' => $queryData
+            )
+        );
+        $context = stream_context_create($headerOptions);
+        $result = file_get_contents($line_api, FALSE, $context);
+        $res = json_decode($result);
+        
+        return $res;
+    
+    }
 }

@@ -351,13 +351,21 @@ class Web_linkController extends Controller
         }
         if($fileName && is_file($dir.$fileName)){
             unlink($dir.$fileName);// ลบ รูปเดิม;   
-        }        
+        }   
+        
+        $modelFiles  = WebLinkFile::find()->where(['web_link_id' => $id])->one();
+
+        foreach ($modelFiles as $modelFile):
+                    
+            
+            $modelFile->delete();
+
+        endforeach;          
         
         $model->delete();
 
         return $this->redirect(['admin']);
     }
-
     
 public function actionDeletefile($id)
     {
@@ -407,6 +415,15 @@ public function actionDeletefile($id)
     }
 
     protected function findModelFile($id)
+    {
+        if (($model = WebLinkFile::find()->where(['web_link_id' => $id])->all()) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function findModelFileByWebLinkId($id)
     {
         if (($model = WebLinkFile::findOne($id)) !== null) {
             return $model;

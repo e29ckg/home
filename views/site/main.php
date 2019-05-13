@@ -5,7 +5,7 @@ use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+echo gethostbyname("www.google.com");
 $this->title = 'หนังสือเวียน';
 $this->params['breadcrumbs'][] = $this->title;
 ?>

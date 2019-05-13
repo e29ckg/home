@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use app\models\WebLinkFile;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -99,17 +100,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td>
 											<?php 
 												$modelFiles = WebLinkFile::find()->where(['web_link_id'=>$model->id])->orderBy(['sort'=>SORT_ASC,'id' => SORT_ASC])->all(); 
+												echo '<ul>';
+												
 												foreach ($modelFiles as $modelFile):
-													echo $modelFile->name.Html::a('<i class="fa fa-remove"></i> ลบ',['web_link/deletefile','id' => $modelFile->id],
+													echo $modelFile->name;
+													echo '<li><a href="'.Url::to('@web/uploads/weblink/'.$modelFile->file).'" target="_blank">'.$modelFile->name.'</a> ';
+													echo Html::a('แก้ไข/ลบ',['web_link/deletefile','id' => $modelFile->id],
 													[
 														'class' => 'btn btn-danger btn-xs',
 														'data-confirm' => 'Are you sure to delete this item?',
                                     					'data-method' => 'post',
 													]).
-											'<br>';
+											'</li>';
 												endforeach;
+												echo '</ul>';
+												echo var_dump($modelFiles);
 											?>
 											<button class="act-create-file btn btn-success btn-xs" alt="act-create" data-id=<?=$model['id']?>><i class="fa fa-plus "></i> เพิ่มfile</button>
+										
 										</td>		
 										<?php
 											if(Yii::$app->user->identity->role == 9){

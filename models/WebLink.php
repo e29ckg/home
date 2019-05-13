@@ -55,4 +55,10 @@ class WebLink extends \yii\db\ActiveRecord
     {        
         return CLetter::find()->count();           
     }
+
+    public function getWebLinkFile()
+    {
+        // return $this->hasOne(WebLinkFile::className(), ['web_link_id' => 'id']);
+        return $this->hasMany(WebLinkFile::className(), ['web_link_id' => 'id']);
+    }
 }

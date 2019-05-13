@@ -33,7 +33,7 @@ class WebLinkFile extends \yii\db\ActiveRecord
             // [['file'], 'required'],
             [['web_link_id', 'sort'], 'integer'],
             [['name', 'type', 'file'], 'string', 'max' => 255],
-            [['file'], 'file', 'extensions' => 'pdf, txt, zip, rar, doc, docx, png, jpg', 'maxSize'=> 1024 * 1024 * 5],
+            [['file'], 'file', 'extensions' => 'pdf, txt, zip, rar, doc, docx, png, jpg', 'maxSize'=> 1024 * 1024 * 10],
         ];
     }
 
@@ -50,5 +50,11 @@ class WebLinkFile extends \yii\db\ActiveRecord
             'file' => 'File',
             'sort' => 'Sort',
         ];
+    }
+
+    public function getWebLink()
+    {
+        return $this->hasOne(WebLink::className(), ['id' => 'web_link_id']);
+        // return $this->hasMany(WebLinkFile::className(), ['web_link_id' => 'id']);
     }
 }
