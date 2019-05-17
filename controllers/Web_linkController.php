@@ -44,6 +44,7 @@ class Web_linkController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    // 'deletefile' => ['POST'],
                 ],
             ],
         ];
@@ -343,7 +344,23 @@ class Web_linkController extends Controller
 
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
+        $modelFiles  = WebLinkFile::find()->where(['web_link_id' => $id])->all();
+
+        foreach ($modelFiles as $modelFile):
+                    
+            $dir = Url::to('@webroot/uploads/weblink/');
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            }
+            if($modelFile->name && is_file($dir.$modelFile->file)){
+                unlink($dir.$modelFile->file);// ลบ รูปเดิม;   
+            } 
+
+        endforeach;  
+
+        WebLinkFile::deleteAll(['web_link_id' => $id]);
+
+        $model = $this->findModel($id);        
         $fileName = $model->img;
         $dir = Url::to('@webroot/uploads/weblink/');
         if (!is_dir($dir)) {
@@ -353,15 +370,8 @@ class Web_linkController extends Controller
             unlink($dir.$fileName);// ลบ รูปเดิม;   
         }   
         
-        $modelFiles  = WebLinkFile::find()->where(['web_link_id' => $id])->one();
-
-        foreach ($modelFiles as $modelFile):
-                    
-            
-            $modelFile->delete();
-
-        endforeach;          
         
+
         $model->delete();
 
         return $this->redirect(['admin']);
@@ -416,7 +426,7 @@ public function actionDeletefile($id)
 
     protected function findModelFile($id)
     {
-        if (($model = WebLinkFile::find()->where(['web_link_id' => $id])->all()) !== null) {
+        if (($model = WebLinkFile::find()->where(['web_link_id' => $id])->one()) !== null) {
             return $model;
         }
 

@@ -28,7 +28,7 @@ class WebLink extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name' , 'link'], 'required'],
             [['name' , 'link'],'unique','message'=>'Name already exist. Please try another one.'],
             [['create_at'], 'safe'],
             [['name', 'img', 'link'], 'string', 'max' => 255],

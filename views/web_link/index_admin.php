@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
 												echo '<ul>';
 												
 												foreach ($modelFiles as $modelFile):
-													echo $modelFile->name;
+													// echo $modelFile->name;
 													echo '<li><a href="'.Url::to('@web/uploads/weblink/'.$modelFile->file).'" target="_blank">'.$modelFile->name.'</a> ';
 													echo Html::a('แก้ไข/ลบ',['web_link/deletefile','id' => $modelFile->id],
 													[
@@ -114,7 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
 											'</li>';
 												endforeach;
 												echo '</ul>';
-												echo var_dump($modelFiles);
+												// echo var_dump($modelFiles);
 											?>
 											<button class="act-create-file btn btn-success btn-xs" alt="act-create" data-id=<?=$model['id']?>><i class="fa fa-plus "></i> เพิ่มfile</button>
 										
