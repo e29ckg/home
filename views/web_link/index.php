@@ -1,7 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-
+use app\models\WebLinkFile;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -78,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<td class="img-weblink" >
 										<?php
 											if (!empty($model->img)){
-													echo Html::a(Html::img('@web/uploads/weblink/'.$model->img,['alt' => 'My logo1']), '#',[
+													echo Html::a(Html::img('@web/uploads/weblink/'.$model->id.'/'.$model->img,['alt' => 'My logo1']), '#',[
 														'data-id'=> $model->id,
 														'class' => 'act-show img',
 														]);													
@@ -89,7 +90,21 @@ $this->params['breadcrumbs'][] = $this->title;
 										?>
 												</td>
                                         <td><?php  echo '<a href="'.$model['link'].'" target="_blank">'.$model['name'].'</a>'?></td>
-                                        <td><?php  echo $model['link'];?></td>		
+                                        <td>
+										<?php 
+												$modelFiles = WebLinkFile::find()->where(['web_link_id'=>$model->id])->orderBy(['sort'=>SORT_ASC,'id' => SORT_ASC])->all(); 
+												echo '<ul>';
+												
+												foreach ($modelFiles as $modelFile):
+													// echo $modelFile->name;
+													echo '<li>';
+													echo '<a href="'.Url::to('@web/uploads/weblink/'.$model->id.'/'.$modelFile->file).'"  target="_blank">'.$modelFile->name.'.'.$modelFile->type.'</a> ';
+													echo '</li>';
+												endforeach;
+												echo '</ul>';
+												// echo var_dump($modelFiles);
+											?>
+											</td>		
 															        
 									</tr>
 									<?php  endforeach; ?>
@@ -135,7 +150,6 @@ $(document).ready(function() {
             	$("#activity-modal").modal("show");
         	});
     	});
-
 		
     	var url_view = "view";		
     	$(".act-view").click(function(e) {			

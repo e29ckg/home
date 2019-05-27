@@ -32,7 +32,7 @@ class WebLinkFile extends \yii\db\ActiveRecord
         return [
             // [['file'], 'required'],
             [['web_link_id', 'sort'], 'integer'],
-            [['name', 'type', 'file'], 'string', 'max' => 255],
+            [['name', 'type', 'file', 'url'], 'string', 'max' => 255],
             [['file'], 'file', 'extensions' => 'pdf, txt, zip, rar, doc, docx, png, jpg', 'maxSize'=> 1024 * 1024 * 10],
         ];
     }
@@ -46,6 +46,7 @@ class WebLinkFile extends \yii\db\ActiveRecord
             'id' => 'ID',
             'web_link_id' => 'Web Link ID',
             'name' => 'Name',
+            'url' => 'url',
             'type' => 'Type',
             'file' => 'File',
             'sort' => 'Sort',

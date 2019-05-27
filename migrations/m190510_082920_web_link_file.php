@@ -22,6 +22,7 @@ class m190510_082920_web_link_file extends Migration
             'id' => $this->primaryKey(),
             'web_link_id' => $this->integer(11)->notNull(),
             'name' => $this->string(),
+            'url' => $this->string(),
             'type' => $this->string(),
             'file' => $this->string(),
             'sort' => $this->integer(),

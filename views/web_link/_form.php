@@ -61,9 +61,10 @@ use yii\helpers\Url;
 
 <?php 
 if (!empty($model->img)){
-    $filename = Url::to('@webroot/uploads/weblink/').$model->img;
+    $filename = Url::to('@webroot/uploads/weblink/').$model->id.'/'.$model->img;
     if (file_exists($filename)) {
-        echo Url::to('@web/uploads/link/').$model->img;
+        echo Html::img('@web/uploads/weblink/'.$model->id.'/'.$model->img, ['alt' => 'My logo1','class'=>'img']);
+        // echo Url::to('@web/uploads/link/').$model->id.'/'.$model->img;
     }
     
 }

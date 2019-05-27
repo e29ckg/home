@@ -44,7 +44,7 @@ class Web_linkController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
-                    // 'deletefile' => ['POST'],
+                    'deletefile' => ['POST'],
                 ],
             ],
         ];
@@ -69,8 +69,7 @@ class Web_linkController extends Controller
             'create_at'=>SORT_DESC,
             'id' => SORT_DESC,
             ])->limit(100)->all();
-        
-        
+                
         $countAll = WebLink::getCountAll();
 
         return $this->render('index', [
@@ -129,10 +128,10 @@ class Web_linkController extends Controller
           } 
      
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            
+            $model->id = time();
             $f = UploadedFile::getInstance($model, 'img');
             if(!empty($f)){
-                $dir = Url::to('@webroot/uploads/weblink/');
+                $dir = Url::to('@webroot/uploads/weblink/'.$model->id.'/');
                 if (!is_dir($dir)) {
                     mkdir($dir, 0777, true);
                 } 
@@ -181,7 +180,7 @@ class Web_linkController extends Controller
 
             $f = UploadedFile::getInstance($modelFile, 'file');
             if(!empty($f)){
-                $dir = Url::to('@webroot/uploads/weblink/');
+                $dir = Url::to('@webroot/uploads/weblink/'.$model->id.'/');
                 if (!is_dir($dir)) {
                     mkdir($dir, 0777, true);
                 } 
@@ -219,6 +218,49 @@ class Web_linkController extends Controller
         }
     }
 
+    public function actionCreateurl($id)
+    {
+        $model = $this->findModel($id);
+
+        $modelFile = new WebLinkFile();
+
+        //Add This For Ajax Email Exist Validation 
+        if(Yii::$app->request->isAjax && $modelFile->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($modelFile);
+          } 
+     
+        if ($modelFile->load(Yii::$app->request->post()) && $modelFile->validate()) {
+
+            if(!($_POST['WebLinkFile']['name'])==''){
+                $modelFile->name = $_POST['WebLinkFile']['url'];
+            }else{
+                $modelFile->name = $_POST['WebLinkFile']['name']; 
+            }
+
+            $modelFile->web_link_id = $model->id; 
+            $modelFile->url = $_POST['WebLinkFile']['url'];                    
+            $modelFile->type = "url";
+                
+            $modelFile->sort = 1;
+            if($modelFile->save()){
+                Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย'.$_POST['WebLinkFile']['name']);
+                return $this->redirect(['admin']);
+            }   
+
+        }
+
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_form_url',[
+                    'modelFile' => $modelFile,                    
+            ]);
+        }else{
+            return $this->render('_form_url',[
+                'modelFile' => $modelFile,                    
+            ]); 
+        }
+    }
+    
     public function actionC2()
     {
         $model = $this->findModel($id);
@@ -297,7 +339,7 @@ class Web_linkController extends Controller
             
             $f = UploadedFile::getInstance($model, 'img');
             if(!empty($f)){
-                $dir = Url::to('@webroot/uploads/weblink/');
+                $dir = Url::to('@webroot/uploads/weblink/'.$model->id.'/');
                 if (!is_dir($dir)) {
                     mkdir($dir, 0777, true);
                 }
@@ -328,9 +370,62 @@ class Web_linkController extends Controller
             return $this->render('update',[
                 'model' => $model,                    
             ]); 
+        }        
+    }
+
+    public function actionUpdatefile($id)
+    {
+        $modelFile = $this->findModelFileByWebLinkId($id);
+
+        $fileName = $modelFile->file;
+
+        //Add This For Ajax Email Exist Validation 
+        if(Yii::$app->request->isAjax && $modelFile->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($modelFile);
+          } 
+     
+        if ($modelFile->load(Yii::$app->request->post()) && $modelFile->validate()) {
+
+            $f = UploadedFile::getInstance($modelFile, 'file');
+            if(!empty($f)){
+                $dir = Url::to('@webroot/uploads/weblink/'.$modelFile->web_link_id.'/');
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0777, true);
+                }
+                if($fileName && is_file($dir.$fileName)){
+                    unlink($dir.$fileName);// ลบ รูปเดิม;   
+                }
+                $fileName = md5($f->baseName . time()) . '.' . $f->extension;
+                if($f->saveAs($dir . $fileName)){
+                    $modelFile->file = $fileName;                    
+                    $modelFile->type = $f->extension;
+                    $modelFile->name  = $f->baseName;
+                }
+            } 
+            $modelFile->file = $fileName;
+            
+            if(!($_POST['WebLinkFile']['name'])==''){
+                $modelFile->name = $_POST['WebLinkFile']['name'];
+            }
+                
+            // $modelFile->sort = 1;
+            if($modelFile->save()){
+                Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย'.$_POST['WebLinkFile']['name']);
+                return $this->redirect(['admin']);
+            }   
+
         }
 
-        
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_form_file',[
+                    'modelFile' => $modelFile,                    
+            ]);
+        }else{
+            return $this->render('_form_file',[
+                'modelFile' => $modelFile,                    
+            ]); 
+        }
     }
 
     /**
@@ -345,10 +440,9 @@ class Web_linkController extends Controller
     public function actionDelete($id)
     {
         $modelFiles  = WebLinkFile::find()->where(['web_link_id' => $id])->all();
-
-        foreach ($modelFiles as $modelFile):
-                    
-            $dir = Url::to('@webroot/uploads/weblink/');
+        $dir = Url::to('@webroot/uploads/weblink/'.$id.'/');
+        foreach ($modelFiles as $modelFile):                   
+            
             if (!is_dir($dir)) {
                 mkdir($dir, 0777, true);
             }
@@ -356,32 +450,31 @@ class Web_linkController extends Controller
                 unlink($dir.$modelFile->file);// ลบ รูปเดิม;   
             } 
 
-        endforeach;  
+        endforeach;          
+        
+        WebLinkFile::deleteAll(['web_link_id' => $id]);        
 
-        WebLinkFile::deleteAll(['web_link_id' => $id]);
-
-        $model = $this->findModel($id);        
-        $fileName = $model->img;
-        $dir = Url::to('@webroot/uploads/weblink/');
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-        if($fileName && is_file($dir.$fileName)){
-            unlink($dir.$fileName);// ลบ รูปเดิม;   
+        $model = $this->findModel($id); 
+        
+        if($model->img && is_file($dir.$model->img)){
+            unlink($dir.$model->img);// ลบ รูปเดิม;   
         }   
-        
-        
 
         $model->delete();
 
+        if (is_dir($dir)) {
+            // mkdir($dir, 0777, true);
+            rmdir($dir);
+        }
+       
         return $this->redirect(['admin']);
     }
     
 public function actionDeletefile($id)
     {
-        $model = $this->findModelFile($id);
-        $fileName = $model->file;
-        $dir = Url::to('@webroot/uploads/weblink/');
+        $modelfile = $this->findModelFileByWebLinkId($id);
+        $fileName = $modelfile->file;
+        $dir = Url::to('@webroot/uploads/weblink/'.$modelfile->web_link_id.'/');
         if (!is_dir($dir)) {
             mkdir($dir, 0777, true);
         }
@@ -389,23 +482,35 @@ public function actionDeletefile($id)
             unlink($dir.$fileName);// ลบ รูปเดิม;   
         }        
         
-        $model->delete();
+        $modelfile->delete();
 
         return $this->redirect(['admin']);
     }
 
     public function actionShow($id=null){
-        $mdWebLink = WebLink::find()->where(['id' => $id])->one();
+        // $mdWebLink = WebLink::find()->where(['id' => $id])->one();
+        $mdWebLink = $this->findModel($id);
+        $modelFiles = WebLinkFile::find()->where(['web_link_id' => $id])->all();
 
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('show',[
-                    'model' => $mdWebLink,                    
+                    'model' => $mdWebLink, 
+                    'modelFiles' =>  $modelFiles,                    
             ]);
         }
         
         return $this->render('show',[
-               'model' => $mdWebLink,                    
+               'model' => $mdWebLink,
+               'modelFiles' =>  $modelFiles,                       
         ]);
+    }
+
+    public function actionOpenfile($id=null){
+        $modelfile = $this->findModelFileByWebLinkId($id);
+        $filePath = '/web/uploads/weblink/'.$modelfile->web_link_id;
+        // Might need to change '@app' for another alias
+        $completePath = Yii::getAlias('@app'.$filePath.'/'.$modelfile->file);
+        return Yii::$app->response->sendFile($completePath, $file, ['inline'=>true]);;
     }
 
     /**
@@ -441,6 +546,7 @@ public function actionDeletefile($id)
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 
 
     public function actionPrint($id = null)

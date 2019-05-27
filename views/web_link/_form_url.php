@@ -41,22 +41,14 @@ use kartik\file\FileInput;
  
 
 <div>
-<?php
-echo $form->field($modelFile, 'file')->widget(FileInput::classname(), [
-    // 'options' => ['accept' => 'image/*'],
-    // 'pluginOptions' => ['previewFileType' => 'any', 'uploadUrl' => Url::to(['/site/file-upload']),]
-]);
-?>
-<?php
-// echo $form->field($model, 'file',[
-//    'inputOptions' => [
-//         'placeholder' => $model->getAttributeLabel('file'),
-//         'onchange'=>'this.parentNode.nextSibling.value = this.value'
-//     ],
-//     'template' => '<section><label class="label">{label}</label><div class="input input-file"><span class="button">{input}Browse</span><input type="text" placeholder="Include some files" readonly=""><div class="invalid">{error}{hint}</div></div></section>'
-// ])->fileInput()->label(false) 
-?>
-</div>
+<?= $form->field($modelFile, 'url', [
+    'inputOptions' => [
+        'placeholder' => $modelFile->getAttributeLabel('url')
+    ],
+    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-user"></i>{input}<b class="tooltip tooltip-top-right">'.$modelFile->getAttributeLabel('url').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+    ])->input('url')->label(false);
+    ?>
+</div> 
 
  
 <fieldset class="text-right"> 

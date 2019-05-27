@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<td class="img-weblink" >
 										<?php
 											if (!empty($model->img)){
-												echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/uploads/weblink/'.$model->img, ['alt' => 'My logo1','class'=>'img']).'</a>';													
+												echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/uploads/weblink/'.$model->id.'/'.$model->img, ['alt' => 'My logo1','class'=>'img']).'</a>';													
 												
 											}else{
 												echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/img/none.png', ['alt' => 'My logo','class'=>'img']).'</a>';
@@ -104,19 +104,21 @@ $this->params['breadcrumbs'][] = $this->title;
 												
 												foreach ($modelFiles as $modelFile):
 													// echo $modelFile->name;
-													echo '<li><a href="'.Url::to('@web/uploads/weblink/'.$modelFile->file).'" target="_blank">'.$modelFile->name.'</a> ';
-													echo Html::a('แก้ไข/ลบ',['web_link/deletefile','id' => $modelFile->id],
+													echo '<li><a href="'.Url::to('@web/uploads/weblink/'.$model->id.'/'.$modelFile->file).'"  target="_blank">'.$modelFile->name.'.'.$modelFile->type.'</a> ';
+													echo '<button class="act-update-file btn btn-success btn-xs" alt="act-update-file" data-id="'.$modelFile->id.'"<i class="fa fa-plus "></i> แก้ไข</button>';
+													echo Html::a('ลบ',['web_link/deletefile','id' => $modelFile->id],
 													[
 														'class' => 'btn btn-danger btn-xs',
 														'data-confirm' => 'Are you sure to delete this item?',
                                     					'data-method' => 'post',
 													]).
-											'</li>';
+													'</li>';
 												endforeach;
 												echo '</ul>';
 												// echo var_dump($modelFiles);
 											?>
 											<button class="act-create-file btn btn-success btn-xs" alt="act-create" data-id=<?=$model['id']?>><i class="fa fa-plus "></i> เพิ่มfile</button>
+											<button class="act-create-url btn btn-success btn-xs" alt="act-create-url" data-id=<?=$model['id']?>><i class="fa fa-plus "></i> เพิ่มurl</button>
 										
 										</td>		
 										<?php
@@ -172,6 +174,21 @@ $(document).ready(function() {
                 //   $("#myModal").modal('toggle');
         	});     
 		}); 
+
+		var url_create_url = "createurl";
+    	$( ".act-create-url" ).click(function() {
+        	var fID = $(this).data("id");
+			// alert(fID);
+        	$.get(url_create_url,{id: fID},function (data){
+                $("#activity-modal").find(".modal-body").html(data);
+                $(".modal-body").html(data);
+                $(".modal-title").html("เพิ่มข้อมูล");
+            	// $(".modal-footer").html(footer);
+                $("#activity-modal").modal("show");
+                //   $("#myModal").modal('toggle');
+        	});     
+		});
+
 		
 		var url_show = "show";				
 			$( ".act-show" ).click(function() {
@@ -191,6 +208,18 @@ $(document).ready(function() {
 			var fID = $(this).data("id");
 			// alert(fID);
         	$.get(url_update,{id: fID},function (data){
+            	$("#activity-modal").find(".modal-body").html(data);
+            	$(".modal-body").html(data);
+            	$(".modal-title").html("แก้ไข");
+            	$("#activity-modal").modal("show");
+        	});
+    	});
+
+		var url_update_file = "updatefile";
+    	$(".act-update-file").click(function(e) {            
+			var fID = $(this).data("id");
+			// alert(fID);
+        	$.get(url_update_file,{id: fID},function (data){
             	$("#activity-modal").find(".modal-body").html(data);
             	$(".modal-body").html(data);
             	$(".modal-title").html("แก้ไขข้อมูลสมาชิก");
