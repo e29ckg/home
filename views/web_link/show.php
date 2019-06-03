@@ -60,5 +60,6 @@ use yii\helpers\Url;
 		<div>
 	</section>
 </div>
-<div>	
+<div>
+	
 </div>

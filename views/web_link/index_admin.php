@@ -145,7 +145,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 	</section>	
 
-	<barcode code="ssssss" type="QR" size="0.3" error="M" disableborder = "1"/>
 </div>
 
 <?php
