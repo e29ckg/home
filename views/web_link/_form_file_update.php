@@ -59,7 +59,14 @@ echo $form->field($modelFile, 'file')->widget(FileInput::classname(), [
 
  
 <fieldset class="text-right"> 
-    <?= Html::resetButton('Reset', ['class' => 'btn btn-warning btn-lg']) ?> <?= Html::submitButton('Save', ['class' => 'btn btn-primary btn-lg']) ?>
+<?= Html::a('ลบ',['web_link/deletefile','id' => $modelFile->id],
+													[
+														'class' => 'btn btn-danger btn-lg',
+														'data-confirm' => 'Are you sure to delete this item?',
+                                    					'data-method' => 'post',
+													]); ?>
+    <?= Html::resetButton('Reset', ['class' => 'btn btn-warning btn-lg']) ?> 
+    <?= Html::submitButton('Save', ['class' => 'btn btn-primary btn-lg']) ?>
 </fieldset>
 
     <?php ActiveForm::end(); ?>

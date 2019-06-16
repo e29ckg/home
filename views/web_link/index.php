@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<td class="img-weblink" >
 										<?php
 											if (!empty($model->img)){
-													echo Html::a(Html::img('@web/uploads/weblink/'.$model->id.'/'.$model->img,['alt' => 'My logo1']), '#',[
+													echo Html::a(Html::img('@web/uploads/weblink/'.$model->id.'/'.$model->img,['alt' => 'My logo1','width'=>'80']), '#',[
 														'data-id'=> $model->id,
 														'class' => 'act-show img',
 														]);													
@@ -98,7 +98,11 @@ $this->params['breadcrumbs'][] = $this->title;
 												foreach ($modelFiles as $modelFile):
 													// echo $modelFile->name;
 													echo '<li>';
+													if($modelFile->type =='url'){
+														echo '<a href="'.Url::to($modelFile->url).'"  target="_blank">'.$modelFile->name.'</a> ';														
+													}else{
 													echo '<a href="'.Url::to('@web/uploads/weblink/'.$model->id.'/'.$modelFile->file).'"  target="_blank">'.$modelFile->name.'.'.$modelFile->type.'</a> ';
+													}		
 													echo '</li>';
 												endforeach;
 												echo '</ul>';

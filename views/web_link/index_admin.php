@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<td class="img-weblink" >
 										<?php
 											if (!empty($model->img)){
-												echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/uploads/weblink/'.$model->id.'/'.$model->img, ['alt' => 'My logo1','class'=>'img']).'</a>';													
+												echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/uploads/weblink/'.$model->id.'/'.$model->img, ['alt' => 'My logo1','class'=>'img', 'width'=>'80']).'</a>';													
 												
 											}else{
 												echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/img/none.png', ['alt' => 'My logo','class'=>'img']).'</a>';
@@ -104,14 +104,17 @@ $this->params['breadcrumbs'][] = $this->title;
 												
 												foreach ($modelFiles as $modelFile):
 													// echo $modelFile->name;
-													echo '<li><a href="'.Url::to('@web/uploads/weblink/'.$model->id.'/'.$modelFile->file).'"  target="_blank">'.$modelFile->name.'.'.$modelFile->type.'</a> ';
-													echo '<button class="act-update-file btn btn-success btn-xs" alt="act-update-file" data-id="'.$modelFile->id.'"<i class="fa fa-plus "></i> แก้ไข</button>';
-													echo Html::a('ลบ',['web_link/deletefile','id' => $modelFile->id],
-													[
-														'class' => 'btn btn-danger btn-xs',
-														'data-confirm' => 'Are you sure to delete this item?',
-                                    					'data-method' => 'post',
-													]).
+													echo '<li>';
+													if($modelFile->type =='url'){
+														echo '<a href="'.Url::to($modelFile->url).'"  target="_blank">'.$modelFile->name.'</a> ';
+														echo '<button class="act-update-url btn btn-xs bg-color-white txt-color-red" alt="act-update-url" data-id="'.$modelFile->id.'"><i class="fa fa-gear fa-spin fa-lg"></i> แก้ไข</button>';
+														
+													}else{
+													echo '<a href="'.Url::to('@web/uploads/weblink/'.$model->id.'/'.$modelFile->file).'"  target="_blank">'.$modelFile->name.'.'.$modelFile->type.'</a> ';
+													echo '<button class="act-update-file btn btn-xs bg-color-white txt-color-red" alt="act-update-file" data-id="'.$modelFile->id.'"><i class="fa fa-gear fa-spin fa-lg"></i> แก้ไข</button>';
+													
+												}
+													
 													'</li>';
 												endforeach;
 												echo '</ul>';
@@ -125,10 +128,10 @@ $this->params['breadcrumbs'][] = $this->title;
 											if(Yii::$app->user->identity->role == 9){
 										?>
 										<td>
-										<a href="#" class="act-update btn btn-info btn-xs" data-id=<?=$model['id']?>>แก้ไข</a> 
+										<a href="#" class="act-update btn btn-info btn-md" data-id=<?=$model['id']?>>แก้ไข</a> 
 										<?= Html::a('<i class="fa fa-remove"></i> ลบ',['web_link/delete','id' => $model->id],
 													[
-														'class' => 'btn btn-danger btn-xs',
+														'class' => 'btn btn-danger btn-md',
 														'data-confirm' => 'Are you sure to delete this item?',
                                     					'data-method' => 'post',
 													]);
@@ -156,9 +159,10 @@ $(document).ready(function() {
 
 	init_click_handlers(); //first run
 			
-	// $('#activity-modal').on('hidden.bs.modal', function () {
- 	// 	location.reload();
-	// })
+	$('#activity-modal').on('hidden.bs.modal', function () {
+ 		location.reload();
+	})
+	
 		        
 	function init_click_handlers(){    
 
@@ -228,6 +232,17 @@ $(document).ready(function() {
         	});
     	});    	
 		
+		var url_update_url = "updateurl";
+    	$(".act-update-url").click(function(e) {            
+			var fID = $(this).data("id");
+			// alert(fID);
+        	$.get(url_update_url,{id: fID},function (data){
+            	$("#activity-modal").find(".modal-body").html(data);
+            	$(".modal-body").html(data);
+            	$(".modal-title").html("แก้ไขข้อมูลสมาชิก");
+            	$("#activity-modal").modal("show");
+        	});
+    	});
     	var url_view = "index.php?r=ppss/view";		
     	$(".act-view").click(function(e) {			
                 var fID = $(this).data("id");

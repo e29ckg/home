@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Profile;
 use app\models\ProfileSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -46,12 +47,10 @@ class ProfileController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ProfileSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = Profile::findOne(['user_id' => Yii::$app->user->identity->id]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 

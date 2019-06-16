@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-use kartik\file\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\WebLink */
@@ -52,7 +51,14 @@ use kartik\file\FileInput;
 
  
 <fieldset class="text-right"> 
-    <?= Html::resetButton('Reset', ['class' => 'btn btn-warning btn-lg']) ?> <?= Html::submitButton('Save', ['class' => 'btn btn-primary btn-lg']) ?>
+<?= Html::a('ลบ',['web_link/deleteurl','id' => $modelFile->id],
+													[
+														'class' => 'btn btn-danger btn-lg',
+														'data-confirm' => 'Are you sure to delete this item?',
+                                    					'data-method' => 'post',
+													]); ?> 
+<?= Html::resetButton('Reset', ['class' => 'btn btn-warning btn-lg']) ?> 
+<?= Html::submitButton('Save', ['class' => 'btn btn-primary btn-lg']) ?>
 </fieldset>
 
     <?php ActiveForm::end(); ?>

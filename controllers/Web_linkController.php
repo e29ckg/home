@@ -232,7 +232,7 @@ class Web_linkController extends Controller
      
         if ($modelFile->load(Yii::$app->request->post()) && $modelFile->validate()) {
 
-            if(!($_POST['WebLinkFile']['name'])==''){
+            if($_POST['WebLinkFile']['name'] == ''){
                 $modelFile->name = $_POST['WebLinkFile']['url'];
             }else{
                 $modelFile->name = $_POST['WebLinkFile']['name']; 
@@ -418,11 +418,49 @@ class Web_linkController extends Controller
         }
 
         if(Yii::$app->request->isAjax){
-            return $this->renderAjax('_form_file',[
+            return $this->renderAjax('_form_file_update',[
                     'modelFile' => $modelFile,                    
             ]);
         }else{
-            return $this->render('_form_file',[
+            return $this->render('_form_file_update',[
+                'modelFile' => $modelFile,                    
+            ]); 
+        }
+    }
+
+    public function actionUpdateurl($id)
+    {
+        $modelFile = $this->findModelFileByWebLinkId($id);
+
+        $fileName = $modelFile->url;
+
+        //Add This For Ajax Email Exist Validation 
+        if(Yii::$app->request->isAjax && $modelFile->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($modelFile);
+          } 
+            
+        if ($modelFile->load(Yii::$app->request->post()) && $modelFile->validate()) {
+           
+            if($_POST['WebLinkFile']['name'] == ''){
+                $modelFile->name = $_POST['WebLinkFile']['url'];
+            }else{
+                $modelFile->name = $_POST['WebLinkFile']['name']; 
+            }            
+
+            if($modelFile->save()){
+                // Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย'.$_POST['WebLinkFile']['name']);
+                return $this->redirect(['admin']);
+            }   
+
+        }
+
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_form_url',[
+                    'modelFile' => $modelFile,                    
+            ]);
+        }else{
+            return $this->render('_form_url',[
                 'modelFile' => $modelFile,                    
             ]); 
         }
@@ -481,6 +519,15 @@ public function actionDeletefile($id)
         if($fileName && is_file($dir.$fileName)){
             unlink($dir.$fileName);// ลบ รูปเดิม;   
         }        
+        
+        $modelfile->delete();
+
+        return $this->redirect(['admin']);
+    }
+
+    public function actionDeleteurl($id)
+    {
+        $modelfile = $this->findModelFileByWebLinkId($id);
         
         $modelfile->delete();
 

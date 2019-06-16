@@ -60,7 +60,9 @@ echo $form->field($modelFile, 'file')->widget(FileInput::classname(), [
 
  
 <fieldset class="text-right"> 
-    <?= Html::resetButton('Reset', ['class' => 'btn btn-warning btn-lg']) ?> <?= Html::submitButton('Save', ['class' => 'btn btn-primary btn-lg']) ?>
+ 
+<?= Html::resetButton('Reset', ['class' => 'btn btn-warning btn-lg']) ?> 
+<?= Html::submitButton('Save', ['class' => 'btn btn-primary btn-lg']) ?>
 </fieldset>
 
     <?php ActiveForm::end(); ?>
