@@ -29,7 +29,7 @@ class WebLink extends \yii\db\ActiveRecord
     {
         return [
             [['name' , 'link'], 'required'],
-            [['name' , 'link'],'unique','message'=>'Name already exist. Please try another one.'],
+            [['name' , 'link'],'unique','message'=>'Name already exist. Please try another one.'],            
             [['create_at'], 'safe'],
             [['name', 'img', 'link'], 'string', 'max' => 255],
             [['img'], 'file', 'extensions' => 'png, jpg', 'maxSize'=> 1024 * 1024 * 5],
@@ -53,7 +53,7 @@ class WebLink extends \yii\db\ActiveRecord
 
     public function getCountAll()
     {        
-        return CLetter::find()->count();           
+        return  WebLink::find()->count();           
     }
 
     public function getWebLinkFile()

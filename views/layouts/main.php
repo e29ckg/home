@@ -17,7 +17,7 @@ use yii\helpers\Url;
 AppAsset::register($this);
 
 if (!Yii::$app->user->isGuest){
-	$mdProfile = Profile::find()->where(['user_id'=> Yii::$app->user->id])->one();
+	$mdProfile = Profile::findOne(['user_id'=> Yii::$app->user->id]);
 	
 }else{
 	// $mdProfile = Profile::find()->where(['user_id'=> 1])->one();
@@ -92,7 +92,7 @@ if (!Yii::$app->user->isGuest){
 
 				<!-- PLACE YOUR LOGO HERE <span id="logo"> <img src="img/logo.png" alt="SmartAdmin"> -->
 				
-				<span id="logo"><img src="<?=Url::to('@web/img/logo-pkkjc.png')?>" width="437" alt="pkkjc"></span>
+				<span id="logo"><img src="<?=Url::to('@web/img/logo.png')?>" width="437" alt="pkkjc"></span>
 				<!-- END LOGO PLACEHOLDER -->
 
 				<!-- Note: The activity badge color changes when clicked and resets the number to 0
@@ -195,20 +195,16 @@ if (!Yii::$app->user->isGuest){
 			<!-- User info -->
 			<div class="login-info">
 				<span> <!-- User image size is adjusted inside CSS, it should stay as it --> 
-					<?php
-					if(!Yii::$app->user->isGuest){ 
-						// '<a href="index.php?r=site/logout" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser" ><i class="fa fa-sign-out"></i></a>'
-						if($mdProfile->img){
-							echo Html::img('@web/uploads/user/'.$mdProfile->img, ['alt' => 'My logo']);
-						}else{
-							echo Html::img('@web/img/none.png', ['alt' => 'My logo']);
-						} 
-						echo Html::a('<span>'.User::getProfileNameById(Yii::$app->user->identity->id).' </span> <i class="fa fa-angle-down"></i>', ['user/profile'], []) ;
-					}else{
-						echo Html::img('@web/img/none.png', ['alt' => 'My logo']).
-						Html::a('<span>Guest <i class="fa fa-sign-in"></i></span>  Login', ['site/login'], ['class' => 'btn btn-danger']) ;
-					}
-						?>
+					<a href="<?=Url::to(['user/profile'])?>" id="show-shortcut" >
+						<img src="<?= Profile::getImgSrc(); ?>" alt="me" class="online"> 
+						<span>
+							<?= Profile::getFullName(); ?>
+						
+						</span>
+						<?= !Yii::$app->user->isGuest ? '<i class="fa fa-angle-down"></i>' : ' <span><a href="'.Url::to(['site/login']).'" class="btn btn-danger btn-xs">Login <i class="fa fa-sign-in"></i></a></span>'; ?>
+						
+						<!-- <i class="fa fa-angle-down"></i> -->
+					</a>					
 				</span>
 			</div>
 			<!-- end user info -->

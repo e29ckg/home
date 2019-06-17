@@ -170,10 +170,11 @@ class SiteController extends Controller
             $modelLog->create_at = date("Y-m-d H:i:s");
             $modelLog->ip = Yii::$app->getRequest()->getUserIP();
             if($modelLog->save()){
+                Yii::$app->user->logout();
                 $res = Cletter::notify_message_admin($message); 
             }
 
-        Yii::$app->user->logout();
+        // Yii::$app->user->logout();
 
         return $this->goHome();
     }

@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+use yii\helpers\Html;
 
 use Yii;
 
@@ -67,5 +68,35 @@ class Profile extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    public function getFullName()
+    {
+        if (!Yii::$app->user->isGuest){
+            $model = Profile::findOne(['user_id'=> Yii::$app->user->identity->id]);   
+            return $model->name ? $model->fname.$model->name.' '.$model->sname : 'No_Name';                   
+        }
+        return 'Guest ';
+    }   
+    
+    public function getImgSrc()
+    {
+        if (!Yii::$app->user->isGuest){
+            $model = Profile::findOne(['user_id'=> Yii::$app->user->identity->id]);   
+            return $model->img ? Yii::getAlias('@web').'/uploads/user/'.$model->img : Yii::getAlias('@web').'/img/avatars/male.png';         
+        }
+        return Yii::getAlias('@web').'/img/avatars/male.png';
+    }
+
+    public function getDep()
+    {
+        $model = Profile::findOne(['user_id'=>Yii::$app->user->identity->id]);
+        return $model->dep ? $model->dep : '' ;
+    }
+
+    public function getPhone()
+    {
+        $model = Profile::findOne(['user_id'=>Yii::$app->user->identity->id]);
+        return $model->phone;
     }
 }

@@ -50,7 +50,15 @@ use yii\helpers\Url;
 												<?php foreach ($modelFiles as $modelFile):?>
 													<tr>
 														<td><?= $modelFile->name.'.'.$modelFile->type?></td>
-														<td><a href="<?= Url::to('@web/uploads/weblink/'.$modelFile->web_link_id.'/'.$modelFile->file)?>"  target="_blank">ดาวน์โหลด</a></td>
+														<?php
+															echo '<td>';
+													if($modelFile->type =='url'){
+														echo '<a href="'.Url::to($modelFile->url).'"  target="_blank">'.$modelFile->name.'</a> ';														
+													}else{
+													echo '<a href="'.Url::to('@web/uploads/weblink/'.$model->id.'/'.$modelFile->file).'"  target="_blank">ดาวน์โหลด</a> ';
+													}		
+													echo '</td>';
+													?>
 													</tr>	
 												<?php endforeach;?>												
 												</tbody>

@@ -71,7 +71,7 @@ $this->title = 'Login';
 		<header id="header">
 
 			<div id="logo-group">
-				<span id="logo"> <img src="<?=Url::to('@web/img/logo-pkkjc.png')?>" alt="pkkjc"> </span>
+				<span id="logo"> <img src="<?=Url::to('@web/img/logo.png')?>" alt="pkkjc"> </span>
 			</div>
 
 			<!-- <span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Need an account?</span> <a href="<?=Url::to(['site/register'])?>" class="btn btn-danger">Create account</a> </span> -->

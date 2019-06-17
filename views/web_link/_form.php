@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use kartik\file\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\WebLink */
@@ -50,14 +51,21 @@ use yii\helpers\Url;
 
 </div> 
 
-
-<?= $form->field($model, 'img',[
-   'inputOptions' => [
-        'placeholder' => $model->getAttributeLabel('img'),
-        'onchange'=>'this.parentNode.nextSibling.value = this.value'
-    ],
-    'template' => '<section><label class="label">{label}</label><div class="input input-file"><span class="button">{input}Browse</span><input type="text" placeholder="Include some files" readonly=""><div class="invalid">{error}{hint}</div></div></section>'
-])->fileInput()->label(false) ?>
+<?php
+echo $form->field($model, 'img')->widget(FileInput::classname(), [
+    'options' => ['accept' => 'image/*'],
+    // 'pluginOptions' => ['previewFileType' => 'any', 'uploadUrl' => Url::to(['/site/file-upload']),]
+]);
+?>
+<?php
+//     echo $form->field($model, 'img',[
+//    'inputOptions' => [
+//         'placeholder' => $model->getAttributeLabel('img'),
+//         'onchange'=>'this.parentNode.nextSibling.value = this.value'
+//     ],
+//     'template' => '<section><label class="label">{label}</label><div class="input input-file"><span class="button">{input}Browse</span><input type="text" placeholder="Include some files" readonly=""><div class="invalid">{error}{hint}</div></div></section>'
+// ])->fileInput()->label(false) 
+?>
 
 <?php 
 if (!empty($model->img)){
@@ -71,7 +79,7 @@ if (!empty($model->img)){
 ?>
  
 <fieldset class="text-right"> 
-    <?= Html::resetButton('Reset', ['class' => 'btn btn-warning btn-lg']) ?> <?= Html::submitButton('Save', ['class' => 'btn btn-primary btn-lg']) ?>
+<?= Html::resetButton('Reset', ['class' => 'btn btn-warning btn-lg']) ?> <?= Html::submitButton('Save', ['class' => 'btn btn-primary btn-lg']) ?>
 </fieldset>
 
     <?php ActiveForm::end(); ?>
