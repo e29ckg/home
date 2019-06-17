@@ -10,7 +10,7 @@ use kartik\file\FileInput;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="web-link-form">
+<div class="web-link-form ">
 
     <?php 
     $form = ActiveForm::begin([
@@ -50,7 +50,22 @@ use kartik\file\FileInput;
     ?>
 
 </div> 
-
+<!-- <div class="row"> -->
+<section class="">
+<div class="col-xs-4 col-md-4">
+<?php 
+if (!empty($model->img)){
+    $filename = Url::to('@webroot/uploads/weblink/').$model->id.'/'.$model->img;
+    if (file_exists($filename)) {
+        echo Html::img('@web/uploads/weblink/'.$model->id.'/'.$model->img, ['alt' => 'My logo1','class'=>'img', 'width'=>'250']);
+        // echo Url::to('@web/uploads/link/').$model->id.'/'.$model->img;
+        // echo Html::a('@web/uploads/link/'.$model->id.'/'.$model->img,['@web/uploads/link/'.$model->id.'/'.$model->img]);
+    }
+    
+}
+?>
+</div>
+<div class="col-xs-8 col-md-8">
 <?php
 echo $form->field($model, 'img')->widget(FileInput::classname(), [
     'options' => ['accept' => 'image/*'],
@@ -67,17 +82,12 @@ echo $form->field($model, 'img')->widget(FileInput::classname(), [
 // ])->fileInput()->label(false) 
 ?>
 
-<?php 
-if (!empty($model->img)){
-    $filename = Url::to('@webroot/uploads/weblink/').$model->id.'/'.$model->img;
-    if (file_exists($filename)) {
-        echo Html::img('@web/uploads/weblink/'.$model->id.'/'.$model->img, ['alt' => 'My logo1','class'=>'img']);
-        // echo Url::to('@web/uploads/link/').$model->id.'/'.$model->img;
-    }
-    
-}
-?>
- 
+
+
+
+</div>
+</section>
+<!-- </div> -->
 <fieldset class="text-right"> 
 <?= Html::resetButton('Reset', ['class' => 'btn btn-warning btn-lg']) ?> <?= Html::submitButton('Save', ['class' => 'btn btn-primary btn-lg']) ?>
 </fieldset>

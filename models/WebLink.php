@@ -31,6 +31,7 @@ class WebLink extends \yii\db\ActiveRecord
             [['name' , 'link'], 'required'],
             [['name' , 'link'],'unique','message'=>'Name already exist. Please try another one.'],            
             [['create_at'], 'safe'],
+            [['link'],'url', 'defaultScheme' => 'http'],
             [['name', 'img', 'link'], 'string', 'max' => 255],
             [['img'], 'file', 'extensions' => 'png, jpg', 'maxSize'=> 1024 * 1024 * 5],
         ];
