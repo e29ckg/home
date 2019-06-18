@@ -215,7 +215,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getProfileNameById($id)
     {
-        $model = Profile::find()->where(['user_id' => $id])->one();
+        $model = Profile::findOne(['user_id' => $id]);
         return $model->name ? $model->fname.$model->name.' '.$model->sname : '' ;
     }
     public function getProfileDepById($id)

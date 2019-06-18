@@ -4,6 +4,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\models\User;
+use app\models\Profile;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -94,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						            <tr>
 						                <td><?= $i++?></td>
 										<td  >
-										<?= User::getProfileNameById($model->user_id);?>
+										<?= Profile::getFullNameId($model->user_id)?>
 										</td>
 										<td  >
 										<?=$model->cat?>

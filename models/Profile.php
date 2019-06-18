@@ -41,7 +41,7 @@ class Profile extends \yii\db\ActiveRecord
             // [['user_id', 'name', 'created_at'], 'required'],
             // [['birthday'], 'safe'],
             // // [['created_at', 'updated_at'], 'integer'],
-            // [['user_id', 'img', 'dep', 'address', 'phone'], 'string', 'max' => 255],
+            [['user_id', 'img', 'dep', 'address', 'phone'], 'string', 'max' => 255],
             // [['fname'], 'string', 'max' => 25],
             // [['name', 'sname'], 'string', 'max' => 50],
             // [['user_id'], 'unique'],
@@ -74,10 +74,18 @@ class Profile extends \yii\db\ActiveRecord
     {
         if (!Yii::$app->user->isGuest){
             $model = Profile::findOne(['user_id'=> Yii::$app->user->identity->id]);   
-            return $model->name ? $model->fname.$model->name.' '.$model->sname : 'No_Name';                   
+            return $model->user_id ? $model->fname.$model->name.' '.$model->sname : 'No_Name';                   
         }
         return 'Guest ';
     }   
+
+    public function getFullNameId($id)
+    {
+            $model = Profile::findOne(['user_id'=> $id]);   
+            return $model->user_id ? $model->fname.$model->name.' '.$model->sname : 'No_Name';                   
+            // return $model;                   
+        
+    }
     
     public function getImgSrc()
     {
