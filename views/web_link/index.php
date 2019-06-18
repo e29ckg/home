@@ -66,10 +66,9 @@ $this->params['breadcrumbs'][] = $this->title;
 							<table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
 								<thead>
 									<tr>
-					                    <th data-class="expand"> # </th>
-										<th data-hide="phone,tablet">img</th>
-					                    <th >ชื่อ</th>
-					                    <th data-hide="phone" >Link</th>		
+					                    <th data-class="expand" width="10%"> # </th>
+										<th width="20%">img</th>
+					                    <th data-hide="phone" width="70%">Link</th>		
 						            </tr>
 								</thead>
 								<tbody>  
@@ -78,10 +77,11 @@ $this->params['breadcrumbs'][] = $this->title;
 						            <tr>
 						                <td><?= $i++?></td>
 										<td class="img-weblink" >
-											<img src="<?= Url::to('@web'.WebLink::getImg($model->id)) ?>" alt="Smiley face" data-id= "<?=$model->id?>" class = "act-show img">
+											<a href="#"><img src="<?= Url::to('@web'.WebLink::getImg($model->id)) ?>" alt="Smiley face" data-id= "<?=$model->id?>" class = "act-show img"></a>
+											<br>
+											<?php  echo '<a href="'.$model->link.'" target="_blank">'.$model->name.'</a>'?>
 										</td>
-                                        <td>
-											<?php  echo '<a href="'.$model['link'].'" target="_blank">'.$model['name'].'</a>'?></td>
+                                        
                                         <td>
 										<?php 
 												$modelFiles = WebLinkFile::find()->where(['web_link_id'=>$model->id])->orderBy(['sort'=>SORT_ASC,'id' => SORT_ASC])->all(); 

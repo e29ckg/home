@@ -84,11 +84,11 @@ $this->params['breadcrumbs'][] = $this->title;
 						            <tr>
 						                <td><?= $i++?></td>
 										<td class="img-weblink" >
-											<img src="<?= Url::to('@web'.WebLink::getImg($model->id)) ?>" alt="Smiley face" data-id= "<?=$model->id?>" class = "act-show img">
+										<a href="#" ><img src="<?= Url::to('@web'.WebLink::getImg($model->id)) ?>" alt="Smiley face" data-id= "<?=$model->id?>" class = "act-show img"></a>
 										</td>
                                         <td>
-											<?= '<a href="'.$model['link'].'" target="_blank">'.$model['name'].'</a>'?>
-											<br><?= '<a href="'.$model['link'].'" target="_blank">'.$model['link'].'</a>'?>
+											<?= $model->name?>
+											<br><?= '<a href="'.$model->link.'" target="_blank">'.$model->link.'</a>'?>
 										</td>
                                         <td>
 											<?php 

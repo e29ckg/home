@@ -74,11 +74,7 @@ class WebLink extends \yii\db\ActiveRecord
         }else{
             $link = '/img/none.png';
         } 
-        return $link ;
-        // Html::a(Html::img('@web/'.$link,['alt' => 'My logo1','width'=>'80']), '#',[
-        //         'data-id'=> $model->id,
-        //         'class' => 'act-show img',
-        //         ]);
+        return $link ;        
     }
 
 }
