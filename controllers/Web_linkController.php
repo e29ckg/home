@@ -428,7 +428,7 @@ class Web_linkController extends Controller
         }
     }
 
-    public function actionUpdateurl($id)
+public function actionUpdateurl($id)
     {
         $modelFile = $this->findModelFileByWebLinkId($id);
 
@@ -595,7 +595,6 @@ public function actionDeletefile($id)
     }
 
 
-
     public function actionPrint($id = null)
     {
         // $this->layout = 'cart_shop';   
@@ -646,4 +645,40 @@ public function actionDeletefile($id)
     // return $pdf->render();
     return $this->redirect(['index']);
     }
+
+    
+    public function actionUpdate00(){
+        $models = WebLink::find()->all();
+
+    foreach ($models as $model):
+        $source = Url::to('@webroot/uploads/weblink/'.$model->img);
+        $dir = Url::to('@webroot/uploads/weblink/'.$model->id.'/');
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        } 
+
+        $destination = $dir;
+        echo $source.'<br>'; 
+        echo $destination.'<br>'; 
+        if(is_file($source))
+        {
+            echo ("$source is a regular file <br>");
+            if (copy($source, $destination.$model->img)) {
+                    echo "The file was moved successfully.<br>", "\n";
+                    if(unlink($source)){
+                        echo "File was Delete successfully.", "\n";
+                    }
+                    
+                } else {
+                    echo "The specified file could not be moved. Please try again.", "\n";
+                }
+        }else{
+            echo ("$source is not a regular file");
+        } 
+    
+    endforeach;
+
+    }
+
+
 }

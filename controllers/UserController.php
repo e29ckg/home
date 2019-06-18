@@ -83,11 +83,12 @@ class UserController extends Controller{
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {            
             
             $model->password_hash = Yii::$app->security->generatePasswordHash('password');
+            $model->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
             $model->created_at = date("Y-m-d H:i:s");
 
             if($model->save()){
                 Yii::$app->session->setFlash('success', ['บันทึกเรียบร้อย']);
-                $mU = User::find()->where(['username' => $_POST['User']['username']])->one();
+                $mU = User::findOne(['username' => $_POST['User']['username']]);
 
                 $mP = new Profile();
                 $mP->user_id = $mU->id;

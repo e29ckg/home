@@ -1,6 +1,8 @@
 <?php
 
 namespace app\models;
+use yii\helpers\Url;
+use yii\helpers\Html;
 use Yii;
 
 /**
@@ -62,4 +64,21 @@ class WebLink extends \yii\db\ActiveRecord
         // return $this->hasOne(WebLinkFile::className(), ['web_link_id' => 'id']);
         return $this->hasMany(WebLinkFile::className(), ['web_link_id' => 'id']);
     }
+
+    public function getImg($id)
+    {    
+        $model = WebLink::findOne(['id' => $id]);  
+        $source = Url::to('@webroot/uploads/weblink/'.$model->id.'/'.$model->img);
+        if(is_file($source)){
+            $link = '/uploads/weblink/'.$model->id.'/'.$model->img;
+        }else{
+            $link = '/img/none.png';
+        } 
+        return $link ;
+        // Html::a(Html::img('@web/'.$link,['alt' => 'My logo1','width'=>'80']), '#',[
+        //         'data-id'=> $model->id,
+        //         'class' => 'act-show img',
+        //         ]);
+    }
+
 }

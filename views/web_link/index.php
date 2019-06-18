@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use app\models\WebLink;
 use app\models\WebLinkFile;
 use yii\helpers\Url;
 
@@ -77,19 +78,10 @@ $this->params['breadcrumbs'][] = $this->title;
 						            <tr>
 						                <td><?= $i++?></td>
 										<td class="img-weblink" >
-										<?php
-											if (!empty($model->img)){
-													echo Html::a(Html::img('@web/uploads/weblink/'.$model->id.'/'.$model->img,['alt' => 'My logo1','width'=>'80']), '#',[
-														'data-id'=> $model->id,
-														'class' => 'act-show img',
-														]);													
-											}else{
-												echo Html::img('@web/img/none.png'.$model->img,['alt' => 'My logo1']);
-											}
-											
-										?>
-												</td>
-                                        <td><?php  echo '<a href="'.$model['link'].'" target="_blank">'.$model['name'].'</a>'?></td>
+											<img src="<?= Url::to('@web'.WebLink::getImg($model->id)) ?>" alt="Smiley face" data-id= "<?=$model->id?>" class = "act-show img">
+										</td>
+                                        <td>
+											<?php  echo '<a href="'.$model['link'].'" target="_blank">'.$model['name'].'</a>'?></td>
                                         <td>
 										<?php 
 												$modelFiles = WebLinkFile::find()->where(['web_link_id'=>$model->id])->orderBy(['sort'=>SORT_ASC,'id' => SORT_ASC])->all(); 
@@ -108,8 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
 												echo '</ul>';
 												// echo var_dump($modelFiles);
 											?>
-											</td>		
-															        
+											</td>			        
 									</tr>
 									<?php  endforeach; ?>
 								</tbody>	
