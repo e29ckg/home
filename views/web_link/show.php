@@ -17,7 +17,7 @@ use app\models\WebLink;
 
 </div>
 <div class="text-center">
-	<img src="<?= Url::to('@web'.WebLink::getImg($model->id)) ?>" alt="Smiley face" data-id= "<?=$model->id?>" class = "act-show img">
+	<img src="<?= Url::to('@web'.WebLink::getImg($model->id)) ?>" alt="Smiley face" data-id= "<?=$model->id?>" class = "img-thumbnail">
 	
 </div>
 <br>
