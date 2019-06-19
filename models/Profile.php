@@ -101,9 +101,9 @@ class Profile extends \yii\db\ActiveRecord
         $model = Profile::findOne(['user_id' => $id]);  
         $source = Url::to('@webroot/uploads/user/'.$model->img);
         if(is_file($source)){
-            $link = '/uploads/user/'.$model->img;
+            $link = 'uploads/user/'.$model->img;
         }else{
-            $link = '/img/none.png';
+            $link = 'img/none.png';
         } 
         return $link ;        
     }
