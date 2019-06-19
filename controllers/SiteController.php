@@ -67,6 +67,13 @@ class SiteController extends Controller
      *
      * @return string
      */
+    public function actionTest()
+    {
+        $this->layout = 'blank';
+        // return $this->render('index');
+        return $this->render('test');
+    }
+
     public function actionIndex()
     {
         //s$this->layout = 'loginl';

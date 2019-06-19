@@ -1,76 +1,89 @@
-
-<div class="container">
-			<br />
-			<br />
-			<h2 align="center">Ajax Crud on Dynamically Add Remove Input Fields in PHP</h2><br />
-			<div align="right">
-				<button type="button" name="add" id="add" class="btn btn-info">Add</button>
-			</div>
-			<br />
-			<div id="result"></div>
-		</div>
-		<div id="dynamic_field_modal" class="modal fade" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form method="post" id="add_name">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Add Details</h4>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-		      			<input type="text" name="name" id="name" class="form-control" placeholder="Enter your name" />
-		      		</div>
-		      		<div class="table-responsive">
-		      			<table class="table" id="dynamic_field">
-
-		      			</table>
-		      		</div>
-				</div>
-				<div class="modal-footer">
-					<input type="hidden" name="hidden_id" id="hidden_id" />
-					<input type="hidden" name="action" id="action" value="insert" />
-					<input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit" />
-				</div>
-			</form>
-		</div>
-	</div>
-
-</div>
-
-        <?php
-$script = <<< JS
-    
-$(document).ready(function() {	
-
-    load_data();
-
-var count = 1;
-
-function load_data()
-{
-    $.ajax({
-        url:"index.php?r=co/create",
-        method:"POST",
-        success:function(data)
-        {
-            $('#result').html(data);
-        }
-    })
-}
-
-    $('#add').click(function(){
-		$('#dynamic_field').html('');
-		// add_dynamic_input_field(1);
-		$('.modal-title').text('Add Details');
-		$('#action').val("insert");
-		$('#submit').val('Submit');
-		$('#add_name')[0].reset();
-		$('#dynamic_field_modal').modal('show');
-	});
-
-
-});
-JS;
-$this->registerJs($script);
+<?php
+use yii\helpers\Url;
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<link href="<?= Url::to('@web/plugins/fullcalendar/packages/core/main.css')?>" rel='stylesheet' />
+<link href="<?= Url::to('@web/plugins/fullcalendar/packages/daygrid/main.css')?>" rel='stylesheet' />
+<link href="<?= Url::to('@web/plugins/fullcalendar/packages/list/main.css')?>" rel='stylesheet' />
+<script src="<?= Url::to('@web/plugins/fullcalendar/packages/core/main.js')?>"></script>
+<script src="<?= Url::to('@web/plugins/fullcalendar/packages/interaction/main.js')?>"></script>
+<script src="<?= Url::to('@web/plugins/fullcalendar/packages/daygrid/main.js')?>"></script>
+<script src="<?= Url::to('@web/plugins/fullcalendar/packages/list/main.js')?>"></script>
+<script src="<?= Url::to('@web/plugins/fullcalendar/packages/google-calendar/main.js')?>"></script>
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+
+      plugins: [ 'interaction', 'dayGrid', 'list', 'googleCalendar' ],
+
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,listYear'
+      },
+
+      displayEventTime: false, // don't show the time column in list view
+
+      // THIS KEY WON'T WORK IN PRODUCTION!!!
+      // To make your own Google API key, follow the directions here:
+      // http://fullcalendar.io/docs/google_calendar/
+      googleCalendarApiKey: 'AIzaSyCtp0KVVxbk9VapZoU-X4J6uaulYafzMQw',
+
+      // US Holidays
+      events: 'pkkjc.coj@gmail.com',
+
+      eventClick: function(arg) {
+        // opens events in a popup window
+        window.open(arg.event.url, 'google-calendar-event', 'width=700,height=600');
+
+        arg.jsEvent.preventDefault() // don't navigate in main tab
+      },
+
+      loading: function(bool) {
+        document.getElementById('loading').style.display =
+          bool ? 'block' : 'none';
+      }
+
+    });
+
+    calendar.render();
+  });
+
+</script>
+<style>
+
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #loading {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  #calendar {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+</style>
+</head>
+<body>
+
+  <div id='loading'>loading...</div>
+
+  <div id='calendar'></div>
+
+</body>
+</html>

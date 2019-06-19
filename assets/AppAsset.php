@@ -28,6 +28,9 @@ class AppAsset extends AssetBundle
     'css/smartadmin-skins.min.css',
     'css/smartadmin-rtl.min.css',
     'css/demo.min.css',
+    // 'plugins/fullcalendar/packages/core/main.css',
+    // 'plugins/fullcalendar/packages/daygrid/main.css',
+    // 'plugins/fullcalendar/packages/list/main.css',    
     ];
     public $js = [
         'js/plugin/pace/pace.min.js',
@@ -62,7 +65,13 @@ class AppAsset extends AssetBundle
 		'js/plugin/datatables/dataTables.colVis.min.js',
 		'js/plugin/datatables/dataTables.tableTools.min.js',
 		'js/plugin/datatables/dataTables.bootstrap.min.js',
-        'js/plugin/datatable-responsive/datatables.responsive.min.js',
+        'js/plugin/datatable-responsive/datatables.responsive.min.js',        
+        // 'plugins/fullcalendar/packages/core/main.js',
+        // 'plugins/fullcalendar/packages/interaction/main.js',
+        // 'plugins/fullcalendar/packages/daygrid/main.js',
+        // 'plugins/fullcalendar/packages/list/main.js',
+        // 'plugins/fullcalendar/packages/google-calendar/main.js',
+
     ];
     public $depends = [
         'yii\web\YiiAsset',
