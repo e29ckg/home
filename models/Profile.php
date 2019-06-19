@@ -2,7 +2,7 @@
 
 namespace app\models;
 use yii\helpers\Html;
-
+use yii\helpers\Url;
 use Yii;
 
 /**
@@ -94,6 +94,18 @@ class Profile extends \yii\db\ActiveRecord
             return $model->img ? Yii::getAlias('@web').'/uploads/user/'.$model->img : Yii::getAlias('@web').'/img/avatars/male.png';         
         }
         return Yii::getAlias('@web').'/img/avatars/male.png';
+    }
+
+    public function getImgById($id)
+    {    
+        $model = Profile::findOne(['user_id' => $id]);  
+        $source = Url::to('@webroot/uploads/user/'.$model->img);
+        if(is_file($source)){
+            $link = '/uploads/user/'.$model->img;
+        }else{
+            $link = '/img/none.png';
+        } 
+        return $link ;        
     }
 
     public function getDep()

@@ -40,7 +40,8 @@ $fieldOptions2 = [
         'enableAjaxValidation' => true,
 	]);  ?>
 <header>
-<span > <img src="<?=Url::to('@web/img/head_login.png')?>" alt="pkkjc"> </span>
+    <span > Sign In</span>
+    <!-- <span > <img src="<?=Url::to('@web/img/head_login.png')?>" alt="pkkjc">Login</span> -->
 </header>
 	<fieldset>
 		<section>
@@ -48,11 +49,11 @@ $fieldOptions2 = [
 		</section>
 		<section>
             <?= $form->field($model, 'password', $fieldOptions2)->passwordInput() ?>			
-		    <div class="note"><a href="forgotpassword.html">Forgot password?</a></div>
+		    <!-- <div class="note"><a href="forgotpassword.html">Forgot password?</a></div> -->
 		</section>
 		<div>
-    If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-</div>
+    <!-- If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>. -->
+        </div>
         <?= $form->field($model, 'rememberMe')->checkbox([
 			'template' => "<section><label class=\"checkbox\">{input}<i></i>Remember Me</label></section>",	
 		]) 

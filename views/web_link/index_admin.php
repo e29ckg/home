@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					                    <th data-class="expand"> # </th>
 										<th data-hide="phone,tablet">img</th>
 					                    <th >ชื่อ</th>
-					                    <th data-hide="phone,tablet">Link</th>
+					                    <th data-hide="phone,tablet">File/Url</th>
 										<?php
 											if(Yii::$app->user->identity->role == 9){
 										?>

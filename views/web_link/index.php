@@ -66,23 +66,25 @@ $this->params['breadcrumbs'][] = $this->title;
 							<table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
 								<thead>
 									<tr>
-					                    <th data-class="expand" width="10%"> # </th>
-										<th width="20%">img</th>
-					                    <th data-hide="phone" width="70%">Link</th>		
+					                    <th data-class="expand" width="10%" align="center"> # </th>
+										<th width="10%">img</th>
+					                    <th data-hide="phone" width="80%">Link</th>		
 						            </tr>
 								</thead>
 								<tbody>  
 									<?php $i = 1?>                              
 									<?php foreach ($models as $model): ?>
-						            <tr>
-						                <td><?= $i++?></td>
+						            <tr >
+						                <td align="center"><?= $i++?></td>
 										<td class="img-weblink" >
 											<a href="#"><img src="<?= Url::to('@web'.WebLink::getImg($model->id)) ?>" alt="Smiley face" data-id= "<?=$model->id?>" class = "act-show img"></a>
 											<br>
-											<?php  echo '<a href="'.$model->link.'" target="_blank">'.$model->name.'</a>'?>
+											<?php // echo '<a href="'.$model->link.'" target="_blank">'.$model->name.'</a>'?>
 										</td>
                                         
                                         <td>
+										<?php  echo '<a href="'.$model->link.'" target="_blank">'.$model->name.'</a>'?>
+										
 										<?php 
 												$modelFiles = WebLinkFile::find()->where(['web_link_id'=>$model->id])->orderBy(['sort'=>SORT_ASC,'id' => SORT_ASC])->all(); 
 												echo '<ul>';

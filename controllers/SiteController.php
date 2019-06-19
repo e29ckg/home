@@ -122,15 +122,14 @@ class SiteController extends Controller
     }
 
     public function actionLogin()
-    {        
+    {       
 
         $this->layout = 'loginl';
 
         if (!Yii::$app->user->isGuest) {
             // return $this->goHome();
             return $this->redirect('site/index');
-        }
-        
+        }        
         
         $model = new LoginForm();        
 
@@ -142,8 +141,7 @@ class SiteController extends Controller
             $modelLog->detail = 'เข้าสู่ระบบ';
             $modelLog->create_at = date("Y-m-d H:i:s");
             $modelLog->ip = Yii::$app->getRequest()->getUserIP();
-            if($modelLog->save()){
-                
+            if($modelLog->save()){                
                 $res = Cletter::notify_message_admin($message); 
             }
             return $this->goBack();

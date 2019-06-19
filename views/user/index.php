@@ -8,7 +8,7 @@ use yii\bootstrap\Modal;
 use yii2mod\alert\Alert;
 use yii\helpers\Url;
 use app\models\User;
-
+use app\models\Profile;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProfileSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -99,15 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<tr>
                        						<td class="text-center" ><?=$model->id ?></td>		
 											<td class="text-center" >
-											<?php
-												if (!empty($model->getProfileImg())){
-													
-													echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/uploads/user/'.$model->getProfileImg(), ['alt' => 'My logo1','height'=>'42']).'</a>';													
-												
-												}else{
-													echo '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/img/none.png', ['alt' => 'My logo','height'=>'42']).'</a>';
-												}
-											?>
+											<?= '<a data-id="'.$model->id.'" href="javascript:void(0);" class="act-show">'.Html::img('@web/'.Profile::getImgById($model->id), ['alt' => 'My logo1','height'=>'42']).'</a>';	?>
 											</td>									
                        						<td >
 											   	<?= $model->getProfileName() ?> 
