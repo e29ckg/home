@@ -416,6 +416,11 @@ class UserController extends Controller{
             $mdProfile = Profile::find()->where(['user_id' => $id])->one();
         }
 
+        if(Yii::$app->request->isAjax && $mdProfile->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         if ($mdProfile->load(Yii::$app->request->post())) {
             $mdProfile->fname = $_POST['Profile']['fname'];
             $mdProfile->name = $_POST['Profile']['name'];

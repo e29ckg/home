@@ -10,87 +10,6 @@ echo gethostbyname("www.google.com");
 $this->title = 'หนังสือเวียน';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="row">
-	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-		<h1 class="page-title txt-color-blueDark">
-			<i class="fa fa-table fa-fw "></i> 
-			<?= $this->title;?>
-			<span></span>
-		</h1>
-	</div>
-	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
-		<ul id="sparks" class="">
-			<li class="sparks-info">
-				<h5> ข้อมูลทั้งหมด <span class="txt-color-blue"><i class="fa fa-user" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;<?= $countAll?></span></h5>
-				<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm"></div>
-			</li>
-			<li class="sparks-info">
-				<h5> Site Traffic <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45%</span></h5>
-					<div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm"></div>
-			</li>
-			<li class="sparks-info">
-				<h5> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span></h5>
-					<div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm"></div>
-			</li>
-		</ul>
-	</div>
-</div>
-<div>
-    <!-- widget grid -->
-	<section id="widget-grid" class="">
-				
-        <!-- row -->
-        <div class="row">
-            
-            <!-- NEW WIDGET START -->
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            
-             	<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1">
-					<header>
-						<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-						<h2><?= $this->title;?> </h2>
-				
-					</header>
-						<!-- widget div-->
-					<div>
-						<!-- widget edit box -->
-						<div class="jarviswidget-editbox">
-							<!-- This area used as dropdown edit box -->
-						</div>
-						<!-- end widget edit box -->
-						<!-- widget content -->
-						<div class="widget-body no-padding">
-							<table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
-								<thead>
-									<tr>
-					                    <th data-class="expand">Id</th>
-					                    <th >เรื่อง</th>
-					                    <th data-hide="phone">ประเภท</th>
-					                    <th data-hide="phone">วันที่บันทึก</th>
-						            </tr>
-								</thead>
-								<tbody>
-									<?php foreach ($models as $model): ?>
-						            <tr>
-						                <td><?=$model->id?></td>
-						                <td><?= Html::a($model->name,['cletter/show','file' => $model->file],['target' => '_blank']);?></td>
-								        <td><?=$model->getCaidName()?></td>
-								        <td><?=$model->created_at?></td>
-								        
-									</tr>
-									<?php  endforeach; ?>
-								</tbody>	
-							</table>
-						</div>
-					</div>							
-            </article>
-        </div>
-	</section>	
-</div>
-<div>
-	<!-- <iframe src="https://calendar.google.com/calendar/embed?src=pkkjc.coj%40gmail.com&ctz=Asia%2FBangkok" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe> -->
-</div>
 <link href="<?= Url::to('@web/plugins/fullcalendar/packages/core/main.css')?>" rel='stylesheet' />
 <link href="<?= Url::to('@web/plugins/fullcalendar/packages/daygrid/main.css')?>" rel='stylesheet' />
 <link href="<?= Url::to('@web/plugins/fullcalendar/packages/list/main.css')?>" rel='stylesheet' />
@@ -105,7 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-
+		monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],   
+		lang: 'th',
       plugins: [ 'interaction', 'dayGrid', 'list', 'googleCalendar' ],
 
       header: {
@@ -164,6 +84,89 @@ $this->params['breadcrumbs'][] = $this->title;
   }
 
 </style>
+<div class="row">
+	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+		<h1 class="page-title txt-color-blueDark">
+			<i class="fa fa-table fa-fw "></i> 
+			<?= $this->title;?>
+			<span></span>
+		</h1>
+	</div>
+	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+		<ul id="sparks" class="">
+			<li class="sparks-info">
+				<h5> ข้อมูลทั้งหมด <span class="txt-color-blue"><i class="fa fa-user" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;<?= $countAll?></span></h5>
+				<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm"></div>
+			</li>
+			<li class="sparks-info">
+				<h5> Site Traffic <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45%</span></h5>
+					<div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm"></div>
+			</li>
+			<li class="sparks-info">
+				<h5> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span></h5>
+					<div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm"></div>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="row">
+    <!-- widget grid -->
+	<section id="widget-grid" class="">
+				
+        <!-- row -->
+        <div class="row">
+            
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            
+             	<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+						<h2><?= $this->title;?> </h2>
+				
+					</header>
+						<!-- widget div-->
+					<div>
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+						</div>
+						<!-- end widget edit box -->
+						<!-- widget content -->
+						<div class="widget-body no-padding">
+							<table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
+								<thead>
+									<tr>
+					                    <th data-class="expand">Id</th>
+					                    <th >เรื่อง</th>
+					                    <th data-hide="phone">ประเภท</th>
+					                    <th data-hide="phone">วันที่บันทึก</th>
+						            </tr>
+								</thead>
+								<tbody>
+									<?php foreach ($models as $model): ?>
+						            <tr>
+						                <td><?=$model->id?></td>
+						                <td><?= Html::a($model->name,['cletter/show','file' => $model->file],['target' => '_blank']);?></td>
+								        <td><?=$model->getCaidName()?></td>
+								        <td><?=$model->created_at?></td>
+								        
+									</tr>
+									<?php  endforeach; ?>
+								</tbody>	
+							</table>
+						</div>
+					</div>							
+            </article>
+        </div>
+	</section>	
+</div>
+
+<div>
+	<!-- <iframe src="https://calendar.google.com/calendar/embed?src=pkkjc.coj%40gmail.com&ctz=Asia%2FBangkok" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe> -->
+</div>
+
 
 
   
@@ -211,7 +214,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		
 		</div>
 <div>
-...
+.....
 </div>
 <?php
 

@@ -41,7 +41,7 @@ class Profile extends \yii\db\ActiveRecord
             // [['user_id', 'name', 'created_at'], 'required'],
             // [['birthday'], 'safe'],
             // // [['created_at', 'updated_at'], 'integer'],
-            [['user_id', 'img', 'dep', 'address', 'phone'], 'string', 'max' => 255],
+            // [['user_id', 'img', 'dep', 'address', 'phone'], 'string', 'max' => 255],
             // [['fname'], 'string', 'max' => 25],
             // [['name', 'sname'], 'string', 'max' => 50],
             // [['user_id'], 'unique'],
