@@ -38,7 +38,7 @@ function DateThai_month_full($strDate)
 ?>
 
 <!-- <div class="text-center"><H3> </H3></div> -->
-<table class="table_bordered" width="100%" border="0" cellpadding="2" cellspacing="0">
+<table class="table_bordered" width="100%" border="1" cellpadding="1" cellspacing="0">
     <thead>
 		<tr>
             <th  width="90%">แบบใบลาป่วย , ลากิจส่วนตัว , ลาคลอดบุตร </th>	
@@ -48,23 +48,23 @@ function DateThai_month_full($strDate)
 	</thead>    
 </table>
 
-<table class="bl_detail" width="100%" border="0" cellpadding="2" cellspacing="0">
+<table class="bl_detail" width="100%" border="0" cellpadding="0" cellspacing="0">
+    <!-- <tr>
+        <td width="50px"></td>
+        <td width="50px"></td>
+        <td width="50px"></td>
+        <td width="50px"></td>
+        <td width="50px"></td>
+        <td width="50px"></td>
+        <td width="50px"></td>
+        <td width="50px"></td>
+        <td width="50px"></td>
+        <td width="50px"></td>
+        <td width="50px"></td>
+        <td width="50px"></td>
+    </tr> -->
     <tr>
-        <td width="50px"></td>
-        <td width="50px"></td>
-        <td width="50px"></td>
-        <td width="50px"></td>
-        <td width="50px"></td>
-        <td width="50px"></td>
-        <td width="50px"></td>
-        <td width="50px"></td>
-        <td width="50px"></td>
-        <td width="50px"></td>
-        <td width="50px"></td>
-        <td width="50px"></td>
-    </tr>
-    <tr>
-        <td colspan="1"></td>
+        <td colspan="1" width="50px"></td>
         <td colspan="11" style="text-align:right">สำนักงานประจำศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์</td>
     </tr>
     <?php
@@ -115,11 +115,11 @@ function DateThai_month_full($strDate)
     <tr>
         <td colspan="2" >ตั้งแต่วันที่ </td>        
         <td colspan="2" class="TableLine" style="text-align:center"><?=DateThai_full($model->date_begin);?> </td>
-        <td colspan="1" >ถึงวันที่</td>
+        <td colspan="1" style="text-align:center">ถึงวันที่</td>
         <td colspan="3" class="TableLine" style="text-align:center"><?=DateThai_full($model->date_end);?></td>
-        <td colspan="2" >มีกำหนด</td>
+        <td colspan="2" style="text-align:center">มีกำหนด</td>
         <td colspan="1" class="TableLine" style="text-align:center"><?=$model->date_total;?></td>
-        <td colspan="1" >วัน</td>
+        <td colspan="1" style="text-align:center">วัน</td>
     </tr>
     <tr>
         <td colspan="2" >ข้าพเจ้าได้ลา </td>
@@ -131,11 +131,11 @@ function DateThai_month_full($strDate)
     <tr>
         <td colspan="2" >ตั้งแต่วันที่ </td>
         <td colspan="2" class="TableLine" style="text-align:center"><?=DateThai_full($model->dateO_begin);?></td>
-        <td colspan="1" >ถึงวันที่</td>
+        <td colspan="1" style="text-align:center">ถึงวันที่</td>
         <td colspan="3" class="TableLine" style="text-align:center"><?=DateThai_full($model->dateO_end);?></td>
-        <td colspan="2" >มีกำหนด</td>
+        <td colspan="2" style="text-align:center">มีกำหนด</td>
         <td colspan="1" class="TableLine" style="text-align:center"><?=$model->dateO_total ? $model->dateO_total : '-';?></td>
-        <td colspan="1" >วัน</td>
+        <td colspan="1" style="text-align:center">วัน</td>
     </tr>
     <tr>
         <td colspan="3" >ระหว่างนี้ติดต่อข้าพเจ้าได้ที่</td>
@@ -149,6 +149,8 @@ function DateThai_month_full($strDate)
     </tr>
     <tr>
     </tr>
+</table>
+<table>    
     <tr>
         <td colspan="6" style="text-align:center">
         - ทราบ<br><br><br>
@@ -202,7 +204,7 @@ function DateThai_month_full($strDate)
             </table>
             <table class="bl_detail" width="100%" cellpadding="2" cellspacing="0">
                 <tr>
-                    <td colspan="8"><br>
+                    <td colspan="8">
                     (ลงชื่อ)................................................ผู้ตรวจสอบ<br><br>
                     ตำแหน่ง................................................<br><br>
                     วันที่...................................................<br><br>
@@ -211,9 +213,9 @@ function DateThai_month_full($strDate)
                 </table>
                 <table class="bl_detail" width="100%" border="0" cellpadding="2" cellspacing="0"> 
                 <tr>
-                    <td colspan="8"><br>
+                    <td colspan="8">
                     ประธานเสนอ ผู้พิพากษาหัวหน้าศาลฯ<br>
-                    - เพื่อโปรดทราบ<br><br><br>
+                    - เพื่อโปรดทราบ<br><br>
                     </td>
                 </tr>
                 <tr>

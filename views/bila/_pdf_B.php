@@ -45,7 +45,7 @@ function DateThai_month_full($strDate)
 </table>
 
 <table class="bl_detail" width="100%" border="0" cellpadding="2" cellspacing="0">
-    <tr>
+    <!-- <tr>
         <td width="50px"></td>
         <td width="50px"></td>
         <td width="50px"></td>
@@ -58,9 +58,10 @@ function DateThai_month_full($strDate)
         <td width="75px"></td>
         <td width="50px"></td>
         <td width="50px"></td>
-    </tr>
+    </tr> -->
     <tr>
-        <td colspan="12" style="text-align:right">สำนักงานประจำศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์</td>
+        <td colspan="1" width="50px"></td>
+        <td colspan="11" style="text-align:right">สำนักงานประจำศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์</td>
     </tr>
     <?php
         $date_create=date_create($model->date_create); 
@@ -168,8 +169,8 @@ function DateThai_month_full($strDate)
                     วันที่...................................................<br><br>
                     </td>
                 </tr> 
-                </table>
-                <table class="bl_detail" width="100%" border="0" cellpadding="2" cellspacing="0"> 
+            </table>
+            <table class="bl_detail" width="100%" border="0" cellpadding="2" cellspacing="0"> 
                 <tr>
                     <td colspan="8"><br>
                     ประธานเสนอ ผู้พิพากษาหัวหน้าศาลฯ<br>
@@ -192,7 +193,7 @@ function DateThai_month_full($strDate)
                 </td>
                 </tr>
                 <tr>
-                    <td colspan="8"><br><br> <br> <br>                     
+                    <td colspan="8"><br><br>                      
                     - รับทราบ<br><br>
                     (ลงชื่อ)...............................................ผู้ปฏิบัติงานแทน
                     </td>

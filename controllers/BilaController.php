@@ -381,6 +381,7 @@ class BilaController extends Controller
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
         $pdf = new Pdf([
             'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+            'destination' => Pdf::DEST_BROWSER,
             'content' => $this->renderPartial($Pdf_print,[
                 'model'=>$model,
             ]),
