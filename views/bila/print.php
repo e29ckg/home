@@ -1,5 +1,35 @@
 <?php
 use yii\helpers\Html;
+
+?>
+<?php 
+
+use Da\QrCode\QrCode;
+
+use Da\QrCode\Format\PhoneFormat; 
+
+$format = new PhoneFormat(['phone' => 0657657657]);
+// $sms_qr = 'http://www.google.com';
+$qrCode = (new QrCode($format))
+    ->setSize(250)
+    ->setMargin(5)
+    ->useForegroundColor(51, 153, 255);
+
+// now we can display the qrcode in many ways
+// saving the result to a file:
+
+// $qrCode->writeFile(__DIR__ . '/code.png'); // writer defaults to PNG when none is specified
+
+// display directly to the browser 
+// header('Content-Type: '.$qrCode->getContentType());
+// echo $qrCode->writeString();
+
+?> 
+
+<?php 
+// or even as data:uri url
+echo '<img src="' . $qrCode->writeDataUri() . '">';
+echo Url::to('@webroot/uploads/bila/'.$model->user_id.'/'.$model->id.'/'.$model->id.'.png');
 ?>
 
 <table width="100%">

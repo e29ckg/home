@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use app\models\User;
 use app\models\SignBossName;
+use yii\helpers\Url;
 
 function DateThai_full($strDate)
 	{
@@ -32,13 +33,17 @@ function DateThai_month_full($strDate)
 		$strMonthThai=$strMonthCut[$strMonth];
 		return "$strMonthThai";
 	}
-
+    // echo $_SERVER['SERVER_ADDR'] . Url::to('$SERVER_ADDR/uploads/bila/'.$model->user_id.'/'.$model->id.'/'.$model->id.'.png');
+    // echo '<img src="' . Url::to('@webroot/uploads/bila/'.$model->user_id.'/'.$model->id.'/'.$model->id.'.png') . '" height="42" width="42" >';
 ?>
+
 <!-- <div class="text-center"><H3> </H3></div> -->
 <table class="table_bordered" width="100%" border="0" cellpadding="2" cellspacing="0">
     <thead>
-		<tr class="cart_menu">
-	    	<th class="">แบบใบลาป่วย , ลากิจส่วนตัว , ลาคลอดบุตร </th>			
+		<tr>
+            <th  width="90%">แบบใบลาป่วย , ลากิจส่วนตัว , ลาคลอดบุตร </th>	
+            <th  width="10%"><?= '<img src="' . Url::to('@webroot/uploads/bila/'.$model->user_id.'/'.$model->id.'/'.$model->id.'.png') . '" height="42" width="42" >';
+?></th>		
 		</tr>
 	</thead>    
 </table>
@@ -59,13 +64,14 @@ function DateThai_month_full($strDate)
         <td width="50px"></td>
     </tr>
     <tr>
-        <td colspan="12" style="text-align:right">สำนักงานประจำศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์</td>
+        <td colspan="1"></td>
+        <td colspan="11" style="text-align:right">สำนักงานประจำศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์</td>
     </tr>
     <?php
         $date_create=date_create($model->date_create); 
         //echo date_format($date_create,"Y/m/d H:i:s");
     ?>
-    <tr>
+    <tr>        
         <td colspan="7" style="text-align:right">วันที่</td>
         <td colspan="1" class="TableLine" style="text-align:center"><?=date_format($date_create,"d");?></td>
         <td colspan="1" style="text-align:center">เดือน</td>

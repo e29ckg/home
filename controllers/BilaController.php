@@ -1,7 +1,6 @@
 <?php
 
 namespace app\controllers;
-
 use Yii;
 use app\models\Bila;
 use app\models\SignBossName;
@@ -17,6 +16,8 @@ use yii\web\Response;
 use yii\widgets\ActiveForm;
 use kartik\mpdf\Pdf;
 use yii\helpers\ArrayHelper;
+use Da\QrCode\QrCode;
+use Da\QrCode\Format\PhoneFormat; 
 
 /**
  * Web_linkController implements the CRUD actions for Bila model.
@@ -117,7 +118,7 @@ class BilaController extends Controller
           } 
      
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            
+            $model->id = time();
             $model->user_id =  $_POST['Bila']['user_id'];
             $model->cat = 'ลาป่วย';
             $model->date_begin = $_POST['Bila']['date_begin'];
@@ -133,6 +134,19 @@ class BilaController extends Controller
             $model->t3 = $_POST['Bila']['date_total'] + $_POST['Bila']['t1'];
             $model->date_create = $_POST['Bila']['date_create'];
             if($model->save()){
+                $dir = Url::to('@webroot/uploads/bila/'.$model->user_id.'/'.$model->id.'/');
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0777, true);
+                } 
+
+                // $format = new PhoneFormat(['phone' => $model->id]);
+                $sms_qr = 'http://'.$_SERVER['SERVER_ADDR'].'/bila.php?ref='.$model->id;
+                $qrCode = (new QrCode($sms_qr))
+                    ->setSize(250)
+                    ->setMargin(5)
+                    ->useForegroundColor(51, 153, 255);              
+                $qrCode->writeFile(Url::to('@webroot/uploads/bila/'.$model->user_id.'/'.$model->id.'/'.$model->id.'.png')); // writer defaults to PNG when none is specified
+
                 Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
                 return $this->redirect(['index']);
             }   
@@ -182,7 +196,7 @@ class BilaController extends Controller
           } 
      
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            
+            $model->id = time();
             $model->user_id =  $_POST['Bila']['user_id'];
             $model->cat = 'ลาพักผ่อน';
             $model->date_begin = $_POST['Bila']['date_begin'];
@@ -201,6 +215,19 @@ class BilaController extends Controller
             $model->t3 = $_POST['Bila']['t1'] + $_POST['Bila']['date_total'] ;
             $model->date_create = $_POST['Bila']['date_create'];
             if($model->save()){
+                $dir = Url::to('@webroot/uploads/bila/'.$model->user_id.'/'.$model->id.'/');
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0777, true);
+                } 
+
+                // $format = new PhoneFormat(['phone' => $model->id]);
+                $sms_qr = 'http://'.$_SERVER['SERVER_ADDR'].'/bila.php?ref='.$model->id;
+                $qrCode = (new QrCode($sms_qr))
+                    ->setSize(250)
+                    ->setMargin(5)
+                    ->useForegroundColor(51, 153, 255);              
+                $qrCode->writeFile(Url::to('@webroot/uploads/bila/'.$model->user_id.'/'.$model->id.'/'.$model->id.'.png')); // writer defaults to PNG when none is specified
+
                 Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
                 return $this->redirect(['index']);
             }   

@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use app\models\User;
 use app\models\SignBossName;
+use yii\helpers\Url;
 
 function DateThai_full($strDate)
 	{
@@ -35,8 +36,10 @@ function DateThai_month_full($strDate)
 <!-- <div class="text-center"><H3> </H3></div> -->
 <table class="table_bordered" width="100%" border="0" cellpadding="2" cellspacing="0">
     <thead>
-		<tr class="cart_menu">
-	    	<th class="">ใบลาพักผ่อน </th>			
+		<tr>
+            <th  width="90%" class="">ใบลาพักผ่อน </th>	
+            <th  width="10%" class=""><?= '<img src="' . Url::to('@webroot/uploads/bila/'.$model->user_id.'/'.$model->id.'/'.$model->id.'.png') . '" height="42" width="42" >';
+?></th>				
 		</tr>
 	</thead>    
 </table>
