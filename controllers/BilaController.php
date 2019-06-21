@@ -334,9 +334,19 @@ class BilaController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        
-        $model->delete();
 
+        $dir = Url::to('@webroot/uploads/bila/'.$model->user_id.'/'.$model->id);
+        
+        if($model->delete()){
+            if(is_file($dir.'/'.$model->id.'.png')){
+                unlink($dir.'/'.$model->id.'.png');// ลบ รูปเดิม;   
+            } 
+            if (is_dir($dir)) {
+                // mkdir($dir, 0777, true);
+                rmdir($dir);
+            } 
+        }
+        
         return $this->redirect(['index']);
     }
 
