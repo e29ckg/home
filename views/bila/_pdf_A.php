@@ -1,8 +1,8 @@
 <?php
 use yii\helpers\Html;
 use app\models\User;
+use app\models\Bila;
 use app\models\SignBossName;
-use yii\helpers\Url;
 
 function DateThai_full($strDate)
 	{
@@ -32,18 +32,20 @@ function DateThai_month_full($strDate)
                             "สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม");
 		$strMonthThai=$strMonthCut[$strMonth];
 		return "$strMonthThai";
-	}
+    }
+    // echo $_SERVER['HTTP_HOST'];
     // echo $_SERVER['SERVER_ADDR'] . Url::to('$SERVER_ADDR/uploads/bila/'.$model->user_id.'/'.$model->id.'/'.$model->id.'.png');
     // echo '<img src="' . Url::to('@webroot/uploads/bila/'.$model->user_id.'/'.$model->id.'/'.$model->id.'.png') . '" height="42" width="42" >';
 ?>
-
+<div style="A_CSS_ATTRIBUTE:all;position: absolute;bottom: 20px; right: 45px;left: 45px; top: 35px;  ">
 <!-- <div class="text-center"><H3> </H3></div> -->
 <table class="table_bordered" width="100%" border="1" cellpadding="1" cellspacing="0">
     <thead>
 		<tr>
-            <th  width="90%">แบบใบลาป่วย , ลากิจส่วนตัว , ลาคลอดบุตร </th>	
-            <th  width="10%"><?= '<img src="' . Url::to('@webroot/uploads/bila/'.$model->user_id.'/'.$model->id.'/'.$model->id.'.png') . '" height="42" width="42" >';
-?></th>		
+            <th  width="90%"><H2>แบบใบลาป่วย , ลากิจส่วนตัว , ลาคลอดบุตร</H2> </th>	
+            <th  width="10%">                         
+                <img src="<?= Bila::getQr($model->id,$model->user_id);?>" height="60" width="60" >
+            </th>		
 		</tr>
 	</thead>    
 </table>
@@ -149,8 +151,7 @@ function DateThai_month_full($strDate)
     </tr>
     <tr>
     </tr>
-</table>
-<table>    
+  
     <tr>
         <td colspan="6" style="text-align:center">
         - ทราบ<br><br><br>
@@ -210,8 +211,8 @@ function DateThai_month_full($strDate)
                     วันที่...................................................<br><br>
                     </td>
                 </tr> 
-                </table>
-                <table class="bl_detail" width="100%" border="0" cellpadding="2" cellspacing="0"> 
+            </table>
+            <table class="bl_detail" width="100%" border="0" cellpadding="2" cellspacing="0"> 
                 <tr>
                     <td colspan="8">
                     ประธานเสนอ ผู้พิพากษาหัวหน้าศาลฯ<br>
@@ -265,3 +266,4 @@ function DateThai_month_full($strDate)
         </td>
     </tr>    
 </table>
+</div>

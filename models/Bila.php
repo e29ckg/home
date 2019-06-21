@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 /**
  * This is the model class for table "bila".
  *
@@ -94,5 +95,16 @@ class Bila extends \yii\db\ActiveRecord
     public function getSignList(){
         $model = SignBossName::find()->where(['status' => '1'])->orderBy('id')->all();
         return ArrayHelper::map($model,'id','name');
+    }
+
+    public function getQr($id,$user_id){
+        $source = Url::to('@webroot/uploads/bila/'.$user_id.'/'.$id.'/'.$id.'.png');
+        if(is_file($source)){
+            $link = Url::to('@web/uploads/bila/'.$user_id.'/'.$id.'/'.$id.'.png');
+        }else{
+            $link = Url::to('@web/img/none.png');
+        } 
+        return $link ;   
+        // return Url::to('@webroot/uploads/bila/'.$user_id.'/'.$id.'/'.$id.'.png');
     }
 }

@@ -1,8 +1,8 @@
 <?php
 use yii\helpers\Html;
 use app\models\User;
+use app\models\Bila;
 use app\models\SignBossName;
-use yii\helpers\Url;
 
 function DateThai_full($strDate)
 	{
@@ -34,12 +34,14 @@ function DateThai_month_full($strDate)
 ?>
 
 <!-- <div class="text-center"><H3> </H3></div> -->
+<div style="A_CSS_ATTRIBUTE:all;position: absolute;bottom: 20px; right: 45px;left: 45px; top: 35px;  ">
 <table class="table_bordered" width="100%" border="0" cellpadding="2" cellspacing="0">
     <thead>
 		<tr>
-            <th  width="90%" class="">ใบลาพักผ่อน </th>	
-            <th  width="10%" class=""><?= '<img src="' . Url::to('@webroot/uploads/bila/'.$model->user_id.'/'.$model->id.'/'.$model->id.'.png') . '" height="42" width="42" >';
-?></th>				
+            <th  width="90%" class=""><H2>ใบลาพักผ่อน</H2> </th>	
+            <th  width="10%" class="">
+                <img src="<?= Bila::getQr($model->id,$model->user_id);?>" height="60" width="60" >
+            </th>				
 		</tr>
 	</thead>    
 </table>
@@ -85,9 +87,9 @@ function DateThai_month_full($strDate)
     </tr>
     <tr>
         <td colspan="2" ></td>
-        <td colspan="1" >ข้าพเจ้า</td>
+        <td colspan="1" style="text-align:center">ข้าพเจ้า</td>
         <td colspan="3" class="TableLine" style="text-align:center"><?= User::getProfileNameById($model->user_id);?></td>
-        <td colspan="1" >ตำแหน่ง</td>
+        <td colspan="1" style="text-align:center">ตำแหน่ง</td>
         <td colspan="5" class="TableLine" style="text-align:center"><?=User::getProfileDepById($model->user_id);?></td>
     </tr>
     <tr>
@@ -95,20 +97,20 @@ function DateThai_month_full($strDate)
         <td colspan="11" class="TableLine">สำนักงานประจำศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์</td>
     </tr>
     <tr>
-        <td colspan="2" >มีวันลาพักผ่อนสะสม</td>
-        <td colspan="2" class="TableLine" style="text-align:center"><?=$model->p1;?></td>
-        <td colspan="6" >วัน มีสิทธิลาพักผ่อนประจำปีนี้อีก 10 วันทำการ รวมเป็น</td>
+        <td colspan="3" >มีวันลาพักผ่อนสะสม</td>
+        <td colspan="1" class="TableLine" style="text-align:center"><?=$model->p1;?></td>
+        <td colspan="6" style="text-align:center">วัน มีสิทธิลาพักผ่อนประจำปีนี้อีก 10 วันทำการ รวมเป็น</td>
         <td colspan="1" class="TableLine" style="text-align:center"><?=$model->p2;?></td>
-        <td colspan="1" >วัน</td>
+        <td colspan="1" style="text-align:right">วัน</td>
     </tr>
     <tr>
         <td colspan="3" >ขอลาพักผ่อนตั้งแต่วันที่ </td>
         <td colspan="3" class="TableLine" style="text-align:center"><?=DateThai_full($model->date_begin);?></td>
-        <td colspan="1" >ถึงวันที่</td>
+        <td colspan="1" style="text-align:center">ถึงวันที่</td>
         <td colspan="2" class="TableLine" style="text-align:center"><?=DateThai_full($model->date_end);?></td>
-        <td colspan="1" >มีกำหนด</td>
+        <td colspan="1" style="text-align:center">มีกำหนด</td>
         <td colspan="1" class="TableLine" style="text-align:center"><?=$model->date_total;?></td>
-        <td colspan="1" >วัน</td>
+        <td colspan="1" style="text-align:right">วัน</td>
     </tr>    
     
     <tr>
@@ -234,3 +236,4 @@ function DateThai_month_full($strDate)
     </tr>
     
 </table>
+</div>

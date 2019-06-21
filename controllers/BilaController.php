@@ -140,7 +140,7 @@ class BilaController extends Controller
                 } 
 
                 // $format = new PhoneFormat(['phone' => $model->id]);
-                $sms_qr = 'http://'.$_SERVER['SERVER_ADDR'].'/bila.php?ref='.$model->id;
+                $sms_qr = 'http://'.$_SERVER['HTTP_HOST'].'/bila.php?ref='.$model->id;
                 $qrCode = (new QrCode($sms_qr))
                     ->setSize(250)
                     ->setMargin(5)
@@ -221,7 +221,7 @@ class BilaController extends Controller
                 } 
 
                 // $format = new PhoneFormat(['phone' => $model->id]);
-                $sms_qr = 'http://'.$_SERVER['SERVER_ADDR'].'/bila.php?ref='.$model->id;
+                $sms_qr = 'http://'.$_SERVER['HTTP_HOST'].'/bila.php?ref='.$model->id;
                 $qrCode = (new QrCode($sms_qr))
                     ->setSize(250)
                     ->setMargin(5)
