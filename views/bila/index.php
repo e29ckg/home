@@ -98,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										<td><?=$model->date_total?></td>
 										<td>
 											<a href="<?=Url::to('print1/'.$model->id)?>" class="btn btn-info btn-xs" target="_blank" data-id=<?=$model->id?>>print</a> 
-											<a href="#" class="act-update btn btn-info btn-xs" data-id=<?=$model->id?>>แก้ไข</a> 
+											<a href="#" class="act-update btn btn-warning btn-xs" data-id=<?=$model->id?>>แก้ไข</a> 
 											<?= Html::a('<i class="fa fa-remove"></i> ลบ',['bila/delete','id' => $model->id],
 													[
 														'class' => 'btn btn-danger btn-xs',
