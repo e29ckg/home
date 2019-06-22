@@ -99,7 +99,7 @@ function DateThai_month_full($strDate)
     <tr>
         <td colspan="3" >มีวันลาพักผ่อนสะสม</td>
         <td colspan="1" class="TableLine" style="text-align:center"><?=$model->p1;?></td>
-        <td colspan="6" style="text-align:center">วัน มีสิทธิลาพักผ่อนประจำปีนี้อีก 10 วันทำการ รวมเป็น</td>
+        <td colspan="6" style="text-align:center">วัน &nbsp;&nbsp; มีสิทธิลาพักผ่อนประจำปีนี้อีก 10 วันทำการ &nbsp;&nbsp; รวมเป็น</td>
         <td colspan="1" class="TableLine" style="text-align:center"><?=$model->p2;?></td>
         <td colspan="1" style="text-align:right">วัน</td>
     </tr>
