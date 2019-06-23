@@ -47,26 +47,28 @@ echo $form->field($model, 'user_id')->widget(Select2::classname(), [
 
 </div> 
 
-<?= $form->field($model, 'file',[
-   'inputOptions' => [
-        'placeholder' => $model->getAttributeLabel('file'),
-        'onchange'=>'this.parentNode.nextSibling.value = this.value'
-    ],
-    'template' => '<section><label class="label">{label}</label><div class="input input-file"><span class="button">{input}Browse</span><input type="text" placeholder="Include some files" readonly=""><div class="invalid">{error}{hint}</div></div></section>'
-])->fileInput()->label(false) ?>
+<?php
+// $form->field($model, 'file',[
+//    'inputOptions' => [
+//         'placeholder' => $model->getAttributeLabel('file'),
+//         'onchange'=>'this.parentNode.nextSibling.value = this.value'
+//     ],
+//     'template' => '<section><label class="label">{label}</label><div class="input input-file"><span class="button">{input}Browse</span><input type="text" placeholder="Include some files" readonly=""><div class="invalid">{error}{hint}</div></div></section>'
+// ])->fileInput()->label(false) 
+?>
 
 <?php 
-if (!empty($model->img)){
-    $filename = Url::to('@webroot/uploads/salary/').$model->img;
-    if (file_exists($filename)) {
-        echo Url::to('@web/uploads/salary/').$model->img;
-    }
+// if (!empty($model->img)){
+//     $filename = Url::to('@webroot/uploads/salary/').$model->img;
+//     if (file_exists($filename)) {
+//         echo Url::to('@web/uploads/salary/').$model->img;
+//     }
     
-}
+// }
 ?>
  
 <fieldset class="text-right"> 
-    <?= Html::resetButton('Reset', ['class' => 'btn btn-warning btn-lg']) ?> <?= Html::submitButton('Save', ['class' => 'btn btn-primary btn-lg']) ?>
+    <?= Html::submitButton('เพิ่ม', ['class' => 'btn btn-primary btn-lg']) ?>
 </fieldset>
 
     <?php ActiveForm::end(); ?>

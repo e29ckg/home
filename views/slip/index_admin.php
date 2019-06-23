@@ -2,11 +2,15 @@
 
 use yii\helpers\Html;
 
+use app\models\Slip;
+use app\models\User;
+use app\models\Profile;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'สลิปเงินเดือน';
+$this->title = 'รายชื่อสำหรับทำเงินเดือน';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -19,20 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		</h1>
 	</div>
 	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
-		<ul id="sparks" class="">
-			<li class="sparks-info">
-				<h5> ข้อมูลทั้งหมด <span class="txt-color-blue"><i class="fa fa-user" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;<?= $countAll?></span></h5>
-				<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm"></div>
-			</li>
-			<li class="sparks-info">
-				<h5> Site Traffic <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45%</span></h5>
-					<div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm"></div>
-			</li>
-			<li class="sparks-info">
-				<h5> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span></h5>
-					<div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm"></div>
-			</li>
-		</ul>
+		
 	</div>
 </div>
 <div>
@@ -49,8 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-						<h2><?= $this->title;?> </h2>
-				
+						<h2><?= $this->title;?> <?= Slip::DateThai_month_full(date("Y-m-d"));?></h2>
+						<?= date("Y") ?>
 					</header>
 						<!-- widget div-->
 					<div>
@@ -65,30 +56,37 @@ $this->params['breadcrumbs'][] = $this->title;
 								<thead>
 									<tr>
 					                    <th data-class="expand"> # </th>
-										<th data-hide="phone">ชื่อ</th>
-					                    <th >เดือน</th>
-					                    <th data-hide="phone">Link</th>		
+										<th >ชื่อ</th>
+					                    <th ></th>
+					                    <th >Link</th>
+										<th >Date</th>
+										
+										
 						            </tr>
 								</thead>
 								<tbody>  
 									<?php $i = 1?>                              
-									<?php foreach ($models as $model): ?>
+									<?php foreach ($modelUsers as $modelUser): ?>
 						            <tr>
-						                <td><?= $i++?></td>										
-                                        <td><?php  echo $model->getProfileName()?></td>
-										<td><?php  echo $model->getMountName($model->create_at)?></td>
+						                <td><?= $i++?></td>
+										<td ><?= $modelUser->fname.$modelUser->name.' '.$modelUser->sname?></td>
+                                        <td></td>
                                         <td>
-										<?php
-											if (!empty($model->file)){
-												echo Html::a($model->file.' <i class="fa fa-file-text-o"></i>', ['salary/show','id'=>$model->id],[
-													'data-id'=> $model->id,
-													'target'=> '_blank',
-													]);												
-											}else{
-												echo '-';												
+										
+										</td>	
+										<td>
+										<?php 
+											if($modelSlip = Slip::findOne(['user_id' => $modelUser->user_id,'slip_month' => date("m"),'slip_year' => date("Y")])){
+												echo ' <a href="'.Url::to(['slip/print','id' => $modelSlip->slip_id]).'" class="btn btn-info btn-xs" data-id='.$modelSlip->slip_id.' data-method="POST"> Print </a> ';
+												echo ' <a href="#" class="act-update-slip btn btn-info btn-xs" data-id='.$modelSlip->slip_id.'> แกไข </a> ';
+												echo ' <a href="'.Url::to(['slip/delete','id' => $modelSlip->slip_id]).'" class="btn btn-info btn-xs" data-id='.$modelUser['id'].' data-method="POST">ลบ </a> ';
+											}
+											else{
+												echo '<a href="#" class="act-create-slip btn btn-info btn-xs" data-id='.$modelUser['id'].'>สร้าง</a>';
 											}
 										?>
-										</td>			        
+										</td>
+					        
 									</tr>
 									<?php  endforeach; ?>
 								</tbody>	
@@ -109,7 +107,7 @@ $(document).ready(function() {
 		        
 	function init_click_handlers(){    
 
-		var url_show = "index.php?r=salary/show";				
+		var url_show = "show";				
 			$( ".act-show" ).click(function() {
 				var fID = $(this).data("id");
         	$.get(url_show,{id: fID},function (data){
@@ -122,41 +120,25 @@ $(document).ready(function() {
         	});     
 		});
 
-		var url_update = "index.php?r=salary/update";
-    	$(".act-update").click(function(e) {            
+		var url_update_s = "update_s";
+    	$(".act-update-slip").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
-        	$.get(url_update,{id: fID},function (data){
+        	$.get(url_update_s,{id: fID},function (data){
             	$("#activity-modal").find(".modal-body").html(data);
             	$(".modal-body").html(data);
             	$(".modal-title").html("แก้ไขข้อมูลสมาชิก");
             	$("#activity-modal").modal("show");
         	});
-    	});
-
-		
-    	var url_view = "index.php?r=salary/view";		
-    	$(".act-view").click(function(e) {			
-                var fID = $(this).data("id");
-				
-                $.get(url_view,{id: fID},function (data){
-                        $("#activity-modal").find(".modal-body").html(data);
-                        $(".modal-body").html(data);
-                        $(".modal-title").html("ข้อมูล");
-                        $("#activity-modal").modal("show");
-                    }
-                );
-            }); 
-
-			
+    	}); 
     
 	}
 
     init_click_handlers(); //first run
 			
-	// $('#activity-modal').on('hidden.bs.modal', function () {
- 	// 	location.reload();
-	// })
+	$('#activity-modal').on('hidden.bs.modal', function () {
+ 		location.reload();
+	})
 
 				var responsiveHelper_dt_basic = undefined;
 				var responsiveHelper_datatable_fixed_column = undefined;
@@ -186,7 +168,7 @@ $(document).ready(function() {
 						responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
 					}
 				},
-				// "paging":   false,
+				"paging":   false,
 				"rowCallback" : function(nRow) {
 					responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
 				},
@@ -198,7 +180,7 @@ $(document).ready(function() {
 		    
 		    // custom toolbar
 												
-		    // $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> act-create</button></div>');
+		    $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> act-create</button></div>');
 			   
 		    // Apply the filter
 		    $("#datatable_fixed_column thead th input[type=text]").on( 'keyup change', function () {
@@ -214,9 +196,9 @@ $(document).ready(function() {
 
 /* END COLUMN FILTER */  
 
-		var url_create = "index.php?r=salary/create";
+		var url_create_u = "create_u";
     	$( "#act-create" ).click(function() {
-        	$.get(url_create,function (data){
+        	$.get(url_create_u,function (data){
                 $("#activity-modal").find(".modal-body").html(data);
                 $(".modal-body").html(data);
                 $(".modal-title").html("เพิ่มข้อมูล");
@@ -226,6 +208,19 @@ $(document).ready(function() {
         	});     
 		}); 
 		
+		var url_create_s = "create_s";
+    	$( ".act-create-slip" ).click(function() {
+        		var fID = $(this).data("id");
+        	$.get(url_create_s,{id: fID},function (data){
+                $("#activity-modal").find(".modal-body").html(data);
+                $(".modal-body").html(data);
+                $(".modal-title").html("show");
+            	// $(".modal-footer").html(footer);
+                $("#activity-modal").modal("show");
+                //   $("#myModal").modal('toggle');
+        	});
+		});
+
 });
 JS;
 $this->registerJs($script);

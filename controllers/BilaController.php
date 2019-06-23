@@ -225,7 +225,7 @@ class BilaController extends Controller
                 $qrCode = (new QrCode($sms_qr))
                     ->setSize(250)
                     ->setMargin(5)
-                    ->useForegroundColor(51, 153, 255);              
+                    ->useForegroundColor(1, 1, 1);              
                 $qrCode->writeFile(Url::to('@webroot/uploads/bila/'.$model->user_id.'/'.$model->id.'/'.$model->id.'.png')); // writer defaults to PNG when none is specified
 
                 Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');

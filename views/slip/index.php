@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Salary';
+$this->title = 'สลิปเงินเดือน';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -19,20 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		</h1>
 	</div>
 	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
-		<ul id="sparks" class="">
-			<li class="sparks-info">
-				<h5> ข้อมูลทั้งหมด <span class="txt-color-blue"><i class="fa fa-user" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;<?= $countAll?></span></h5>
-				<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm"></div>
-			</li>
-			<li class="sparks-info">
-				<h5> Site Traffic <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45%</span></h5>
-					<div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm"></div>
-			</li>
-			<li class="sparks-info">
-				<h5> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span></h5>
-					<div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm"></div>
-			</li>
-		</ul>
+	
 	</div>
 </div>
 <div>
@@ -65,73 +52,30 @@ $this->params['breadcrumbs'][] = $this->title;
 								<thead>
 									<tr>
 					                    <th data-class="expand"> # </th>
-										<th >file</th>
-					                    <th >ชื่อ</th>
-					                    <th >Link</th>
-										<th >Date</th>
-										<?php
-											if(Yii::$app->user->identity->role == 9){
-										?>
-										<th style="width:80px"></th>
-										<?php } ?>	
-										
+										<th data-hide="phone">ชื่อ</th>
+					                    <th >เดือน</th>
+					                    <th data-hide="phone">Link</th>		
 						            </tr>
 								</thead>
 								<tbody>  
 									<?php $i = 1?>                              
 									<?php foreach ($models as $model): ?>
 						            <tr>
-						                <td><?= $i++?></td>
-										<td class="text-center" >
-										
-										<?php
-											if (!empty($model->file)){
-												// echo '<a href="index.php?r=salary/show_admin&id='.$model->id.'" target="_blank"><i class="fa fa-file-text-o"></i></a>';
-												echo Html::a('<i class="fa fa-file-text-o"></i>', ['salary/show_admin','id'=>$model->id],[
-														'data-id'=> $model->id,
-														'target'=> '_blank',
-														]);												
-											}else{
-												echo Html::img('@web/img/none.png',['alt' => 'My logo1','height'=>'42']);
-											}
-										?>
-												</td>
+						                <td><?= $i++?></td>										
                                         <td><?php  echo $model->getProfileName()?></td>
+										<td><?php  echo $model->getMountName($model->create_at)?></td>
                                         <td>
 										<?php
 											if (!empty($model->file)){
-												echo Html::a($model->file.' <i class="fa fa-file-text-o"></i>', ['salary/show_admin','id'=>$model->id],[
+												echo Html::a($model->file.' <i class="fa fa-file-text-o"></i>', ['salary/show','id'=>$model->id],[
 													'data-id'=> $model->id,
 													'target'=> '_blank',
-													]);	
-											
+													]);												
 											}else{
-												echo '-';
-												
+												echo '-';												
 											}
 										?>
-										</td>	
-										<td>
-										<?=$model->create_at?>
-										</td>
-
-										<?php
-											if(Yii::$app->user->identity->role == 9){
-										?>
-										<td>
-										<!-- <a href="#" class="act-update btn btn-info btn-xs" data-id=<?=$model['id']?>>แก้ไข</a> -->
-										<?= Html::label('แก้ไข', 'edit', [
-													'class' => 'btn btn-info btn-xs act-update',
-													'data-id' => $model->id]) ?>
-										<?= Html::a('<i class="fa fa-remove"></i> ลบ',['salary/delete','id' => $model->id],
-													[
-														'class' => 'btn btn-danger btn-xs act-update',
-														'data-confirm' => 'Are you sure to delete this item?',
-                                    					'data-method' => 'post',
-													]);
-											?>
-											</td>
-										<?php } ?>					        
+										</td>			        
 									</tr>
 									<?php  endforeach; ?>
 								</tbody>	
@@ -152,7 +96,7 @@ $(document).ready(function() {
 		        
 	function init_click_handlers(){    
 
-		var url_show = "show";				
+		var url_show = "index.php?r=salary/show";				
 			$( ".act-show" ).click(function() {
 				var fID = $(this).data("id");
         	$.get(url_show,{id: fID},function (data){
@@ -165,7 +109,7 @@ $(document).ready(function() {
         	});     
 		});
 
-		var url_update = "update";
+		var url_update = "index.php?r=salary/update";
     	$(".act-update").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
@@ -175,15 +119,31 @@ $(document).ready(function() {
             	$(".modal-title").html("แก้ไขข้อมูลสมาชิก");
             	$("#activity-modal").modal("show");
         	});
-    	}); 
+    	});
+
+		
+    	var url_view = "index.php?r=salary/view";		
+    	$(".act-view").click(function(e) {			
+                var fID = $(this).data("id");
+				
+                $.get(url_view,{id: fID},function (data){
+                        $("#activity-modal").find(".modal-body").html(data);
+                        $(".modal-body").html(data);
+                        $(".modal-title").html("ข้อมูล");
+                        $("#activity-modal").modal("show");
+                    }
+                );
+            }); 
+
+			
     
 	}
 
     init_click_handlers(); //first run
 			
-	$('#activity-modal').on('hidden.bs.modal', function () {
- 		location.reload();
-	})
+	// $('#activity-modal').on('hidden.bs.modal', function () {
+ 	// 	location.reload();
+	// })
 
 				var responsiveHelper_dt_basic = undefined;
 				var responsiveHelper_datatable_fixed_column = undefined;
@@ -213,7 +173,7 @@ $(document).ready(function() {
 						responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
 					}
 				},
-				"paging":   false,
+				// "paging":   false,
 				"rowCallback" : function(nRow) {
 					responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
 				},
@@ -225,7 +185,7 @@ $(document).ready(function() {
 		    
 		    // custom toolbar
 												
-		    $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> act-create</button></div>');
+		    // $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> act-create</button></div>');
 			   
 		    // Apply the filter
 		    $("#datatable_fixed_column thead th input[type=text]").on( 'keyup change', function () {
@@ -241,7 +201,7 @@ $(document).ready(function() {
 
 /* END COLUMN FILTER */  
 
-		var url_create = "create";
+		var url_create = "index.php?r=salary/create";
     	$( "#act-create" ).click(function() {
         	$.get(url_create,function (data){
                 $("#activity-modal").find(".modal-body").html(data);

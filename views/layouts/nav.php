@@ -69,7 +69,7 @@ $menu = [
 		],	
 		[
 			'label' => 'สลิปเงินเดือน',
-			'url' => ['/salary/index'],
+			'url' => ['/slip/index'],
 			'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
 			
 		],	
@@ -119,18 +119,18 @@ $menu = [
 		],	
 		[
 			'label' => 'Setting',  
-			'url' => ['#'],
+			'url' => 'javascript:void(0);',
 			'template' => '<a href="#" title="{label}"><i class="fa fa-lg fa-fw fa-wrench"></i> <span class="menu-item-parent">{label}</span></a>',
 			'items' => [
 				
 				[
 					'label' => 'User',
-					'url' => ['/user/index'],
+					'url' => ['user/index'],
 					'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-wrench"></i> <span class="menu-item-parent">{label}</span></a>',
 				],
 				[
 					'label' => 'Profile',
-					'url' => ['/user/profile'],
+					'url' => ['user/profile'],
 					'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-wrench"></i> <span class="menu-item-parent">{label}</span></a>',
 				],
 				[
@@ -138,17 +138,43 @@ $menu = [
 					'url' => ['/cletter/index'],
 					'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-book"></i> <span class="menu-item-parent">{label}</span></a>',
 					
+					
 				],
 				[
 					'label' => 'สลิปเงินเดือน',
-					'url' => ['/salary/admin'],
+					'url' => 'javascript:void(0);',
 					'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
+					'items' => [
+						[
+							'label' => 'จัดการ User',
+							'url' => ['slip/admin'],
+							'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
+						],				
+						[
+							'label' => 'จัดทำเงินเดือน',
+							'url' => ['slip/admin'],
+							'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
+						],
+					],
 				],
 				[
-					'label' => 'ชื่อผู้ลงนาม',
-					'url' => ['/sign_boss_name/admin'],
+					'label' => 'ใบลา',
+					'url' => 'javascript:void(0);',
 					'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
+					'items' => [
+						[
+							'label' => 'ใบลาทั้งหมด',
+							'url' => ['bila/admin'],
+							'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
+						],				
+						[
+							'label' => 'ชื่อผู้ลงนาม',
+							'url' => ['/sign_boss_name/admin'],
+							'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
+						],
+					],
 				],
+				
 				[
 					'label' => 'Web_Link',
 					'url' => ['/web_link/admin'],
@@ -182,7 +208,7 @@ $menu = [
 		],
 		[
 			'label' => 'สลิปเงินเดือน',
-			'url' => ['/salary/index'],
+			'url' => ['/slip/index'],
 			'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
 			
 		],
