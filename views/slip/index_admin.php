@@ -68,23 +68,26 @@ $this->params['breadcrumbs'][] = $this->title;
 									<?php $i = 1?>                              
 									<?php foreach ($modelUsers as $modelUser): ?>
 						            <tr>
-						                <td><?= $i++?></td>
-										<td ><?= $modelUser->fname.$modelUser->name.' '.$modelUser->sname?></td>
+						                <td><?=  $modelUser->status?></td>
+										<td ><?= Profile::getFullNameId($modelUser->user_id); ?></td>
                                         <td></td>
                                         <td>
 										
 										</td>	
 										<td>
 										<?php 
-											if($modelSlip = Slip::findOne(['user_id' => $modelUser->user_id,'slip_month' => date("m"),'slip_year' => date("Y")])){
-												echo ' <a href="'.Url::to(['slip/print','id' => $modelSlip->slip_id]).'" class="btn btn-info btn-xs" data-id='.$modelSlip->slip_id.' data-method="POST"> Print </a> ';
-												echo ' <a href="#" class="act-update-slip btn btn-info btn-xs" data-id='.$modelSlip->slip_id.'> แกไข </a> ';
-												echo ' <a href="'.Url::to(['slip/delete','id' => $modelSlip->slip_id]).'" class="btn btn-info btn-xs" data-id='.$modelUser['id'].' data-method="POST">ลบ </a> ';
+										$modelSlip = Slip::findOne(['user_id' => $modelUser->user_id,'slip_month' => 6,'slip_year' => 2019]);
+											if(isset($modelSlip)){
+												echo ' <a href="'.Url::to(['slip/print','id' => $modelSlip->slip_id]).'" class="btn btn-info btn-xs" data-id='.$modelSlip->slip_id.' data-method="POST" target="_blank"> Print </a> ';
+												echo ' <a href="#" class="act-update-u btn btn-info btn-xs" data-id='.$modelSlip->slip_id.'> แกไข </a> ';
+												echo ' <a href="'.Url::to(['slip/delete','id' => $modelSlip->slip_id]).'" class="btn btn-info btn-xs" data-id='.$modelSlip->slip_id.' data-method="POST">ลบ </a> ';
 											}
 											else{
-												echo '<a href="#" class="act-create-slip btn btn-info btn-xs" data-id='.$modelUser['id'].'>สร้าง</a>';
+												
+												echo '<a href="#" class="act-create-slip btn btn-info btn-xs" data-id='.$modelUser->user_id.'>สร้าง</a>';
 											}
 										?>
+										
 										</td>
 					        
 									</tr>
@@ -120,11 +123,11 @@ $(document).ready(function() {
         	});     
 		});
 
-		var url_update_s = "update_s";
-    	$(".act-update-slip").click(function(e) {            
+		var url_update_u = "update_u";
+    	$(".act-update-u").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
-        	$.get(url_update_s,{id: fID},function (data){
+        	$.get(url_update_u,{id: fID},function (data){
             	$("#activity-modal").find(".modal-body").html(data);
             	$(".modal-body").html(data);
             	$(".modal-title").html("แก้ไขข้อมูลสมาชิก");
@@ -180,7 +183,7 @@ $(document).ready(function() {
 		    
 		    // custom toolbar
 												
-		    $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> act-create</button></div>');
+		    // $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> act-create</button></div>');
 			   
 		    // Apply the filter
 		    $("#datatable_fixed_column thead th input[type=text]").on( 'keyup change', function () {

@@ -61,9 +61,20 @@ class SlipController extends Controller
 
     public function actionAdmin()
     {
-        $modelUsers = Profile::find()->where(['status' => 10])->orderBy(['st' => SORT_ASC])->all();
+        $modelUsers = SlipUser::find()->orderBy(['status' => SORT_ASC])->all();
         
         return $this->render('index_admin', [
+            // 'models' => $models,
+            'modelUsers' => $modelUsers,
+            // 'countAll' => $countAll,
+        ]);
+    }
+
+    public function actionAdmin_user()
+    {
+        $modelUsers = SlipUser::find()->orderBy(['status' => SORT_ASC])->all();
+        
+        return $this->render('index_admin_user', [
             // 'models' => $models,
             'modelUsers' => $modelUsers,
             // 'countAll' => $countAll,
@@ -103,7 +114,7 @@ class SlipController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
             // 'id' => 'ID',
-            $model->user_id = $_GET['id'];
+            $model->user_id = $id;
             $model->slip_month = date("m");
             $model->slip_year = date("Y");
             $model->slip_bank = $_POST['Slip']['slip_bank'];
@@ -177,11 +188,11 @@ class SlipController extends Controller
             // 'id' => 'ID',
             $model->user_id = $_POST['SlipUser']['user_id'];
             $model->user_type = 1;
-            $model->status = 1;
+            $model->status = $_POST['SlipUser']['status'];
 
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
-                return $this->redirect(['admin']);
+                return $this->redirect(['admin_user']);
             }   
         }
 
@@ -259,6 +270,38 @@ class SlipController extends Controller
 
         
     }
+
+    public function actionUpdate_u($id)
+    {
+        $model = $this->findModelUser($id);
+
+         //Add This For Ajax Email Exist Validation 
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+          }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            
+            if($model->save()){
+                Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
+                return $this->redirect(['admin_u']);
+            }   
+        }
+
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_update_u',[
+                    'model' => $model,                    
+            ]);
+        }else{
+            return $this->render('_update_u',[
+                'model' => $model,                    
+            ]); 
+        }
+
+        
+    }
+
     public function actionPrint($id)
     {
         $this->layout = 'blank';
@@ -292,6 +335,15 @@ class SlipController extends Controller
         $model->delete();
 
         return $this->redirect(['admin']);
+    }
+
+    public function actionDelete_user($id)
+    {
+        $model = $this->findModelUser($id);
+        
+        $model->delete();
+
+        return $this->redirect(['admin_user']);
     }
 
     public function actionShow($id){
@@ -358,6 +410,15 @@ class SlipController extends Controller
     protected function findModel($id)
     {
         if (($model = Slip::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function findModelUser($id)
+    {
+        if (($model = SlipUser::findOne($id)) !== null) {
             return $model;
         }
 

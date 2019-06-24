@@ -34,7 +34,7 @@ class WebLinkFile extends \yii\db\ActiveRecord
             [['web_link_id', 'sort'], 'integer'],
             [['name', 'type', 'file', 'url'], 'string', 'max' => 255],
             [['url'],'url', 'defaultScheme' => 'http'],
-            [['file'], 'file', 'extensions' => 'pdf, txt, zip, rar, doc, docx, png, jpg', 'maxSize'=> 1024 * 1024 * 10],
+            [['file'], 'file', 'extensions' => 'pdf, txt, zip, rar, doc, docx, png, jpg', 'maxSize'=> 1024 * 1024 * 15],
         ];
     }
 

@@ -147,7 +147,7 @@ $menu = [
 					'items' => [
 						[
 							'label' => 'จัดการ User',
-							'url' => ['slip/admin'],
+							'url' => ['slip/admin_user'],
 							'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
 						],				
 						[

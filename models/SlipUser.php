@@ -30,7 +30,8 @@ class SlipUser extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'required'],
-            [['user_id'], 'integer'],
+            [['user_id'],'unique','message'=>'ชื่อนี้มีแล้ว.'],
+            // [['user_id'], 'integer'],
             // [['user_type', 'status'], 'string', 'max' => 255],
         ];
     }
@@ -44,7 +45,7 @@ class SlipUser extends \yii\db\ActiveRecord
             'id' => 'ID',
             'user_id' => 'User ID',
             'user_type' => 'User Type',
-            'status' => 'Status',
+            'status' => 'ลำดับ',
         ];
     }
 

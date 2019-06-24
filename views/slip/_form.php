@@ -44,7 +44,13 @@ echo $form->field($model, 'user_id')->widget(Select2::classname(), [
 ])->label(false);
 
 ?> 
-
+<?= $form->field($model, 'status', [
+    'inputOptions' => [
+        'placeholder' => $model->getAttributeLabel('status'),
+    ],
+    'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-usd"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('status').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
+    ])->label(false);
+    ?>
 </div> 
 
 <?php
