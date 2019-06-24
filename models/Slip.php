@@ -55,7 +55,10 @@ class Slip extends \yii\db\ActiveRecord
         return [
             [['slip_bank','slip_salary'], 'required'],
             // [['user_id'], 'integer'],
-            [['slip_bank','slip_salary','slip_salary2', 'slip_position'], 'number'],
+            [['slip_bank','slip_salary','slip_salary2', 'slip_position', 'slip_position2', 
+                'slip_special', 'slip_special2', 'slip_spem', 'slip_spem2', 'slip_ptk', 'slip_ptk2', 
+                'slip_future', 'slip_future2', 'slip_full', 'slip_juscoop', 'slip_tax', 'slip_cremation', 
+                'slip_aia', 'slip_kasikorn', 'slip_aom', 'slip_justice', 'slip_kbk', 'slip_kbk2'], 'number'],
             // [['slip_month', 'slip_year', 'slip_bank', 'slip_salary', 'slip_salary2', 'slip_position', 'slip_position2', 'slip_special', 'slip_special2', 'slip_spem', 'slip_spem2', 'slip_ptk', 'slip_ptk2', 'slip_future', 'slip_future2', 'slip_full', 'slip_juscoop', 'slip_tax', 'slip_cremation', 'slip_aia', 'slip_kasikorn', 'slip_aom', 'slip_justice', 'slip_kbk', 'slip_kbk2'], 'string', 'max' => 255],
         ];
     }
@@ -129,4 +132,72 @@ class Slip extends \yii\db\ActiveRecord
 		$strMonthThai=$strMonthCut[$strMonth];
 		return "$strMonthThai";
     }
+
+    public function DateThai_month($strDate)
+	{
+		$strMonthCut = Array("","มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม",
+                            "สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม");
+		
+		return $strMonthCut[$strDate];
+    }
+
+    public function ThaiBahtConversion($amount_number)
+    {
+        $amount_number = number_format($amount_number, 2, ".","");
+        //echo "<br/>amount = " . $amount_number . "<br/>";
+        $pt = strpos($amount_number , ".");
+        $number = $fraction = "";
+        if ($pt === false){
+            $number = $amount_number;
+        } else {
+            $number = substr($amount_number, 0, $pt);
+            $fraction = substr($amount_number, $pt + 1);
+        }
+   
+        //list($number, $fraction) = explode(".", $number);
+        $ret = "";
+        $baht = Slip::ReadNumber($number);
+        if ($baht != ""){
+            $ret .= $baht . "บาท";
+        }
+        $satang = Slip::ReadNumber($fraction);
+        if ($satang != ""){
+            $ret .=  $satang . "สตางค์";
+        }else{
+            $ret .= "ถ้วน";
+        }
+        //return iconv("UTF-8", "TIS-620", $ret);
+        return $ret;
+    }
+
+public function ReadNumber($number)
+{
+    $position_call = array("แสน", "หมื่น", "พัน", "ร้อย", "สิบ", "");
+    $number_call = array("", "หนึ่ง", "สอง", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า");
+    $number = $number + 0;
+    $ret = "";
+    if ($number == 0) { 
+        return $ret;
+    }
+    if ($number > 1000000)
+    {
+        $ret .= Slip::ReadNumber(intval($number / 1000000)) . "ล้าน";
+        $number = intval(fmod($number, 1000000));
+    }
+   
+    $divider = 100000;
+    $pos = 0;
+    while($number > 0)
+    {
+        $d = intval($number / $divider);
+        $ret .= (($divider == 10) && ($d == 2)) ? "ยี่" :
+            ((($divider == 10) && ($d == 1)) ? "" :
+            ((($divider == 1) && ($d == 1) && ($ret != "")) ? "เอ็ด" : $number_call[$d]));
+        $ret .= ($d ? $position_call[$pos] : "");
+        $number = $number % $divider;
+        $divider = $divider / 10;
+        $pos++;
+    }
+    return $ret;
+} 
 }

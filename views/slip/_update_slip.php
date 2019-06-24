@@ -31,6 +31,8 @@ use yii\helpers\Url;
     ]);  
     ?>
 <p><?=Slip::DateThai_month_full(date("Y-m-d")).' '.$_GET['id']?></p>
+<div  class="row" >
+<div class="content">
 
 <article class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable">
     <div role="content">
@@ -239,48 +241,17 @@ use yii\helpers\Url;
         'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-usd"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('slip_kbk2').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
         ])->label(false);
     ?>
-    <?= $form->field($model, 'slip_spem', [
-        'inputOptions' => [
-            'placeholder' => $model->getAttributeLabel('slip_spem'),
-            // 'value' => isset($modelSlip->slip_spem) ? $modelSlip->slip_spem : '',
-        ],
-        'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-usd"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('slip_spem').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
-        ])->label(false);
-    ?>
-    <?= $form->field($model, 'slip_spem2', [
-        'inputOptions' => [
-            'placeholder' => $model->getAttributeLabel('slip_spem2'),
-            // 'value' => isset($modelSlip->slip_spem2) ? $modelSlip->slip_spem2 : '',
-        ],
-        'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-usd"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('slip_spem2').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
-        ])->label(false);
-    ?>
-    <?= $form->field($model, 'slip_spem', [
-        'inputOptions' => [
-            'placeholder' => $model->getAttributeLabel('slip_spem'),
-            // 'value' => isset($modelSlip->slip_spem) ? $modelSlip->slip_spem : '',
-        ],
-        'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-usd"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('slip_spem').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
-        ])->label(false);
-    ?>
-    <?= $form->field($model, 'slip_spem2', [
-        'inputOptions' => [
-            'placeholder' => $model->getAttributeLabel('slip_spem2'),
-            // 'value' => isset($modelSlip->slip_spem2) ? $modelSlip->slip_spem2 : '',
-        ],
-        'template' => '<section class=""><label class="label">{label}</label> <label class="input"> <i class="icon-append fa fa-usd"></i>{input}<b class="tooltip tooltip-top-right">'.$model->getAttributeLabel('slip_spem2').'</b></label><em for="name" class="invalid">{error}{hint}</em></section>'
-        ])->label(false);
-    ?>
-
+    
+    
 <fieldset>
     </div>
     </div>
 </article>
-<div>
+
 <fieldset class="text-right"> 
     <?= Html::submitButton('Update', ['class' => 'btn btn-primary btn-lg']) ?>
 </fieldset>
 
     <?php ActiveForm::end(); ?>
-
-<!-- </div> -->
+    <div>
+</div>

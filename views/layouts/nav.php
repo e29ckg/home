@@ -155,6 +155,11 @@ $menu = [
 							'url' => ['slip/admin'],
 							'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
 						],
+						[
+							'label' => 'Export',
+							'url' => ['slip/export'],
+							'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
+						],
 					],
 				],
 				[

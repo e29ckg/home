@@ -10,7 +10,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'รายชื่อสำหรับทำเงินเดือน';
+$this->title = 'ส่งออก EXCElL';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -59,39 +59,24 @@ $this->params['breadcrumbs'][] = $this->title;
 										<th >ชื่อ</th>
 					                    <th ></th>
 					                    <th >Link</th>
-										<th >Date</th>
-										
 										
 						            </tr>
 								</thead>
 								<tbody>  
 									<?php $i = 1?>                              
-									<?php foreach ($modelUsers as $modelUser): ?>
+									<?php foreach ($models as $model): ?>
 						            <tr>
-						                <td><?=  $modelUser->status?></td>
-										<td ><?= Profile::getFullNameId($modelUser->user_id); ?></td>
+						                <td><?=  'ลำดับที่ '.$model->slip_id?></td>
+										<td ><?= Profile::getFullNameId($model->user_id); ?></td>
                                         <td></td>
                                         <td>
 										
 										</td>	
-										<td>
-										<?php 
-										$modelSlip = Slip::findOne(['user_id' => $modelUser->user_id,'slip_month' => 6,'slip_year' => 2019]);
-											if(isset($modelSlip)){
-												echo ' <a href="'.Url::to(['slip/print','id' => $modelSlip->slip_id]).'" class="btn btn-info btn-xs" data-id='.$modelSlip->slip_id.' data-method="POST" target="_blank"> Print </a> ';
-												echo ' <a href="#" class="act-update-slip btn btn-info btn-xs" data-id='.$modelSlip->slip_id.'> แกไข </a> ';
-												echo ' <a href="'.Url::to(['slip/delete','id' => $modelSlip->slip_id]).'" class="btn btn-info btn-xs" data-id='.$modelSlip->slip_id.' data-method="POST">ลบ </a> ';
-											}
-											else{
-												
-												echo '<a href="#" class="act-create-slip btn btn-info btn-xs" data-id='.$modelUser->user_id.'>สร้าง</a>';
-											}
-										?>
 										
-										</td>
 					        
 									</tr>
 									<?php  endforeach; ?>
+						            									
 								</tbody>	
 							</table>
 						</div>
@@ -123,11 +108,11 @@ $(document).ready(function() {
         	});     
 		});
 
-		var url_update_slip = "update_s";
-    	$(".act-update-slip").click(function(e) {            
+		var url_update_u = "update_u";
+    	$(".act-update-u").click(function(e) {            
 			var fID = $(this).data("id");
 			// alert(fID);
-        	$.get(url_update_slip,{id: fID},function (data){
+        	$.get(url_update_u,{id: fID},function (data){
             	$("#activity-modal").find(".modal-body").html(data);
             	$(".modal-body").html(data);
             	$(".modal-title").html("แก้ไขข้อมูลสมาชิก");
@@ -183,7 +168,7 @@ $(document).ready(function() {
 		    
 		    // custom toolbar
 												
-		    // $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> act-create</button></div>');
+		    $("div.toolbar").html('<div class="text-right"><button id="act-create" class="btn btn-success btn-md" alt="act-create"><i class="fa fa-plus "></i> act-create</button></div>');
 			   
 		    // Apply the filter
 		    $("#datatable_fixed_column thead th input[type=text]").on( 'keyup change', function () {
@@ -195,7 +180,8 @@ $(document).ready(function() {
 		            
 		    } );
 
-			otable.order( [[ 0, 'asc' ], [ 2, 'asc' ]] ).draw();
+			// otable.order( [[ 0, 'asc' ], [ 2, 'asc' ]] ).draw();
+			// otable.order(false);
 
 /* END COLUMN FILTER */  
 

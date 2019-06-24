@@ -81,7 +81,20 @@ class SlipController extends Controller
         ]);
     }
     
+    public function actionExport()
+    {   
+        return $this->render('index_export', [
+            // 'models' => $models,
+        ]);
+    }
 
+    public function actionExport_m($y,$m)
+    {   
+        $models = Slip::find()->where(['slip_year' => $y ,'slip_month' => $m])->all();
+        return $this->render('index_export_m', [
+            'models' => $models,
+        ]);
+    }
     /**
      * Displays a single Slip model.
      * @param integer $id
@@ -115,8 +128,8 @@ class SlipController extends Controller
             
             // 'id' => 'ID',
             $model->user_id = $id;
-            $model->slip_month = date("m");
-            $model->slip_year = date("Y");
+            $model->slip_month = (int)date("m");
+            $model->slip_year = (int)date("Y");
             $model->slip_bank = $_POST['Slip']['slip_bank'];
             $model->slip_salary = $_POST['Slip']['slip_salary'];
             $model->slip_salary2 = $_POST['Slip']['slip_salary2'];
