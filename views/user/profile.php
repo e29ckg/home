@@ -4,6 +4,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\models\Profile;
+use app\models\Bila;
 ?>
 			<!-- MAIN CONTENT -->
 <div id="content">
@@ -67,8 +68,8 @@ use app\models\Profile;
 												</div>															
 											</div>
 											<div class="col-sm-8">
-												<h1> <?=$mdProfile->fname?><?=$mdProfile->name?>&nbsp;&nbsp;<?=$mdProfile->sname?>
-												<a id="act-edit-profile" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn bg-color-white txt-color-red"><i class="fa fa-gear fa-spin fa-lg"></i> แก้ไข</a>
+												<h1> <?= Profile::getFullName(); ?>
+												<!-- <a id="act-edit-profile" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn bg-color-white txt-color-red"><i class="fa fa-gear fa-spin fa-lg"></i> แก้ไข</a> -->
 												<br>
 												<small> <?=$mdProfile->dep?></small></h1>
 													<ul class="list-unstyled">
@@ -105,10 +106,14 @@ use app\models\Profile;
 															</p>
 														</li>
 													</ul>
+													
 													<br>
-													<br>
-													<br>
+													<!-- <a id="act-edit-profile" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn btn-primary btn-lg btn-block"><i class="fa fa-gear fa-spin fa-lg"></i> แก้ไขข้อมูล </a> -->
+													
 												</div>
+												<div class="col-sm-12">
+													<a id="act-edit-profile" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn btn-primary btn-lg btn-block"><i class="fa fa-gear fa-spin fa-lg"></i> แก้ไขข้อมูล </a>
+												</div>													
 											</div>
 										</div>
 									</div>
@@ -118,7 +123,7 @@ use app\models\Profile;
 											<div class="padding-10">
 												<ul class="nav nav-tabs tabs-pull-right">
 													<li class="active">
-														<a href="#a1" data-toggle="tab">Recent Articles</a>
+														<a href="#a1" data-toggle="tab">ประวัติการลา</a>
 													</li>
 													<li>
 														<a href="#a2" data-toggle="tab">New Members</a>
@@ -128,152 +133,54 @@ use app\models\Profile;
 													</li>
 												</ul>
 												<div class="tab-content padding-top-10">
+
 													<div class="tab-pane fade in active" id="a1">
 														<div class="row">
+															<?php foreach ($mdBilas as $mdBila): ?>
 															<div class="col-xs-2 col-sm-1">
-																<time datetime="2014-09-20" class="icon">
-																	<strong>Jan</strong>
-																		<span>10</span>
+																<time datetime="<?=$mdBila->date_begin?>" class="icon">
+																	<strong><?= date("M",strtotime($mdBila->date_begin))?></strong>
+																		<span><?= date("d",strtotime($mdBila->date_begin))?></span>
 																</time>
 															</div>
 															<div class="col-xs-10 col-sm-11">
-																<h6 class="no-margin"><a href="javascript:void(0);">Allice in Wonderland</a></h6>
+																<h6 class="no-margin"><a href="javascript:void(0);"><?= $mdBila->cat?></a></h6>
 																<p>
-																	Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi Nam eget dui.
-																	Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero,
-																	sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel.
+																	วันที่ <?= Bila::DateThai_full($mdBila->date_begin) ?> ถึง <?= Bila::DateThai_full($mdBila->date_end) ?> เป็นเวลา <?= $mdBila->date_total ?> วัน 
+																	<?= $mdBila->due ? 'เนื่องจาก '.$mdBila->due : '' ?>
+
 																</p>
 															</div>
 															<div class="col-sm-12">
 																<hr>
 															</div>
-															<div class="col-xs-2 col-sm-1">
-																<time datetime="2014-09-20" class="icon">
-																	<strong>Jan</strong>
-																	<span>10</span>
-																</time>
-															</div>
-															<div class="col-xs-10 col-sm-11">
-																<h6 class="no-margin"><a href="javascript:void(0);">World Report</a></h6>
-																<p>
-																	Morning our be dry. Life also third land after first beginning to evening cattle created let subdue you'll winged don't Face firmament.
-																	You winged you're was Fruit divided signs lights i living cattle yielding over light life life sea, so deep.
-																Abundantly given years bring were after. Greater you're meat beast creeping behold he unto She'd doesn't. Replenish brought kind gathering Meat.
-																		</p>
-																	</div>
+															<?php  endforeach; ?>																																								
+														</div>				
+													</div>
+															
+													<div class="tab-pane fade" id="a2">
+
+														<div class="alert alert-info fade in">
+															<button class="close" data-dismiss="alert">
+																×
+															</button>
+															<i class="fa-fw fa fa-info"></i>
+															<strong>51 new members </strong>joined today!
+														</div>
 				
-																	<div class="col-sm-12">
-				
-																		<br>
-				
-																	</div>
-				
+														<div class="user" title="email@company.com">
+															<img src="img/avatars/female.png" alt="demo user"><a href="javascript:void(0);">Jenn Wilson</a>
+																<div class="email">
+																	travis@company.com
 																</div>
-				
-															</div>
-															<div class="tab-pane fade" id="a2">
-				
-																<div class="alert alert-info fade in">
-																	<button class="close" data-dismiss="alert">
-																		×
-																	</button>
-																	<i class="fa-fw fa fa-info"></i>
-																	<strong>51 new members </strong>joined today!
-																</div>
-				
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/female.png" alt="demo user"><a href="javascript:void(0);">Jenn Wilson</a>
-																	<div class="email">
-																		travis@company.com
-																	</div>
-																</div>
+														</div>
 																<div class="user" title="email@company.com">
 																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Marshall Hitt</a>
 																	<div class="email">
 																		marshall@company.com
 																	</div>
 																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Joe Cadena</a>
-																	<div class="email">
-																		joe@company.com
-																	</div>
-																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Mike McBride</a>
-																	<div class="email">
-																		mike@company.com
-																	</div>
-																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Travis Wilson</a>
-																	<div class="email">
-																		travis@company.com
-																	</div>
-																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Marshall Hitt</a>
-																	<div class="email">
-																		marshall@company.com
-																	</div>
-																</div>
-																<div class="user" title="Joe Cadena joe@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Joe Cadena</a>
-																	<div class="email">
-																		joe@company.com
-																	</div>
-																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Mike McBride</a>
-																	<div class="email">
-																		mike@company.com
-																	</div>
-																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Marshall Hitt</a>
-																	<div class="email">
-																		marshall@company.com
-																	</div>
-																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Joe Cadena</a>
-																	<div class="email">
-																		joe@company.com
-																	</div>
-																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);"> Mike McBride</a>
-																	<div class="email">
-																		mike@company.com
-																	</div>
-																</div>
-				
-																<div class="text-center">
-																	<ul class="pagination pagination-sm">
-																		<li class="disabled">
-																			<a href="javascript:void(0);">Prev</a>
-																		</li>
-																		<li class="active">
-																			<a href="javascript:void(0);">1</a>
-																		</li>
-																		<li>
-																			<a href="javascript:void(0);">2</a>
-																		</li>
-																		<li>
-																			<a href="javascript:void(0);">3</a>
-																		</li>
-																		<li>
-																			<a href="javascript:void(0);">...</a>
-																		</li>
-																		<li>
-																			<a href="javascript:void(0);">99</a>
-																		</li>
-																		<li>
-																			<a href="javascript:void(0);">Next</a>
-																		</li>
-																	</ul>
-																</div>
-				
+																
 															</div><!-- end tab -->
 														</div>
 				
@@ -282,8 +189,7 @@ use app\models\Profile;
 												</div>
 				
 											</div>
-											<!-- end row -->
-				
+											<!-- end row -->				
 										</div>
 				
 									</div>
@@ -315,7 +221,7 @@ use app\models\Profile;
 			</div>
 			<!-- END MAIN CONTENT -->
 <?php
-
+var_dump($mdBilas);
 $script = <<< JS
 
 $(document).ready(function() {	

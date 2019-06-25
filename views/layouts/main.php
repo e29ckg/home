@@ -205,6 +205,7 @@ if (!Yii::$app->user->isGuest){
 						<!-- <i class="fa fa-angle-down"></i> -->
 					</a>					
 				</span>
+				
 			</div>
 			<!-- end user info -->
 
