@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use app\models\User;
 use app\models\Bila;
 use app\models\SignBossName;
+use yii\helpers\Url;
 
 function DateThai_full($strDate)
 	{
@@ -37,9 +38,10 @@ function DateThai_month_full($strDate)
     // echo $_SERVER['SERVER_ADDR'] . Url::to('$SERVER_ADDR/uploads/bila/'.$model->user_id.'/'.$model->id.'/'.$model->id.'.png');
     // echo '<img src="' . Url::to('@webroot/uploads/bila/'.$model->user_id.'/'.$model->id.'/'.$model->id.'.png') . '" height="42" width="42" >';
 ?>
+<link rel="stylesheet" href="<?=Url::to(['/fonts/thsarabunnew.css'])?>" />
 <div style="A_CSS_ATTRIBUTE:all;position: absolute;bottom: 20px; right: 45px;left: 45px; top: 35px;  ">
 <!-- <div class="text-center"><H3> </H3></div> -->
-<table class="table_bordered" width="100%" border="1" cellpadding="1" cellspacing="0">
+<table class="table_bordered thsarabunnew" width="100%" border="1" cellpadding="1" cellspacing="0">
     <thead>
 		<tr>
             <th  width="90%"><H2>แบบใบลาป่วย , ลากิจส่วนตัว , ลาคลอดบุตร</H2> </th>	
