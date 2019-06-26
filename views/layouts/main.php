@@ -198,14 +198,14 @@ if (!Yii::$app->user->isGuest){
 					<a href="<?=Url::to(['user/profile'])?>" id="show-shortcut" >
 						<img src="<?= Profile::getImgSrc(); ?>" alt="me" class="online"> 
 						<span>
-							<?= Profile::getFullName(); ?>
-						
+							<?= Profile::getFullName(); ?>						
 						</span>
 						<?= !Yii::$app->user->isGuest ? '<i class="fa fa-angle-down"></i>' : ' <span><a href="'.Url::to(['site/login']).'" class="btn btn-danger btn-xs">Login <i class="fa fa-sign-in"></i></a></span>'; ?>
 						
 						<!-- <i class="fa fa-angle-down"></i> -->
 					</a>					
 				</span>
+				
 			</div>
 			<!-- end user info -->
 

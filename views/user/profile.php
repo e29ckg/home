@@ -3,302 +3,184 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use app\models\Profile;
+use app\models\Bila;
 ?>
 			<!-- MAIN CONTENT -->
-			<div id="content">
+<div id="content">
 
-				<!-- Bread crumb is created dynamically -->
-				<!-- row -->
+	<!-- Bread crumb is created dynamically -->
+	<!-- row -->
 								
+	<div class="row">
+				
+		<div class="col-sm-12">				
+				
+			<div class="well well-sm">
+				
 				<div class="row">
 				
-					<div class="col-sm-12">				
+					<div class="col-sm-12 col-md-12 col-lg-6">
+						<div class="well well-light well-sm no-margin no-padding">
 				
-							<div class="well well-sm">
+							<div class="row">
 				
-								<div class="row">
-				
-									<div class="col-sm-12 col-md-12 col-lg-6">
-										<div class="well well-light well-sm no-margin no-padding">
-				
-											<div class="row">
-				
-												<div class="col-sm-12">
-													<div id="myCarousel" class="carousel fade profile-carousel">
-														<div class="air air-bottom-right padding-10">
-															<!-- <a href="javascript:void(0);" class="btn txt-color-white bg-color-teal btn-sm"><i class="fa fa-check"></i> Follow</a> -->
-															&nbsp; 
-															<a id="chang_pass" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn txt-color-white bg-color-pinkDark btn-sm"><i class="fa fa-key"></i> เปลี่ยนPassword</a>
-														</div>
-														<div class="air air-top-left padding-10">
-															<h4 class="txt-color-white font-md"><?=$mdUser->created_at?></h4>
-														</div>
-														<ol class="carousel-indicators">
-															<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-															<li data-target="#myCarousel" data-slide-to="1" class=""></li>
-															<li data-target="#myCarousel" data-slide-to="2" class=""></li>
-														</ol>
-														<div class="carousel-inner">
-															<!-- Slide 1 -->
-															<div class="item active">
-																<?= Html::img('@web/img/demo/s1.jpg', ['alt' => 'demo user']);?>	
-															</div>
-															<!-- Slide 2 -->
-															<div class="item">
-																<img src="/home/web/img/demo/s2.jpg" alt="demo user">
-															</div>
-															<!-- Slide 3 -->
-															<div class="item">
-																<img src="/home/web/img/demo/m3.jpg" alt="demo user">
-															</div>
-														</div>
-													</div>
+								<div class="col-sm-12">
+									<div id="myCarousel" class="carousel fade profile-carousel">
+										<div class="air air-bottom-right padding-10">
+											<!-- <a href="javascript:void(0);" class="btn txt-color-white bg-color-teal btn-sm"><i class="fa fa-check"></i> Follow</a> -->
+												&nbsp; 
+											<a id="chang_pass" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn txt-color-white bg-color-pinkDark btn-sm"><i class="fa fa-key"></i> เปลี่ยนPassword</a>
+										</div>
+										<div class="air air-top-left padding-10">
+											<h4 class="txt-color-white font-md"><?=$mdUser->created_at?></h4>
+										</div>
+											<ol class="carousel-indicators">
+												<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+												<li data-target="#myCarousel" data-slide-to="1" class=""></li>
+												<li data-target="#myCarousel" data-slide-to="2" class=""></li>
+											</ol>
+											<div class="carousel-inner">
+												<!-- Slide 1 -->
+												<div class="item active">
+													<?= Html::img('@web/img/demo/s1.jpg', ['alt' => 'demo user']);?>	
 												</div>
-				
-												<div class="col-sm-12">
-				
-													<div class="row">
-				
-														<div class="col-sm-3 profile-pic">
-															<?php 
-																if(!empty($mdProfile->img)){
-																	echo Html::img('@web/uploads/user/'.$mdProfile->img, ['alt' => 'user']);
-																}else{
-																	echo Html::img('@web/img/avatars/male.png', ['alt' => 'My logo1']);
-																}
-															?>
-															<div class="air air-bottom-right padding-10">
-																<a id="act-edit-img" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn txt-color-white bg-color-teal btn-sm"><i class="fa fa-gear fa-sm"></i></a>
-															</div>															
-														</div>
-														<div class="col-sm-8">
-															<h1> <?=$mdProfile->fname?><?=$mdProfile->name?>&nbsp;&nbsp;<?=$mdProfile->sname?>
-															<a id="act-edit-profile" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn bg-color-white txt-color-red"><i class="fa fa-gear fa-spin fa-lg"></i> แก้ไข</a>
-															<br>
-															<small> <?=$mdProfile->dep?></small></h1>
-															
-				
-															<ul class="list-unstyled">
-																<li>
-																	<p class="text-muted">
-																		<i class="fa fa-phone"></i>&nbsp;&nbsp; <span class="txt-color-darken"><?=$mdProfile->id_card?></span>
-																	</p>
-																</li>
-																<li>
-																	<p class="text-muted">
-																		<i class="fa fa-phone"></i>&nbsp;&nbsp; <span class="txt-color-darken"><?=$mdProfile->phone?></span>
-																	</p>
-																</li>
-																<li>
-																	<p class="text-muted">
-																		<i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:<?=$mdUser->email?>"><?=$mdUser->email?></a>
-																		<a id="act-chang-email" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn bg-color-white txt-color-red"><i class="fa fa-gear fa-spin fa-lg"></i> แก้ไข</a>
-															
-																	</p>
-																</li>
-																<li>
-																	<p class="text-muted">
-																		<i class="fa fa-skype"></i>&nbsp;&nbsp;<span class="txt-color-darken"><?=$mdProfile->birthday?></span>
-																	</p>
-																</li>
-																<li>
-																	<p class="text-muted">
-																		<i class="fa fa-skype"></i>&nbsp;&nbsp;<span class="txt-color-darken"><?=$mdProfile->address?></span>
-																	</p>
-																</li>
-																<li>
-																	<p class="text-muted">
-																		<i class="fa fa-calendar"></i>&nbsp;&nbsp;<span class="txt-color-darken">Free after <a href="javascript:void(0);" rel="tooltip" title="" data-placement="top" data-original-title="Create an Appointment">4:30 PM</a></span>
-																	</p>
-																</li>
-															</ul>
-															<br>
-															
-															<br>
-															<br>
-				
-														</div>
-													</div>
-				
+												<!-- Slide 2 -->
+												<div class="item">
+													<img src="/home/web/img/demo/s2.jpg" alt="demo user">
 												</div>
-				
+												<!-- Slide 3 -->
+												<div class="item">
+													<img src="/home/web/img/demo/m3.jpg" alt="demo user">
+												</div>
 											</div>
+										</div>
+									</div>
 				
-											<div class="row">
+									<div class="col-sm-12">
 				
+										<div class="row">
+				
+											<div class="col-sm-3 profile-pic">
+												<img src="<?= Profile::getImgSrc(); ?>" alt="me" > 
+												<div class="air air-bottom-right padding-10">
+													<a id="act-edit-img" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn txt-color-white bg-color-teal btn-sm"><i class="fa fa-gear fa-sm"></i></a>
+												</div>															
+											</div>
+											<div class="col-sm-8">
+												<h1> <?= Profile::getFullName(); ?>
+												<!-- <a id="act-edit-profile" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn bg-color-white txt-color-red"><i class="fa fa-gear fa-spin fa-lg"></i> แก้ไข</a> -->
+												<br>
+												<small> <?=$mdProfile->dep?></small></h1>
+													<ul class="list-unstyled">
+														<li>
+															<p class="text-muted">
+																<i class="fa fa-credit-card"></i>&nbsp;&nbsp; <span class="txt-color-darken"><?=$mdProfile->id_card?></span>
+															</p>
+														</li>
+														<li>
+															<p class="text-muted">
+																<i class="fa fa-phone"></i>&nbsp;&nbsp; <span class="txt-color-darken"><?=$mdProfile->phone?></span>
+															</p>
+														</li>
+														<li>
+															<p class="text-muted">
+															<i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:<?=$mdUser->email?>"><?=$mdUser->email?></a>
+															<a id="act-chang-email" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn bg-color-white txt-color-red"><i class="fa fa-gear fa-spin fa-lg"></i> แก้ไข</a>
+															
+														</p>
+														</li>
+														<li>
+															<p class="text-muted">
+																<i class="fa fa-calendar-o"></i>&nbsp;&nbsp;<span class="txt-color-darken"><?=$mdProfile->birthday?></span>
+															</p>
+														</li>
+														<li>
+															<p class="text-muted">
+																<i class="fa fa-briefcase"></i>&nbsp;&nbsp;<span class="txt-color-darken"><?=$mdProfile->address?></span>
+															</p>
+														</li>
+														<li>
+															<p class="text-muted">
+																<i class="fa fa-calendar"></i>&nbsp;&nbsp;<span class="txt-color-darken">Free after <a href="javascript:void(0);" rel="tooltip" title="" data-placement="top" data-original-title="Create an Appointment">4:30 PM</a></span>
+															</p>
+														</li>
+													</ul>
+													
+													<br>
+													<!-- <a id="act-edit-profile" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn btn-primary btn-lg btn-block"><i class="fa fa-gear fa-spin fa-lg"></i> แก้ไขข้อมูล </a> -->
+													
+												</div>
 												<div class="col-sm-12">
-				
-													<hr>
-				
-													<div class="padding-10">
-				
-														<ul class="nav nav-tabs tabs-pull-right">
-															<li class="active">
-																<a href="#a1" data-toggle="tab">Recent Articles</a>
-															</li>
-															<li>
-																<a href="#a2" data-toggle="tab">New Members</a>
-															</li>
-															<li class="pull-left">
-																<span class="margin-top-10 display-inline"><i class="fa fa-rss text-success"></i> Activity</span>
-															</li>
-														</ul>
-				
-														<div class="tab-content padding-top-10">
-															<div class="tab-pane fade in active" id="a1">
-				
-																<div class="row">
-				
-																	<div class="col-xs-2 col-sm-1">
-																		<time datetime="2014-09-20" class="icon">
-																			<strong>Jan</strong>
-																			<span>10</span>
-																		</time>
-																	</div>
-				
-																	<div class="col-xs-10 col-sm-11">
-																		<h6 class="no-margin"><a href="javascript:void(0);">Allice in Wonderland</a></h6>
-																		<p>
-																			Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi Nam eget dui.
-																			Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero,
-																			sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel.
-																		</p>
-																	</div>
-				
-																	<div class="col-sm-12">
-				
-																		<hr>
-				
-																	</div>
-				
-																	<div class="col-xs-2 col-sm-1">
-																		<time datetime="2014-09-20" class="icon">
-																			<strong>Jan</strong>
-																			<span>10</span>
-																		</time>
-																	</div>
-				
-																	<div class="col-xs-10 col-sm-11">
-																		<h6 class="no-margin"><a href="javascript:void(0);">World Report</a></h6>
-																		<p>
-																			Morning our be dry. Life also third land after first beginning to evening cattle created let subdue you'll winged don't Face firmament.
-																			You winged you're was Fruit divided signs lights i living cattle yielding over light life life sea, so deep.
-																			Abundantly given years bring were after. Greater you're meat beast creeping behold he unto She'd doesn't. Replenish brought kind gathering Meat.
-																		</p>
-																	</div>
-				
-																	<div class="col-sm-12">
-				
-																		<br>
-				
-																	</div>
-				
-																</div>
-				
+													<a id="act-edit-profile" data-id="<?=$mdProfile->user_id?>" href="javascript:void(0);" class="btn btn-primary btn-lg btn-block"><i class="fa fa-gear fa-spin fa-lg"></i> แก้ไขข้อมูล </a>
+												</div>													
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<hr>
+											<div class="padding-10">
+												<ul class="nav nav-tabs tabs-pull-right">
+													<li class="active">
+														<a href="#a1" data-toggle="tab">ประวัติการลา</a>
+													</li>
+													<li>
+														<a href="#a2" data-toggle="tab">New Members</a>
+													</li>
+													<li class="pull-left">
+														<span class="margin-top-10 display-inline"><i class="fa fa-rss text-success"></i> Activity</span>
+													</li>
+												</ul>
+												<div class="tab-content padding-top-10">
+
+													<div class="tab-pane fade in active" id="a1">
+														<div class="row">
+															<?php foreach ($mdBilas as $mdBila): ?>
+															<div class="col-xs-2 col-sm-1">
+																<time datetime="<?=$mdBila->date_begin?>" class="icon">
+																	<strong><?= date("M",strtotime($mdBila->date_begin))?></strong>
+																		<span><?= date("d",strtotime($mdBila->date_begin))?></span>
+																</time>
 															</div>
-															<div class="tab-pane fade" id="a2">
+															<div class="col-xs-10 col-sm-11">
+																<h6 class="no-margin"><a href="javascript:void(0);"><?= $mdBila->cat?></a></h6>
+																<p>
+																	วันที่ <?= Bila::DateThai_full($mdBila->date_begin) ?> ถึง <?= Bila::DateThai_full($mdBila->date_end) ?> เป็นเวลา <?= $mdBila->date_total ?> วัน 
+																	<?= $mdBila->due ? 'เนื่องจาก '.$mdBila->due : '' ?>
+
+																</p>
+															</div>
+															<div class="col-sm-12">
+																<hr>
+															</div>
+															<?php  endforeach; ?>																																								
+														</div>				
+													</div>
+															
+													<div class="tab-pane fade" id="a2">
+
+														<div class="alert alert-info fade in">
+															<button class="close" data-dismiss="alert">
+																×
+															</button>
+															<i class="fa-fw fa fa-info"></i>
+															<strong>51 new members </strong>joined today!
+														</div>
 				
-																<div class="alert alert-info fade in">
-																	<button class="close" data-dismiss="alert">
-																		×
-																	</button>
-																	<i class="fa-fw fa fa-info"></i>
-																	<strong>51 new members </strong>joined today!
+														<div class="user" title="email@company.com">
+															<img src="img/avatars/female.png" alt="demo user"><a href="javascript:void(0);">Jenn Wilson</a>
+																<div class="email">
+																	travis@company.com
 																</div>
-				
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/female.png" alt="demo user"><a href="javascript:void(0);">Jenn Wilson</a>
-																	<div class="email">
-																		travis@company.com
-																	</div>
-																</div>
+														</div>
 																<div class="user" title="email@company.com">
 																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Marshall Hitt</a>
 																	<div class="email">
 																		marshall@company.com
 																	</div>
 																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Joe Cadena</a>
-																	<div class="email">
-																		joe@company.com
-																	</div>
-																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Mike McBride</a>
-																	<div class="email">
-																		mike@company.com
-																	</div>
-																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Travis Wilson</a>
-																	<div class="email">
-																		travis@company.com
-																	</div>
-																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Marshall Hitt</a>
-																	<div class="email">
-																		marshall@company.com
-																	</div>
-																</div>
-																<div class="user" title="Joe Cadena joe@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Joe Cadena</a>
-																	<div class="email">
-																		joe@company.com
-																	</div>
-																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Mike McBride</a>
-																	<div class="email">
-																		mike@company.com
-																	</div>
-																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Marshall Hitt</a>
-																	<div class="email">
-																		marshall@company.com
-																	</div>
-																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);">Joe Cadena</a>
-																	<div class="email">
-																		joe@company.com
-																	</div>
-																</div>
-																<div class="user" title="email@company.com">
-																	<img src="img/avatars/male.png" alt="demo user"><a href="javascript:void(0);"> Mike McBride</a>
-																	<div class="email">
-																		mike@company.com
-																	</div>
-																</div>
-				
-																<div class="text-center">
-																	<ul class="pagination pagination-sm">
-																		<li class="disabled">
-																			<a href="javascript:void(0);">Prev</a>
-																		</li>
-																		<li class="active">
-																			<a href="javascript:void(0);">1</a>
-																		</li>
-																		<li>
-																			<a href="javascript:void(0);">2</a>
-																		</li>
-																		<li>
-																			<a href="javascript:void(0);">3</a>
-																		</li>
-																		<li>
-																			<a href="javascript:void(0);">...</a>
-																		</li>
-																		<li>
-																			<a href="javascript:void(0);">99</a>
-																		</li>
-																		<li>
-																			<a href="javascript:void(0);">Next</a>
-																		</li>
-																	</ul>
-																</div>
-				
+																
 															</div><!-- end tab -->
 														</div>
 				
@@ -307,8 +189,7 @@ use yii\helpers\Url;
 												</div>
 				
 											</div>
-											<!-- end row -->
-				
+											<!-- end row -->				
 										</div>
 				
 									</div>
@@ -340,7 +221,7 @@ use yii\helpers\Url;
 			</div>
 			<!-- END MAIN CONTENT -->
 <?php
-
+var_dump($mdBilas);
 $script = <<< JS
 
 $(document).ready(function() {	

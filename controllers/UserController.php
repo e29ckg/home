@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use app\models\User;
 use app\models\Profile;
+use app\models\Bila;
 use app\models\Log;
 use yii\web\UploadedFile;
 use yii\helpers\Url;
@@ -253,21 +254,26 @@ class UserController extends Controller{
     public function actionProfile(){
         $mdUser = User::findOne(Yii::$app->user->id);
         $mdProfile = Profile::find()->where(['user_id' => Yii::$app->user->id])->one();   
-        
+        $mdBilas = Bila::find()->where(['user_id' => Yii::$app->user->id])
+                    ->orderBy([
+                        'date_begin'=>SORT_DESC,
+                        // 'id' => SORT_DESC,
+                    ])->limit(5)->all(); 
         $modelLogs = Log::find()
                         ->where(['user_id' => Yii::$app->user->id])
                         ->orderBy([
                             'create_at'=>SORT_DESC,
                             'id' => SORT_DESC,
                             ])
-                        ->limit(50)
+                        ->limit(20)
                         ->all();        
         
 
         return $this->render('profile',[
             'mdProfile' => $mdProfile,
             'mdUser' => $mdUser,
-            'modelLogs' => $modelLogs
+            'modelLogs' => $modelLogs,
+            'mdBilas' => $mdBilas,
             ]);
     }
 
