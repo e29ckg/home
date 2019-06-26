@@ -211,12 +211,12 @@ $menu = [
 			'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{label}</span></a>',
 			
 		],
-		[
-			'label' => 'สลิปเงินเดือน',
-			'url' => ['/slip/index'],
-			'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
+		// [
+		// 	'label' => 'สลิปเงินเดือน',
+		// 	'url' => ['/slip/index'],
+		// 	'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">{label}</span></a>',
 			
-		],
+		// ],
 		[
 			'label' => 'WebLink',
 			'url' => ['/web_link/index'],
@@ -230,12 +230,12 @@ $menu = [
 		// 	'template' => '<a href="{url}" title="{label}"><i class="fa fa-lg fa-fw fa-paper-plane-o"></i> <span class="menu-item-parent">{label}</span></a>',
 			
 		// ],
-		// [
-		// 	'label' => 'เบิกของ Cartx',
-		// 	'url' => '/cartx/web',
-		// 	'template' => '<a href="{url}" title="{label}" target="_blank"> <i class="fa fa-lg fa-fw fa-shopping-cart"></i> <span class="menu-item-parent">{label}</span></a>',
+		[
+			'label' => 'เบิกของ Cartx',
+			'url' => '/cartx/web',
+			'template' => '<a href="{url}" title="{label}" target="_blank"> <i class="fa fa-lg fa-fw fa-shopping-cart"></i> <span class="menu-item-parent">{label}</span></a>',
 		
-		// ],		
+		],		
 		[
 			'label' => 'ช่วยอำนวยการพัฒนา',  
 			'url' => ['#'],

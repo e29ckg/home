@@ -44,6 +44,8 @@ echo $form->field($model, 'user_id')->widget(Select2::classname(), [
 ])->label(false);
 
 ?> 
+
+    
 <?= $form->field($model, 'status', [
     'inputOptions' => [
         'placeholder' => $model->getAttributeLabel('status'),

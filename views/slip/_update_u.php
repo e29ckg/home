@@ -74,7 +74,7 @@ echo $form->field($model, 'user_id')->widget(Select2::classname(), [
 ?>
  
 <fieldset class="text-right"> 
-    <?= Html::submitButton('เพิ่ม', ['class' => 'btn btn-primary btn-lg']) ?>
+    <?= Html::submitButton('แก้ไข', ['class' => 'btn btn-primary btn-lg']) ?>
 </fieldset>
 
     <?php ActiveForm::end(); ?>

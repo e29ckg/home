@@ -88,10 +88,18 @@ class SlipController extends Controller
         ]);
     }
 
+    public function actionExport_excel()
+    {   
+        return $this->render('_export_excel', [
+            // 'models' => $models,
+        ]);
+    }
+
     public function actionExport_m($y,$m)
     {   
+        $this->layout = 'blank';
         $models = Slip::find()->where(['slip_year' => $y ,'slip_month' => $m])->all();
-        return $this->render('index_export_m', [
+        return $this->render('_export_excel', [
             'models' => $models,
         ]);
     }
@@ -296,9 +304,13 @@ class SlipController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
+            $model->user_id = $_POST['SlipUser']['user_id'];
+            $model->user_type = 1;
+            $model->status = (int)$_POST['SlipUser']['status'];
+
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
-                return $this->redirect(['admin_u']);
+                return $this->redirect(['admin_user']);
             }   
         }
 

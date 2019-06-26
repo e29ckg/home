@@ -68,8 +68,8 @@ $this->params['breadcrumbs'][] = $this->title;
 									<?php $i = 1?>                              
 									<?php foreach ($modelUsers as $modelUser): ?>
 						            <tr>
-						                <td><?=  'ลำดับที่ '.$modelUser->status?></td>
-										<td ><?= Profile::getFullNameId($modelUser->user_id); ?></td>
+						                <td> # </td>
+										<td ><?=  'ลำดับที่ '.$modelUser->status ?> <?= Profile::getFullNameId($modelUser->user_id); ?></td>
                                         <td></td>
                                         <td>
 										
@@ -83,6 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										</td>
 					        
 									</tr>
+									<?php  $i++ ; ?>
 									<?php  endforeach; ?>
 								</tbody>	
 							</table>
@@ -187,7 +188,7 @@ $(document).ready(function() {
 		            
 		    } );
 
-			otable.order( [[ 0, 'asc' ], [ 2, 'asc' ]] ).draw();
+			// otable.order( [[ 0, 'asc' ], [ 2, 'asc' ]] ).draw();
 
 /* END COLUMN FILTER */  
 

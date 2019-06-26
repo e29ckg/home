@@ -22,7 +22,7 @@ class m190622_124829_slip_user extends Migration
             'id' => $this->primaryKey(),
             'user_id' => $this->integer(11)->notNull(),
             'user_type' => $this->string(),
-            'status' => $this->string(),
+            'status' => $this->integer(11),
         ], $tableOptions);
         
     }
