@@ -122,7 +122,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="col-sm-12 col-md-12 col-lg-12">
 				
 				<!-- new widget -->
-				<div class="jarviswidget jarviswidget-color-blueDark">
+				<div class="jarviswidget jarviswidget-color-blueDark " data-widget-custombutton="false">
 		
 					<!-- widget options:
 					usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">

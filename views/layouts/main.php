@@ -147,22 +147,22 @@ if (!Yii::$app->user->isGuest){
 				<div id="logout" class="btn-header transparent pull-right">
 					<span> 
 					<?= !Yii::$app->user->isGuest ? 
-						'<a href="'.Url::to(['site/logout']).'" title="Sign Out" data-confirm = "Are you sure ?", data-method = "post" ><i class="fa fa-sign-out"></i></a>'
+						'<a href="'.Url::to(['site/logout']).'" title="Sign Out" data-confirm = "Are you sure ?", data-method = "post" >ออกจากระบบ <i class="fa fa-sign-out"></i></a>'
 						: 
-						'<a href="'.Url::to(['site/login']).'" class="btn btn-danger"><i class="fa fa-sign-in"></i></a>';
+						'<a href="'.Url::to(['site/login']).'" class="btn btn-danger"> <i class="fa fa-sign-in"></i> เข้าสู่ระบบ</a>';
 					?>
 					</span>
 				</div>
 				<!-- end logout button -->
 
 				<!-- search mobile button (this is hidden till mobile view port) -->
-				<div id="search-mobile" class="btn-header transparent pull-right">
+				<!-- <div id="search-mobile" class="btn-header transparent pull-right">
 					<span> <a href="javascript:void(0)" title="Search"><i class="fa fa-search"></i></a> </span>
-				</div>
+				</div> -->
 				<!-- end search mobile button -->
 
 				<!-- input: search field -->
-				<form action="search.html" class="header-search pull-right">
+				<!-- <form action="search.html" class="header-search pull-right">
 					<input id="search-fld"  type="text" name="param" placeholder="Find reports and more" data-autocomplete='[
 					"ActionScript",
 					"Ruby",
@@ -172,13 +172,13 @@ if (!Yii::$app->user->isGuest){
 						<i class="fa fa-search"></i>
 					</button>
 					<a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i class="fa fa-times"></i></a>
-				</form>
+				</form> -->
 				<!-- end input: search field -->
 
 				<!-- fullscreen button -->
-				<div id="fullscreen" class="btn-header transparent pull-right">
+				<!-- <div id="fullscreen" class="btn-header transparent pull-right">
 					<span> <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
-				</div>
+				</div> -->
 				<!-- end fullscreen button -->		
 				
 

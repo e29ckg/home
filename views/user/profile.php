@@ -221,7 +221,7 @@ use app\models\Bila;
 			</div>
 			<!-- END MAIN CONTENT -->
 <?php
-var_dump($mdBilas);
+
 $script = <<< JS
 
 $(document).ready(function() {	

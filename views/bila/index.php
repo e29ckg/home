@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<?= $this->title;?>
 			<span></span>
 		</h1>
-	</div>
+	</div> 
 	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
 		<ul id="sparks" class="">
 			<li class="sparks-info">
@@ -47,77 +47,78 @@ $this->params['breadcrumbs'][] = $this->title;
 			</li>
 		</ul>
 	</div>
-</div>
-<div>
-    <!-- widget grid -->
-	<section id="widget-grid" class="">
-				
-        <!-- row -->
-        <div class="row">
-            
-            <!-- NEW WIDGET START -->
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            
-             	<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1">
-					<header>
-						<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-						<h2><?= $this->title;?> </h2>
-				
-					</header>
-						<!-- widget div-->
-					<div>
-						<!-- widget edit box -->
-						<div class="jarviswidget-editbox">
-							<!-- This area used as dropdown edit box -->
-						</div>
-						<!-- end widget edit box -->
-						<!-- widget content -->
-						<div class="widget-body no-padding">
-							<table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
-								<thead>
-									<tr>
-					                    <th data-class="expand"> # </th>
-										<th style="width:50px">ประเภทการลา</th>
-					                    <th data-hide="phone,tablet">ลาตั้งแต่</th>
-					                    <th data-hide="phone,tablet">ถึงวันที่</th>
-										<th data-hide="phone,tablet">รวมการลา(วัน)</th>										
-										<th style="width:120px"></th>
-						            </tr>
-								</thead>
-								<tbody>  
-									<?php $i = 1?>                              
-									<?php foreach ($models as $model): ?>
-						            <tr>
-						                <td><?= $i++?></td>
-										<td class="img-weblink" >
-										<?=$model->cat?>
-										</td>										
-                                        <td><?=DateThai_full($model->date_begin)?></td>										
-                                        <td><?=DateThai_full($model->date_end)?></td>	
-										<td><?=$model->date_total?></td>
-										<td>
-											<a href="<?=Url::to('print1/'.$model->id)?>" class="btn btn-info btn-xs" target="_blank" data-id=<?=$model->id?>>print</a> 
-											<a href="#" class="act-update btn btn-warning btn-xs" data-id=<?=$model->id?>>แก้ไข</a> 
-											<?= Html::a('<i class="fa fa-remove"></i> ลบ',['bila/delete','id' => $model->id],
-													[
-														'class' => 'btn btn-danger btn-xs',
-														'data-confirm' => 'Are you sure to delete this item?',
-                                    					'data-method' => 'post',
-													]);
-											?>						        
-										</td>
-									</tr>
-									<?php  endforeach; ?>
-								</tbody>	
-							</table>
-						</div>
-					</div>							
-            </article>
-        </div>
-	</section>	
-</div>
+</div> 
 
+<div>
+		<!-- widget grid -->
+		<section id="widget-grid" class="">
+					
+			<!-- <!-- row -->
+			<div class="row">
+				
+				<!-- NEW WIDGET START -->
+				<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				
+					<!-- Widget ID (each widget will need unique ID)-->
+					<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1">
+						<header>
+							<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+							<h2><?= $this->title;?> </h2>
+					
+						</header>
+							<!-- widget div-->
+						<div>
+							<!-- widget edit box -->
+							<div class="jarviswidget-editbox">
+								<!-- This area used as dropdown edit box -->
+							</div>
+							<!-- end widget edit box -->
+							<!-- widget content -->
+							<div class="widget-body no-padding">
+								<table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
+									<thead>
+										<tr>
+											<th data-class="expand"> # </th>
+											<th style="width:50px">ประเภทการลา</th>
+											<th data-hide="phone,tablet">ลาตั้งแต่</th>
+											<th data-hide="phone,tablet">ถึงวันที่</th>
+											<th data-hide="phone,tablet">รวมการลา(วัน)</th>										
+											<th style="width:120px"></th>
+										</tr>
+									</thead>
+									<tbody>  
+										<?php $i = 1?>                              
+										<?php foreach ($models as $model): ?>
+										<tr>
+											<td><?= $i++?></td>
+											<td class="img-weblink" >
+											<?=$model->cat?>
+											</td>										
+											<td><?=DateThai_full($model->date_begin)?></td>										
+											<td><?=DateThai_full($model->date_end)?></td>	
+											<td><?=$model->date_total?></td>
+											<td>
+												<a href="<?=Url::to('print1/'.$model->id)?>" class="btn btn-info btn-xs" target="_blank" data-id=<?=$model->id?>>print</a> 
+												<a href="#" class="act-update btn btn-warning btn-xs" data-id=<?=$model->id?>>แก้ไข</a> 
+												<?= Html::a('<i class="fa fa-remove"></i> ลบ',['bila/delete','id' => $model->id],
+														[
+															'class' => 'btn btn-danger btn-xs',
+															'data-confirm' => 'Are you sure to delete this item?',
+															'data-method' => 'post',
+														]);
+												?>						        
+											</td>
+										</tr>
+										<?php  endforeach; ?>
+									</tbody>	
+								</table>
+							</div>
+						</div>							
+				</article>
+			</div>
+		</section>	
+	</div>
+</div>
 <?php
 
 $script = <<< JS

@@ -15,6 +15,7 @@ use yii\widgets\ActiveForm;
 use yii\web\Session;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\base\Model;
 
 class UserController extends Controller{
 
@@ -74,39 +75,56 @@ class UserController extends Controller{
     public function actionCreate() {
      
         $model = new User();
+        $modelP = new Profile();
 
         //Add This For Ajax Email Exist Validation 
-        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) ){
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
+            return ActiveForm::validate($model) ;
+            // return ActiveForm::validateMultiple([$model,$modelP]);
         } 
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {            
-            
+        if(Yii::$app->request->isAjax && $modelP->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($modelP) ;
+            // return ActiveForm::validateMultiple([$model,$modelP]);
+        } 
+
+        if ($model->load(Yii::$app->request->post()) )
+        //&& 
+                // $model->validate()            
+                // Model::validateMultiple([$model,$modelP]))
+            { 
             $model->password_hash = Yii::$app->security->generatePasswordHash('password');
             $model->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
             $model->created_at = date("Y-m-d H:i:s");
 
-            if($model->save()){
+            if($model->save() ){
                 Yii::$app->session->setFlash('success', ['บันทึกเรียบร้อย']);
-                $mU = User::findOne(['username' => $_POST['User']['username']]);
-
-                $mP = new Profile();
-                $mP->user_id = $mU->id;
-                $mP->name = $_POST['User']['username'];
-                $mP->img = '';
-                $mP->save();
+                // $mU = User::findOne(['username' => $_POST['User']['username']]);
+                $modelP->user_id = $model->id;
+                $modelP->name = $_POST['Profile']['name'];
+                $modelP->sname = $_POST['Profile']['sname'];
+                $modelP->img = 'none.png';
+                $modelP->save();
+                // $mP = new Profile();
+                // $mP->user_id = $mU->id;
+                // $mP->name = $_POST['User']['username'];
+                // $mP->img = '';
+                // $mP->save();
                 return $this->redirect(['index']);
            } 
         }
 
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('_form',[
-                    'model' => $model,                
+                    'model' => $model, 
+                    'modelP' => $modelP,                
             ]);
         }
             return $this->render('_form',[
-                'model' => $model,                     
+                'model' => $model,
+                'modelP' => $modelP,                      
             ]); 
         
     }
@@ -203,7 +221,13 @@ class UserController extends Controller{
         
         $mdProfile = Profile::find()->where(['user_id' => $id])->one();
         
-        $filename = $mdProfile->img;
+        $fileName = $mdProfile->img ;
+
+        if(Yii::$app->request->isAjax && $mdProfile->load(Yii::$app->request->post())){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($mdProfile) ;
+            // return ActiveForm::validateMultiple([$model,$modelP]);
+        } 
 
         if ($mdProfile->load(Yii::$app->request->post())) {
             $f = UploadedFile::getInstance($mdProfile, 'img');
@@ -214,8 +238,8 @@ class UserController extends Controller{
                 if (!is_dir($dir)) {
                     mkdir($dir, 0777, true);
                 }                
-                if($filename && is_file($dir.$filename)){
-                    unlink($dir.$filename);// ลบ รูปเดิม;   
+                if($fileName && is_file($dir.$fileName)){
+                    unlink($dir.$fileName);// ลบ รูปเดิม;   
                 }
                 $fileName = md5($f->baseName . time()) . '.' . $f->extension;
                 if($f->saveAs($dir . $fileName)){
@@ -226,7 +250,7 @@ class UserController extends Controller{
                 };   
                 return $this->redirect(['index']);                            
             }
-            $mdProfile->img = $filename;
+            $mdProfile->img = $fileName;
             $mdProfile->fname = $_POST['Profile']['fname'];
             $mdProfile->name = $_POST['Profile']['name'];
             $mdProfile->sname = $_POST['Profile']['sname'];
@@ -300,7 +324,7 @@ class UserController extends Controller{
             $mdProfile = Profile::find()->where(['user_id' => $id])->one();
         }
 
-        $filename = $mdProfile->img;
+        $fileName = $mdProfile->img;
 
         if ($mdProfile->load(Yii::$app->request->post())) {
             $f = UploadedFile::getInstance($mdProfile, 'img');
@@ -311,8 +335,8 @@ class UserController extends Controller{
                 if (!is_dir($dir)) {
                     mkdir($dir, 0777, true);
                 }                
-                if($filename && is_file($dir.$filename)){
-                    unlink($dir.$filename);// ลบ รูปเดิม;   
+                if($fileName && is_file($dir.$fileName)){
+                    unlink($dir.$fileName);// ลบ รูปเดิม;   
                 }
                 $fileName = md5($f->baseName . time()) . '.' . $f->extension;
                 if($f->saveAs($dir . $fileName)){
@@ -323,7 +347,7 @@ class UserController extends Controller{
                 };   
                 return $this->redirect(['profile']);                            
             }
-            $mdProfile->img = $filename;
+            $mdProfile->img = $fileName;
             if($mdProfile->save()){
                 Yii::$app->session->setFlash('success', 'บันทึกข้อมูลเรียบร้อย');
             };          

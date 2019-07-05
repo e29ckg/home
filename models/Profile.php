@@ -38,13 +38,13 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            // [['user_id', 'name', 'created_at'], 'required'],
+            [['name','sname'], 'required'],
             // [['birthday'], 'safe'],
             // // [['created_at', 'updated_at'], 'integer'],
-            // [['user_id', 'img', 'dep', 'address', 'phone'], 'string', 'max' => 255],
+            // [['img', 'dep', 'address', 'phone'], 'string', 'max' => 255],
             // [['fname'], 'string', 'max' => 25],
             // [['name', 'sname'], 'string', 'max' => 50],
-            // [['user_id'], 'unique'],
+            // [['name','id_card'], 'unique'],
         ];
     }
 
@@ -61,7 +61,7 @@ class Profile extends \yii\db\ActiveRecord
             'sname' => 'นามสกุล',
             'img' => 'รูปภาพ',
             'birthday' => 'วันเกิด',
-            'idcard' => 'เลขบัตรประชาชน',
+            'id_card' => 'เลขบัตรประชาชน',
             'dep' => 'ตำแหน่ง',
             'address' => 'ที่อยู่',
             'phone' => 'เบอร์โทรศัพท์',
@@ -99,13 +99,16 @@ class Profile extends \yii\db\ActiveRecord
     public function getImgById($id)
     {    
         $model = Profile::findOne(['user_id' => $id]);  
-        $source = Url::to('@webroot/uploads/user/'.$model->img);
-        if(is_file($source)){
-            $link = 'uploads/user/'.$model->img;
-        }else{
-            $link = 'img/none.png';
-        } 
+        if(isset($model->img)){
+            $source = Url::to('@webroot/uploads/user/'.$model->img);
+            if(is_file($source)){
+                $link = 'uploads/user/'.$model->img;
+                return $link ;
+            }             
+        }
+        $link = 'img/none.png';
         return $link ;        
+              
     }
 
     public function getDep()

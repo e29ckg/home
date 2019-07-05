@@ -60,9 +60,9 @@ class BilaController extends Controller
                 'id' => SORT_DESC,
             ])->limit(100)->all();        
         
-        $countAll = Bila::getCountAll();
-        $countA = Bila::getCountA();
-        $countB = Bila::getCountB();
+        $countAll = Bila::find()->where(['user_id' => Yii::$app->user->id])->count();
+        $countA = Bila::find()->where(['user_id' => Yii::$app->user->id, 'cat' => 'ลาป่วย'])->count();
+        $countB = Bila::find()->where(['user_id' => Yii::$app->user->id, 'cat' => 'ลาพักผ่อน'])->count();
 
         return $this->render('index', [
             'models' => $models,
@@ -80,10 +80,14 @@ class BilaController extends Controller
             ])->limit(100)->all();        
         
         $countAll = Bila::getCountAll();
+        $countA = Bila::find()->where(['cat' => 'ลาป่วย'])->count();
+        $countB = Bila::find()->where(['cat' => 'ลาพักผ่อน'])->count();
 
         return $this->render('index_admin', [
             'models' => $models,
             'countAll' => $countAll,
+            'countA' => $countA,
+            'countB' => $countB,
         ]);
     }
     
