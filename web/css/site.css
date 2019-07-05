@@ -1,10 +1,3 @@
-@font-face{font-family:"TH SarabunPSK";
-	panose-1:2 11 5 0 4 2 0 2 0 3;
-	mso-font-charset:0;
-	mso-generic-font-family:swiss;
-	mso-font-pitch:variable;
-	mso-font-signature:-1593835409 1342185562 0 0 65923 0;
-}
 
 div.img-resize img {
     width: 800px;
@@ -28,4 +21,12 @@ td.img-weblink {
 	height: 46px;
 	overflow: hidden;
 	text-align: center;
+}
+
+.text-short-100{
+    white-space: nowrap; 
+    width: 100%; 
+    /* border: 1px solid #000000; */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

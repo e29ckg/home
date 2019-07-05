@@ -9,8 +9,9 @@ use app\models\WebLink;
 /* @var $model app\models\Profile */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-<div class="text-center">
-	<a href="<?=$model->link?>" class="" target="_blank"><i class="fa fa-gear fa-sm"></i> <?=$model->name .' : '.$model->link?></a>
+<div class="text-center text-short-100">
+	<p><h4><?=$model->name?></h4></p>
+	<a href="<?=$model->link?>" class="" target="_blank"><i class="fa fa-gear fa-sm"></i> <?=$model->link?></a>
 </div>
 <div class="profile-form text-center">
 
@@ -21,8 +22,8 @@ use app\models\WebLink;
 	
 </div>
 <br>
-<div class="profile-form text-center">
-	<a href="<?=$model->link?>" class="btn btn-success" target="_blank"><i class="fa fa-external-link"></i> <?=$model->name .' : '.$model->link?></a>
+<div class="profile-form text-center text-short-100">
+	<a href="<?=$model->link?>" class="btn btn-success " target="_blank"><i class="fa fa-external-link"></i> <?=$model->name .' : '.$model->link?></a>
 </div>
 
 <div class="row">
